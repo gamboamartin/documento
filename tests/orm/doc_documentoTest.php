@@ -80,6 +80,14 @@ class doc_documentoTest extends base_test {
         errores::$error = false;
         $_FILES['name'] = 'a.a';
         $doc_documento->registro['doc_tipo_documento_id'] = 1;
+
+        $elimina_extension = $this->elimina_extension();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al eliminar extension', data: $elimina_extension);
+            print_r($error);
+            die('Error');
+        }
+
         $resultado = $doc_documento->alta_bd();
         $this->assertIsArray($resultado);
         $this->assertTrue(errores::$error);
@@ -90,11 +98,24 @@ class doc_documentoTest extends base_test {
         $doc_documento->registro['doc_tipo_documento_id'] = 1;
         $_SESSION['grupo_id'] = 1;
         unset($_SESSION['usuario_id']);
-        $resultado = $doc_documento->alta_bd();
 
-        $this->assertIsArray($resultado);
-        $this->assertTrue(errores::$error);
-        $this->assertStringContainsStringIgnoringCase('Error al guardar registro', $resultado['mensaje']);
+        $inserta_extension = $this->inserta_extension(descripcion: 'a');
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al insertar extension', data: $inserta_extension);
+            print_r($error);
+            die('Error');
+        }
+
+        $inserta_extension_permitido = $this->inserta_extension_permitido();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al insertar $inserta_extension_permitido', data: $inserta_extension_permitido);
+            print_r($error);
+            die('Error');
+        }
+
+        $resultado = $doc_documento->alta_bd();
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
 
         errores::$error = false;
         $_FILES['name'] = 'a.a';
