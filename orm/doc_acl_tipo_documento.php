@@ -25,7 +25,7 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
      * @param int $tipo_documento_id
      * @return array|bool
      */
-    public function tipo_documento_permiso(int $grupo_id, int $tipo_documento_id)
+    public function tipo_documento_permiso(int $grupo_id, int $tipo_documento_id): bool|array
     {
         if($grupo_id <= 0){
             return $this->error->error(mensaje: 'Error grupo id no puede ser menor a 1',data:  $grupo_id,

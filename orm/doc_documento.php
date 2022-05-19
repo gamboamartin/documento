@@ -69,7 +69,8 @@ class doc_documento extends modelo{ //FINALIZADAS
     }
 
 
-    public function validaciones_documentos(string $extension, int $grupo_id, int $tipo_documento_id){
+    public function validaciones_documentos(string $extension, int $grupo_id, int $tipo_documento_id): bool|array
+    {
         $tiene_permiso = (new doc_acl_tipo_documento($this->link))->tipo_documento_permiso(
             grupo_id: $grupo_id, tipo_documento_id: $tipo_documento_id);
         if($tiene_permiso){
