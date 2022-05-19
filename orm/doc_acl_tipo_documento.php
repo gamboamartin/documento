@@ -1,6 +1,7 @@
 <?php
 namespace models;
 use base\orm\modelo;
+use config\generales;
 use gamboamartin\errores\errores;
 use PDO;
 use stdClass;
@@ -21,15 +22,17 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
 
     /**
      * PRUEBA P ORDER P INT
-     * @param int $grupo_id
-     * @param int $tipo_documento_id
+     * Funcion que verifica si existe un acl_tipo_documento conforme al grupo_id y el tipo_documento_id
+     * @param int $grupo_id Grupo de usuario
+     * @param int $tipo_documento_id Tipo de documento en base de datos no relacionado a la extension,
+     * mas bien al objeto del tipo del documento ej INE
      * @return array|bool
      */
     public function tipo_documento_permiso(int $grupo_id, int $tipo_documento_id): bool|array
     {
+
         if($grupo_id <= 0){
-            return $this->error->error(mensaje: 'Error grupo id no puede ser menor a 1',data:  $grupo_id,
-                params: get_defined_vars());
+            return $this->error->error(mensaje: 'Error grupo id no puede ser menor a 1',data:  $grupo_id);
         }
         if($tipo_documento_id <= 0){
             return $this->error->error(mensaje: 'Error tipo documento id no puede ser menor a 1',

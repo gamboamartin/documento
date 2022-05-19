@@ -2,11 +2,12 @@
 namespace tests\orm;
 
 use gamboamartin\errores\errores;
-use gamboamartin\test\test;
+
 use models\doc_extension;
+use tests\base_test;
 
 
-class doc_extensionTest extends test {
+class doc_extensionTest extends base_test {
     public errores $errores;
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
@@ -27,6 +28,21 @@ class doc_extensionTest extends test {
         $this->assertStringContainsStringIgnoringCase('Error extension no puede venir vacia', $resultado['mensaje']);
 
         errores::$error = false;
+
+        $elimina_extension = $this->elimina_extension();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al eliminar extension', data: $elimina_extension);
+            print_r($error);
+            die('Error');
+        }
+
+
+        $inserta_extension = $this->inserta_extension();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al insertar extension', data: $inserta_extension);
+            print_r($error);
+            die('Error');
+        }
 
         $extension = 'pdf';
         $resultado = $tipo_doc->doc_extension_id(extension: $extension);

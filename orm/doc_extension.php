@@ -30,6 +30,9 @@ class doc_extension extends modelo{ //FINALIZADAS
         if(errores::$error) {
             return $this->error->error(mensaje: 'Error al obtener extensiones', data: $r_extension);
         }
+        if($r_extension->n_registros === 0){
+            return $this->error->error(mensaje: 'Error no existe la extension', data: $extension);
+        }
 
         return $r_extension->registros[0]['doc_extension_id'];
     }

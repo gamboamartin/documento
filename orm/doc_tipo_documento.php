@@ -23,9 +23,9 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
      * PRUEBA P ORDER P INT
      * @param string $extension
      * @param array $extensiones_permitidas
-     * @return bool
+     * @return bool|array
      */
-    public function es_extension_permitida(string $extension, array $extensiones_permitidas): bool|array
+    private function es_extension_permitida(string $extension, array $extensiones_permitidas): bool|array
     {
         if($extension === '') {
             return $this->error->error(mensaje: 'Error extension no puede venir vacio', data: $extension);
@@ -42,7 +42,7 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
         return  $es_extension_permitida;
     }
 
-    public function extensiones_permitidas(int $tipo_documento_id): array
+    private function extensiones_permitidas(int $tipo_documento_id): array
     {
         $filtro['doc_tipo_documento.id'] = $tipo_documento_id;
 

@@ -5,6 +5,7 @@ use config\generales;
 use gamboamartin\errores\errores;
 use gamboamartin\plugins\files;
 use PDO;
+use RuntimeException;
 use stdClass;
 
 
@@ -23,12 +24,32 @@ class doc_documento extends modelo{ //FINALIZADAS
 
     public function alta_bd(): array|stdClass
     {
-        $extension = (new files())->extension($_FILES['name']);
+        $keys = array('name','tmp_name');
+        $valida = $this->validacion->valida_existencia_keys(keys: $keys,registro:  $_FILES);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar FILES', data: $valida);
+        }
+        $keys = array('doc_tipo_documento_id');
+        $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $this->registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar registro a insertar', data: $valida);
+        }
+        $valida = (new files())->valida_extension(archivo: $_FILES['name']);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar extension', data: $valida);
+        }
+
+        $extension = (new files())->extension(archivo: $_FILES['name']);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error obtener extension', data: $extension);
         }
 
-        $validaciones = $this->validaciones_documentos(extension: $extension, grupo_id: $_SESSION['grupo_id'],
+        $grupo_id = -1;
+        if(isset($_SESSION['grupo_id']) && $_SESSION['grupo_id']!==''){
+            $grupo_id = $_SESSION['grupo_id'];
+        }
+
+        $validaciones = $this->validaciones_documentos(extension: $extension, grupo_id: $grupo_id,
             tipo_documento_id: $this->registro['doc_tipo_documento_id']);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error validar documento', data: $validaciones);
@@ -45,12 +66,30 @@ class doc_documento extends modelo{ //FINALIZADAS
             return $this->error->error(mensaje: 'Error obtener nombre documento', data: $extension);
         }
 
-        $ruta_directorio = 'archivos/'.$this->tabla.'/';
-        $ruta_absoluta_directorio = (new generales())->path_base.$ruta_directorio;
+        $ruta_archivos = (new generales())->path_base.'/archivos/';
+
+        $ruta_relativa = 'archivos/'.$this->tabla.'/';
+
+        if(!is_dir($ruta_archivos) && !mkdir($ruta_archivos) && !is_dir($ruta_archivos)) {
+            return $this->error->error(mensaje: 'Error crear directorio', data: $ruta_archivos);
+        }
+
+
+        $ruta_absoluta_directorio = (new generales())->path_base.$ruta_relativa;
+
+        if(!is_dir($ruta_absoluta_directorio) && !mkdir($ruta_absoluta_directorio) &&
+            !is_dir($ruta_absoluta_directorio)) {
+            return $this->error->error(mensaje: 'Error crear directorio', data: $ruta_absoluta_directorio);
+        }
+
+
+        if(!file_exists($_FILES['tmp_name'])){
+            return $this->error->error('Error al guardar archivo temporal', $_FILES);
+        }
 
         $this->registro['status'] = 'activo';
         $this->registro['nombre'] = $nombre_doc;
-        $this->registro['ruta_relativa'] = $ruta_directorio.$nombre_doc;
+        $this->registro['ruta_relativa'] = $ruta_relativa.$nombre_doc;
         $this->registro['ruta_absoluta'] = $ruta_absoluta_directorio.$nombre_doc;
         $this->registro['doc_extension_id'] = $extension_id;
 
@@ -58,6 +97,8 @@ class doc_documento extends modelo{ //FINALIZADAS
         if(errores::$error){
             return $this->error->error('Error al guardar registro', $r_alta_doc);
         }
+
+
 
         $guarda = (new files())->guarda_archivo_fisico(contenido_file:  file_get_contents($_FILES['tmp_name']),
             ruta_file: $this->registro['ruta_absoluta']);
@@ -68,19 +109,37 @@ class doc_documento extends modelo{ //FINALIZADAS
         return $r_alta_doc;
     }
 
-
-    public function validaciones_documentos(string $extension, int $grupo_id, int $tipo_documento_id): bool|array
+    /** Valida
+     * @param string $extension
+     * @param int $grupo_id
+     * @param int $tipo_documento_id
+     * @return bool|array
+     */
+    private function validaciones_documentos(string $extension, int $grupo_id, int $tipo_documento_id): bool|array
     {
-        $tiene_permiso = (new doc_acl_tipo_documento($this->link))->tipo_documento_permiso(
-            grupo_id: $grupo_id, tipo_documento_id: $tipo_documento_id);
-        if($tiene_permiso){
-            return $this->error->error(mensaje: 'Error no tiene permiso de alta', data: $tiene_permiso);
+        $aplica_seguridad = (new generales())->aplica_seguridad;
+        if($aplica_seguridad) {
+            $tiene_permiso = (new doc_acl_tipo_documento($this->link))->tipo_documento_permiso(
+                grupo_id: $grupo_id, tipo_documento_id: $tipo_documento_id);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al validar permiso',
+                    data: $tiene_permiso);
+            }
+            if (!$tiene_permiso) {
+                return $this->error->error(mensaje: 'Error no tiene permiso de alta', data: $tiene_permiso);
+            }
         }
 
         $extension_permitida = (new doc_tipo_documento($this->link))->valida_extension_permitida(extension: $extension,
             tipo_documento_id: $tipo_documento_id);
-        if($extension_permitida){
-            return $this->error->error(mensaje: 'Error la extension del documento no es validad',
+
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener extension',
+                data: $extension_permitida);
+        }
+
+        if(!$extension_permitida){
+            return $this->error->error(mensaje: 'Error la extension del documento no es validar',
                 data: $extension_permitida);
         }
 

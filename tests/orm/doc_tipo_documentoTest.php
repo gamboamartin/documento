@@ -2,11 +2,12 @@
 namespace tests\orm;
 
 use gamboamartin\errores\errores;
-use gamboamartin\test\test;
+use gamboamartin\test\liberator;
 use models\doc_tipo_documento;
+use tests\base_test;
 
 
-class doc_tipo_documentoTest extends test {
+class doc_tipo_documentoTest extends base_test {
     public errores $errores;
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
@@ -18,7 +19,7 @@ class doc_tipo_documentoTest extends test {
     {
         errores::$error = false;
         $tipo_doc = new doc_tipo_documento($this->link);
-        //$inicializacion = new liberator($inicializacion);
+        $tipo_doc = new liberator($tipo_doc);
 
         $extension = '';
         $extensiones_permitidas = array();
@@ -29,6 +30,13 @@ class doc_tipo_documentoTest extends test {
         $this->assertStringContainsStringIgnoringCase('Error extension no puede venir vacio', $resultado['mensaje']);
 
         errores::$error = false;
+
+        $inserta_extension = $this->inserta_extension();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al insertar extension', data: $inserta_extension);
+            print_r($error);
+            die('Error');
+        }
 
         $extension = 'pdf';
         $extensiones_permitidas = array();
