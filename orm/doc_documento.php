@@ -63,7 +63,7 @@ class doc_documento extends modelo{ //FINALIZADAS
         $nombre_doc = (new files())->nombre_doc(tipo_documento_id: $this->registro['doc_tipo_documento_id'],
             extension: $extension);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error obtener nombre documento', data: $extension);
+            return $this->error->error(mensaje: 'Error obtener nombre documento', data: $nombre_doc);
         }
 
         $ruta_archivos = (new generales())->path_base.'/archivos/';
@@ -97,8 +97,6 @@ class doc_documento extends modelo{ //FINALIZADAS
         if(errores::$error){
             return $this->error->error('Error al guardar registro', $r_alta_doc);
         }
-
-
 
         $guarda = (new files())->guarda_archivo_fisico(contenido_file:  file_get_contents($_FILES['tmp_name']),
             ruta_file: $this->registro['ruta_absoluta']);
