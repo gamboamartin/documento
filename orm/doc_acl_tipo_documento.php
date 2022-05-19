@@ -33,7 +33,7 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
         }
         if($tipo_documento_id <= 0){
             return $this->error->error(mensaje: 'Error tipo documento id no puede ser menor a 1',
-                data: $tipo_documento_id, params: get_defined_vars());
+                data: $tipo_documento_id);
         }
 
         $filtro['doc_tipo_documento.id'] = $tipo_documento_id;
@@ -41,7 +41,7 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
 
         $existe = $this->existe(filtro: $filtro);
         if(errores::$error) {
-            return $this->error->error(mensaje: 'Error al obtener acl', data: $existe, params: get_defined_vars());
+            return $this->error->error(mensaje: 'Error al obtener acl', data: $existe);
         }
 
         return $existe;
