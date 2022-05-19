@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
+        'reference' => 'd3461b58bc5926ff6f1cdc4dea0534fde3c64c60',
         'name' => '__root__',
         'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => 'd3461b58bc5926ff6f1cdc4dea0534fde3c64c60',
             'dev_requirement' => false,
         ),
         'chillerlan/php-qrcode' => array(
@@ -129,7 +129,7 @@
             'aliases' => array(
                 0 => '9999999-dev',
             ),
-            'reference' => '9aca51664a305fcba56f13a19dee18b7cf341dc6',
+            'reference' => 'd6adbe3d73abadc21f83b320daefc91addfa2b7f',
             'dev_requirement' => false,
         ),
         'gamboa.martin/test' => array(
@@ -151,7 +151,7 @@
             'aliases' => array(
                 0 => '9999999-dev',
             ),
-            'reference' => '4f53758af66be053f590d973f17fecb76cd09b73',
+            'reference' => '3cd8d9e891111360a0fa0a9a3a48669bf9927f67',
             'dev_requirement' => false,
         ),
         'graham-campbell/guzzle-factory' => array(
@@ -191,12 +191,12 @@
             'dev_requirement' => false,
         ),
         'maennchen/zipstream-php' => array(
-            'pretty_version' => '2.2.0',
-            'version' => '2.2.0.0',
+            'pretty_version' => '2.2.1',
+            'version' => '2.2.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../maennchen/zipstream-php',
             'aliases' => array(),
-            'reference' => 'd900a051ce342d2090595e877c732db1722b88c2',
+            'reference' => '211e9ba1530ea5260b45d90c9ea252f56ec52729',
             'dev_requirement' => false,
         ),
         'markbaker/complex' => array(
