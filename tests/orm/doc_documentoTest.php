@@ -183,10 +183,6 @@ class doc_documentoTest extends base_test {
         $_SESSION['grupo_id'] = 1;
         $_SESSION['usuario_id'] = 1;
 
-
-
-
-
         $resultado = $doc_documento->alta_bd();
 
         $this->assertIsObject($resultado);

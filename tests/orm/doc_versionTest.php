@@ -89,7 +89,10 @@ class doc_versionTest extends base_test {
         $_SESSION['grupo_id'] = 1;
         $doc_version->registro['doc_documento_id'] = 1;
         $resultado = $doc_version->alta_bd();
-        print_r($resultado);exit;
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+
+        errores::$error = false;
     }
 }
 
