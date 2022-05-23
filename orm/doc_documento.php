@@ -24,6 +24,17 @@ class doc_documento extends modelo{ //FINALIZADAS
 
     /**
      * PRUEBA P ORDER P INT
+     * Funcion sobrescrita la cual solo devuelve error
+     * @param bool $reactiva
+     * @return array
+     */
+    public function activa_bd(bool $reactiva = false): array
+    {
+        return $this->error->error(mensaje: 'Error la funcion de activa_bd no esta permitada para este modelo', data: $reactiva);
+    }
+
+    /**
+     * PRUEBA P ORDER P INT
      * Inserta registro de documento en la base de datos
      * @return array|stdClass
      */
@@ -110,6 +121,16 @@ class doc_documento extends modelo{ //FINALIZADAS
         }
 
         return $r_alta_doc;
+    }
+
+    /**
+     * PRUEBA P ORDER P INT
+     * Funcion sobrescrita la cual solo devuelve error
+     * @return array
+     */
+    public function desactiva_bd(): array
+    {
+        return $this->error->error(mensaje: 'Error la funcion de desactiva_bd no esta permitada para este modelo', data: $this);
     }
 
     /**
