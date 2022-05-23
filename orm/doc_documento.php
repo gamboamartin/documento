@@ -22,6 +22,11 @@ class doc_documento extends modelo{ //FINALIZADAS
         parent::__construct(link: $link,tabla:  $tabla,campos_obligatorios: $campos_obligatorios, columnas:  $columnas);
     }
 
+    /**
+     * PRUEBA P ORDER P INT
+     * Inserta registro de documento en la base de datos
+     * @return array|stdClass
+     */
     public function alta_bd(): array|stdClass
     {
         $keys = array('name','tmp_name');
@@ -107,6 +112,14 @@ class doc_documento extends modelo{ //FINALIZADAS
         return $r_alta_doc;
     }
 
+    /**
+     * PRUEBA P ORDER P INT
+     * Se edita registro y se genera registro de version
+     * @param array $registro
+     * @param int $id
+     * @param bool $reactiva
+     * @return array|stdClass
+     */
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
         $keys = array('name','tmp_name');
