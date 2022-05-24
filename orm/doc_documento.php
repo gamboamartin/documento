@@ -143,6 +143,9 @@ class doc_documento extends modelo{ //FINALIZADAS
      */
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
+        if(isset($registro['status'])){
+            return $this->error->error(mensaje: 'Error no puedes modificar status', data: $registro);
+        }
         $keys = array('name','tmp_name');
         $valida = $this->validacion->valida_existencia_keys(keys: $keys,registro:  $_FILES);
         if(errores::$error){
