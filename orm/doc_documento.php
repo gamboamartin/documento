@@ -133,6 +133,53 @@ class doc_documento extends modelo{ //FINALIZADAS
         return $this->error->error(mensaje: 'Error la funcion de desactiva_bd no esta permitada para este modelo', data: $this);
     }
 
+    public function elimina_bd(int $id): array
+    {
+        $documento = $this->registro(registro_id: $id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener documento', data: $documento);
+        }
+
+        $grupo_id = -1;
+        if(isset($_SESSION['grupo_id']) && $_SESSION['grupo_id']!==''){
+            $grupo_id = $_SESSION['grupo_id'];
+        }
+
+        $tiene_permiso = (new doc_acl_tipo_documento($this->link))->tipo_documento_permiso(
+            grupo_id: $grupo_id, tipo_documento_id: $documento['doc_tipo_documento_id']);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar permiso',
+                data: $tiene_permiso);
+        }
+        if (!$tiene_permiso) {
+            return $this->error->error(mensaje: 'Error no tiene permiso de alta', data: $tiene_permiso);
+        }
+
+        $filtro['doc_documento.id'] = $id;
+        $versiones = (new doc_version($this->link))->filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error obtener versiones', data: $versiones);
+        }
+
+        foreach ($versiones as $version){
+            $elimina_version = (new doc_version($this->link))->elimina_bd(id: $version['doc_version_id']);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al eliminar versiones', data: $elimina_version);
+            }
+        }
+
+        if(file_exists($documento['doc_documento_ruta_absoluta'])){
+            unlink($documento['doc_documento_ruta_absoluta']);
+        }
+
+        $r_elimina_doc = parent::elimina_bd(id: $id);
+        if(errores::$error){
+            return $this->error->error(mensaje:'Error al eliminar documento', data: $r_elimina_doc);
+        }
+
+        return $r_elimina_doc;
+    }
+
     /**
      * PRUEBA P ORDER P INT
      * Se edita registro y se genera registro de version

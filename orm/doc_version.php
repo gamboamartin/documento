@@ -121,6 +121,12 @@ class doc_version extends modelo
         return $this->error->error(mensaje: 'Error la funcion de desactiva_bd no esta permitada para este modelo', data: $this);
     }
 
+    /**
+     * P ORDER P INT
+     * Funcion sobrescrita elimina archivo fisico y registro de entidad version
+     * @param int $id Identificador de un registro version
+     * @return array
+     */
     public function elimina_bd(int $id): array
     {
         $version = $this->registro(registro_id: $id);
