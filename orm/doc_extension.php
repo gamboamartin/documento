@@ -19,7 +19,8 @@ class doc_extension extends modelo{ //FINALIZADAS
         parent::__construct(link: $link,tabla:  $tabla,campos_obligatorios: $campos_obligatorios, columnas:  $columnas);
     }
 
-    public function doc_extension_id(string $extension){
+    public function doc_extension_id(string $extension): int|array
+    {
         if($extension === ''){
             return $this->error->error(mensaje: 'Error extension no puede venir vacia', data: $extension);
         }
@@ -34,6 +35,6 @@ class doc_extension extends modelo{ //FINALIZADAS
             return $this->error->error(mensaje: 'Error no existe la extension', data: $extension);
         }
 
-        return $r_extension->registros[0]['doc_extension_id'];
+        return (int)$r_extension->registros[0]['doc_extension_id'];
     }
 }

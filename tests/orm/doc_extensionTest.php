@@ -46,6 +46,7 @@ class doc_extensionTest extends base_test {
 
         $extension = 'pdf';
         $resultado = $tipo_doc->doc_extension_id(extension: $extension);
+
         $this->assertIsInt($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals('1', (string)$resultado);
