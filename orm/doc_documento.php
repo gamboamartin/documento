@@ -102,8 +102,8 @@ class doc_documento extends modelo{ //FINALIZADAS
         }
 
 
-        if(!file_exists($_FILES['tmp_name'])){
-            return $this->error->error('Error al guardar archivo temporal', $_FILES);
+        if(!file_exists($file['tmp_name'])){
+            return $this->error->error('Error al guardar archivo temporal', $file);
         }
 
         $this->registro['status'] = 'activo';
@@ -117,7 +117,7 @@ class doc_documento extends modelo{ //FINALIZADAS
             return $this->error->error('Error al guardar registro', $r_alta_doc);
         }
 
-        $guarda = (new files())->guarda_archivo_fisico(contenido_file:  file_get_contents($_FILES['tmp_name']),
+        $guarda = (new files())->guarda_archivo_fisico(contenido_file:  file_get_contents($file['tmp_name']),
             ruta_file: $this->registro['ruta_absoluta']);
         if(errores::$error){
             return $this->error->error('Error al guardar archivo', $guarda);
