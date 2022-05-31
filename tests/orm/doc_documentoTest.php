@@ -9,6 +9,7 @@ use models\doc_documento;
 use models\doc_extension;
 use models\doc_extension_permitido;
 use models\doc_tipo_documento;
+use models\doc_version;
 use tests\base_test;
 
 
@@ -27,6 +28,13 @@ class doc_documentoTest extends base_test {
 
         $doc_documento = new doc_documento($this->link);
         //$inicializacion = new liberator($inicializacion);
+
+        $doc_version = (new doc_version($this->link))->elimina_todo();
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al eliminar $doc_version', data: $doc_version);
+            print_r($error);
+            die('Error');
+        }
 
         $documentos = (new doc_documento($this->link))->elimina_todo();
         if(errores::$error){
@@ -182,10 +190,6 @@ class doc_documentoTest extends base_test {
         $doc_documento->registro['doc_tipo_documento_id'] = 1;
         $_SESSION['grupo_id'] = 1;
         $_SESSION['usuario_id'] = 1;
-
-
-
-
 
         $resultado = $doc_documento->alta_bd();
 
