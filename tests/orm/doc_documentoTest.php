@@ -80,7 +80,8 @@ class doc_documentoTest extends base_test {
 
         $_FILES['name'] = 'a.a';
         $_FILES['tmp_name'] = '/var/www/html/documento/tests/files/a.a';
-        $resultado = $doc_documento->alta_bd();
+        $resultado = $doc_documento->alta_bd($_FILES);
+
         $this->assertIsArray($resultado);
         $this->assertTrue(errores::$error);
         $this->assertStringContainsStringIgnoringCase('Error al validar registro a insertar', $resultado['mensaje']);
@@ -96,7 +97,7 @@ class doc_documentoTest extends base_test {
             die('Error');
         }
 
-        $resultado = $doc_documento->alta_bd();
+        $resultado = $doc_documento->alta_bd($_FILES);
         $this->assertIsArray($resultado);
         $this->assertTrue(errores::$error);
         $this->assertStringContainsStringIgnoringCase('Error validar documento', $resultado['mensaje']);
@@ -121,7 +122,7 @@ class doc_documentoTest extends base_test {
             die('Error');
         }
 
-        $resultado = $doc_documento->alta_bd();
+        $resultado = $doc_documento->alta_bd($_FILES);
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
 
@@ -179,7 +180,7 @@ class doc_documentoTest extends base_test {
             unlink('/var/www/html/documento/tests/files/a.a');
         }
 
-        $resultado = $doc_documento->alta_bd();
+        $resultado = $doc_documento->alta_bd($_FILES);
         $this->assertIsArray($resultado);
         $this->assertTrue(errores::$error);
         $this->assertStringContainsStringIgnoringCase('Error al guardar archivo temporal', $resultado['mensaje']);
@@ -191,7 +192,7 @@ class doc_documentoTest extends base_test {
         $_SESSION['grupo_id'] = 1;
         $_SESSION['usuario_id'] = 1;
 
-        $resultado = $doc_documento->alta_bd();
+        $resultado = $doc_documento->alta_bd($_FILES);
 
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
@@ -213,7 +214,7 @@ class doc_documentoTest extends base_test {
         }
 
 
-        $resultado = $doc_documento->alta_bd();
+        $resultado = $doc_documento->alta_bd($_FILES);
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertFileExists($resultado->registro['doc_documento_ruta_absoluta']);

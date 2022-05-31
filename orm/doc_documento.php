@@ -4,6 +4,7 @@ use base\orm\modelo;
 use config\generales;
 use gamboamartin\errores\errores;
 use gamboamartin\plugins\files;
+use JsonException;
 use PDO;
 use RuntimeException;
 use stdClass;
@@ -36,12 +37,14 @@ class doc_documento extends modelo{ //FINALIZADAS
     /**
      * PRUEBA P ORDER P INT
      * Inserta registro de documento en la base de datos
+     * @param array $file
      * @return array|stdClass
+     * @throws JsonException
      */
-    public function alta_bd(): array|stdClass
+    public function alta_bd(array $file = array()): array|stdClass
     {
         $keys = array('name','tmp_name');
-        $valida = $this->validacion->valida_existencia_keys(keys: $keys,registro:  $_FILES);
+        $valida = $this->validacion->valida_existencia_keys(keys: $keys,registro:  $file);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar FILES', data: $valida);
         }
@@ -50,12 +53,12 @@ class doc_documento extends modelo{ //FINALIZADAS
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar registro a insertar', data: $valida);
         }
-        $valida = (new files())->valida_extension(archivo: $_FILES['name']);
+        $valida = (new files())->valida_extension(archivo: $file['name']);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar extension', data: $valida);
         }
 
-        $extension = (new files())->extension(archivo: $_FILES['name']);
+        $extension = (new files())->extension(archivo: $file['name']);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error obtener extension', data: $extension);
         }
@@ -121,6 +124,16 @@ class doc_documento extends modelo{ //FINALIZADAS
         }
 
         return $r_alta_doc;
+    }
+
+    public function alta_registro(array $registro, array $file = array()): array|stdClass
+    {
+        $this->registro = $registro;
+        $r_alta = $this->alta_bd(file:$file);
+        if(errores::$error){
+            return $this->error->error('Error al guardar archivo', $r_alta);
+        }
+        return $r_alta;
     }
 
     /**
