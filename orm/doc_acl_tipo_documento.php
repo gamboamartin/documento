@@ -15,8 +15,8 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
      */
     public function __construct(PDO $link){
         $tabla = __CLASS__;
-        $columnas = array($tabla=>false, 'doc_tipo_documento'=>$tabla, 'grupo'=>$tabla);
-        $campos_obligatorios = array('doc_tipo_documento_id', 'grupo_id');
+        $columnas = array($tabla=>false, 'doc_tipo_documento'=>$tabla, 'adm_grupo'=>$tabla);
+        $campos_obligatorios = array('doc_tipo_documento_id', 'adm_grupo_id');
         parent::__construct(link: $link,tabla:  $tabla,campos_obligatorios: $campos_obligatorios, columnas:  $columnas);
     }
 
@@ -40,7 +40,7 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
         }
 
         $filtro['doc_tipo_documento.id'] = $tipo_documento_id;
-        $filtro['grupo.id'] = $grupo_id;
+        $filtro['adm_grupo.id'] = $grupo_id;
 
         $existe = $this->existe(filtro: $filtro);
         if(errores::$error) {

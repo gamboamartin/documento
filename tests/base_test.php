@@ -3,6 +3,7 @@ namespace tests;
 use gamboamartin\errores\errores;
 use gamboamartin\test\test;
 use JsonException;
+use models\adm_grupo;
 use models\doc_acl_tipo_documento;
 use models\doc_documento;
 use models\doc_extension;
@@ -24,7 +25,7 @@ class base_test extends test{
         $_SESSION['usuario_id'] = 1;
         $doc_act_tipo_documento['id'] = $id;
         $doc_act_tipo_documento['doc_tipo_documento_id'] = $doc_tipo_documento_id;
-        $doc_act_tipo_documento['grupo_id'] = $grupo_id;
+        $doc_act_tipo_documento['adm_grupo_id'] = $grupo_id;
         $alta_act_tipo_documento = (new doc_acl_tipo_documento($this->link))->alta_registro(registro: $doc_act_tipo_documento);
         if (errores::$error) {
             return $this->error->error(mensaje: 'Error al insertar extension', data: $alta_act_tipo_documento);
@@ -76,6 +77,22 @@ class base_test extends test{
         $alta_extension_permitido = (new doc_extension_permitido($this->link))->alta_registro(registro: $doc_extension_permitido);
         if (errores::$error) {
             return $this->error->error(mensaje: 'Error al insertar extension permitido', data: $alta_extension_permitido);
+        }
+        return true;
+    }
+
+    /**
+     * @throws JsonException
+     */
+    protected function alta_grupo(int $id = 1, string $descripcion = '1'): bool|array
+    {
+        $_SESSION['usuario_id'] = 1;
+        $grupo['id'] = $id;
+        $grupo['descripcion'] = $descripcion;
+
+        $alta_grupo = (new adm_grupo($this->link))->alta_registro(registro: $grupo);
+        if (errores::$error) {
+            return $this->error->error(mensaje: 'Error al insertar $alta_grupo', data: $alta_grupo);
         }
         return true;
     }
@@ -197,6 +214,17 @@ class base_test extends test{
         return $existe_extension_permitido;
     }
 
+    protected function existe_grupo(int $id = 1): bool|array
+    {
+        $filtro = array();
+        $filtro['adm_grupo.id'] = $id;
+        $existe_grupo = (new adm_grupo($this->link))->existe(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al verificar $existe_grupo', data: $existe_grupo);
+        }
+        return $existe_grupo;
+    }
+
     protected function existe_tipo_documento(int $id = 1): bool|array
     {
         $filtro = array();
@@ -276,6 +304,23 @@ class base_test extends test{
                 doc_tipo_documento_id: $doc_tipo_documento_id);
             if (errores::$error) {
                 return $this->error->error(mensaje: 'Error al insertar extension', data: $alta_extension_permitido);
+            }
+        }
+
+        return true;
+    }
+
+    protected function inserta_grupo(int $id = 1, int $descripcion = 1): bool|array
+    {
+        $existe_grupo = $this->existe_grupo();
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al verificar extension', data: $existe_grupo);
+        }
+
+        if(!$existe_grupo) {
+            $alta_acl_tipo_documento = $this->alta_grupo();
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al insertar extension', data: $alta_acl_tipo_documento);
             }
         }
 

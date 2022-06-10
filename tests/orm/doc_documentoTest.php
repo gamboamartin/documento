@@ -108,6 +108,28 @@ class doc_documentoTest extends base_test {
         $_SESSION['grupo_id'] = 1;
         unset($_SESSION['usuario_id']);
 
+        $elimina_acl_tipo_documento = $this->elimina_acl_tipo_documento();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al eliminar $elimina_acl_tipo_documento', data: $elimina_acl_tipo_documento);
+            print_r($error);
+            die('Error');
+        }
+
+        $inserta_grupo = $this->inserta_grupo();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al insertar $inserta_grupo', data: $inserta_grupo);
+            print_r($error);
+            die('Error');
+        }
+
+        $inserta_acl_tipo_documento = $this->inserta_acl_tipo_documento();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al insertar $inserta_acl_tipo_documento', data: $inserta_acl_tipo_documento);
+            print_r($error);
+            die('Error');
+        }
+
+
         $inserta_extension = $this->inserta_extension(descripcion: 'a');
         if (errores::$error) {
             $error = $this->errores->error(mensaje: 'Error al insertar extension', data: $inserta_extension);
@@ -121,6 +143,7 @@ class doc_documentoTest extends base_test {
             print_r($error);
             die('Error');
         }
+
 
         $resultado = $doc_documento->alta_bd($_FILES);
         $this->assertIsObject($resultado);
@@ -166,7 +189,7 @@ class doc_documentoTest extends base_test {
         if(!$existe_acl_tipo_documento) {
 
             $doc_acl_tipo_documento['id'] = 1;
-            $doc_acl_tipo_documento['grupo_id'] = 1;
+            $doc_acl_tipo_documento['adm_grupo_id'] = 1;
             $doc_acl_tipo_documento['doc_tipo_documento_id'] = 1;
             $alta_acl_tipo_documento = (new doc_acl_tipo_documento($this->link))->alta_registro(registro: $doc_acl_tipo_documento);
             if (errores::$error) {
