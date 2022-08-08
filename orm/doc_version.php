@@ -86,6 +86,11 @@ class doc_version extends modelo
             return $this->error->error(mensaje: 'Error crear directorio', data: $ruta_absoluta_directorio);
         }
 
+        if(!file_exists($doc['doc_documento_ruta_absoluta'])){
+            return $this->error->error(mensaje: 'Error no existe el doc original',
+                data: $doc['doc_documento_ruta_absoluta']);
+        }
+
         $this->registro['status'] = 'activo';
         $this->registro['nombre'] = $nombre_doc;
         $this->registro['ruta_relativa'] = $ruta_relativa.$nombre_doc;
