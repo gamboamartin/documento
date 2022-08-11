@@ -83,6 +83,11 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/configuraciones" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/administrador" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/errores" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/encripta" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/system" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/template_1" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/template" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/js_base" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
