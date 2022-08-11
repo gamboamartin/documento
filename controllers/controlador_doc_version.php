@@ -1,5 +1,5 @@
 <?php
-namespace controllers;
+namespace gamboamartin\documento\controllers;
 
 use base\controller\controlador_base;
 use models\doc_version;

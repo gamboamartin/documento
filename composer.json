@@ -12,7 +12,7 @@
 
     "autoload": {
         "psr-4": {
-            "controllers\\": "controllers",
+            "gamboamartin\\documento\\controllers\\": "controllers",
             "config\\": "config/",
             "base\\": "base/",
             "html\\": "frontend/html",

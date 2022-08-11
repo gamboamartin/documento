@@ -4,7 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/base" isTestSource="false" packagePrefix="base\" />
       <sourceFolder url="file://$MODULE_DIR$/config" isTestSource="false" packagePrefix="config\" />
-      <sourceFolder url="file://$MODULE_DIR$/controllers" isTestSource="false" packagePrefix="controllers\" />
+      <sourceFolder url="file://$MODULE_DIR$/controllers" isTestSource="false" packagePrefix="gamboamartin\documento\controllers\" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/html" isTestSource="false" packagePrefix="html\" />
       <sourceFolder url="file://$MODULE_DIR$/orm" isTestSource="false" packagePrefix="models\" />
       <sourceFolder url="file://$MODULE_DIR$/orm/base" isTestSource="false" packagePrefix="orm\" />
@@ -88,6 +88,12 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/template_1" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/template" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/js_base" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/cat_sat" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/services" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/organigrama" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/direccion_postal" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/empleado" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/im_registro_patronal" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
