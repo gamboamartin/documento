@@ -15,7 +15,7 @@
             "gamboamartin\\documento\\controllers\\": "controllers",
             "config\\": "config/",
             "base\\": "base/",
-            "html\\": "frontend/html",
+            "html\\": "templates/directivas/",
             "orm\\": "orm/base",
             "models\\": "orm",
             "validacion\\": "validacion/",

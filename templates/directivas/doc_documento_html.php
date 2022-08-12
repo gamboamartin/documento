@@ -3,10 +3,8 @@ namespace html;
 
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
-
 use models\doc_documento;
 use PDO;
-use stdClass;
 
 class doc_documento_html extends html_controler {
 
@@ -21,5 +19,6 @@ class doc_documento_html extends html_controler {
         }
         return $select;
     }
+
 
 }
