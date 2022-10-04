@@ -21,12 +21,13 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
     }
 
     /**
-     * PRUEBA P ORDER P INT
+     *
      * Funcion que verifica si existe un acl_tipo_documento conforme al grupo_id y el tipo_documento_id
      * @param int $grupo_id Grupo de usuario
      * @param int $tipo_documento_id Tipo de documento en base de datos no relacionado a la extension,
      * mas bien al objeto del tipo del documento ej INE
      * @return array|bool
+     * @version 0.9.1
      */
     public function tipo_documento_permiso(int $grupo_id, int $tipo_documento_id): bool|array
     {
