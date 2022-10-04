@@ -27,9 +27,10 @@ class doc_version extends modelo
      * PRUEBA P ORDER P INT
      * Funcion sobrescrita la cual solo devuelve error
      * @param bool $reactiva
+     * @param int $registro_id
      * @return array
      */
-    public function activa_bd(bool $reactiva = false): array
+    public function activa_bd(bool $reactiva = false, int $registro_id = -1): array
     {
         return $this->error->error(mensaje: 'Error la funcion de activa_bd no esta permitada para este modelo', data: $reactiva);
     }
