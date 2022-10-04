@@ -29,7 +29,7 @@ class doc_documento extends modelo{ //FINALIZADAS
      * @param bool $reactiva
      * @return array
      */
-    public function activa_bd(bool $reactiva = false): array
+    public function activa_bd(bool $reactiva = false, int $registro_id = -1): array
     {
         return $this->error->error(mensaje: 'Error la funcion de activa_bd no esta permitada para este modelo', data: $reactiva);
     }
