@@ -1,9 +1,9 @@
 <?php
 namespace tests;
+use gamboamartin\administrador\models\adm_grupo;
 use gamboamartin\errores\errores;
 use gamboamartin\test\test;
 use JsonException;
-use models\adm_grupo;
 use models\doc_acl_tipo_documento;
 use models\doc_documento;
 use models\doc_extension;
