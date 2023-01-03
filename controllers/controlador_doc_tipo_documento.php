@@ -1,12 +1,12 @@
 <?php
 namespace gamboamartin\documento\controllers;
 
+use gamboamartin\documento\models\doc_tipo_documento;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
 use gamboamartin\template_1\html;
 use html\doc_tipo_documento_html;
-use models\doc_tipo_documento;
 use PDO;
 use stdClass;
 

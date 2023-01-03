@@ -1,5 +1,5 @@
 <?php
-namespace models;
+namespace gamboamartin\documento\models;
 use base\orm\modelo;
 use config\generales;
 use gamboamartin\errores\errores;
@@ -17,7 +17,7 @@ class doc_version extends modelo
      */
     public function __construct(PDO $link)
     {
-        $tabla = __CLASS__;
+        $tabla = 'doc_version';
         $columnas = array($tabla => false, 'doc_documento' => $tabla, 'doc_extension' => $tabla);
         $campos_obligatorios = array('doc_documento_id', 'doc_extension_id');
         parent::__construct(link: $link, tabla: $tabla, campos_obligatorios: $campos_obligatorios, columnas: $columnas);

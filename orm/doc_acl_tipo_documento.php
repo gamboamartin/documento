@@ -1,10 +1,8 @@
 <?php
-namespace models;
+namespace gamboamartin\documento\models;
 use base\orm\modelo;
-use config\generales;
 use gamboamartin\errores\errores;
 use PDO;
-use stdClass;
 
 
 class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
@@ -14,7 +12,7 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
      * @param PDO $link
      */
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'doc_acl_tipo_documento';
         $columnas = array($tabla=>false, 'doc_tipo_documento'=>$tabla, 'adm_grupo'=>$tabla);
         $campos_obligatorios = array('doc_tipo_documento_id', 'adm_grupo_id');
         parent::__construct(link: $link,tabla:  $tabla,campos_obligatorios: $campos_obligatorios, columnas:  $columnas);

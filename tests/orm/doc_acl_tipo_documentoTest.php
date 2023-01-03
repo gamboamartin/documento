@@ -1,9 +1,9 @@
 <?php
 namespace tests\orm;
 
+use gamboamartin\documento\models\doc_acl_tipo_documento;
 use gamboamartin\errores\errores;
 use gamboamartin\test\test;
-use models\doc_acl_tipo_documento;
 
 
 class doc_acl_tipo_documentoTest extends test {

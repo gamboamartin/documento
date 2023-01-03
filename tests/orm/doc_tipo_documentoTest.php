@@ -1,9 +1,9 @@
 <?php
 namespace tests\orm;
 
+use gamboamartin\documento\models\doc_tipo_documento;
 use gamboamartin\errores\errores;
 use gamboamartin\test\liberator;
-use models\doc_tipo_documento;
 use tests\base_test;
 
 

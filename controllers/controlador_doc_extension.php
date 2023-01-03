@@ -2,7 +2,7 @@
 namespace gamboamartin\documento\controllers;
 
 use base\controller\controlador_base;
-use models\doc_extension;
+use gamboamartin\documento\models\doc_extension;
 
 class controlador_doc_extension extends controlador_base{
     public function __construct($link){

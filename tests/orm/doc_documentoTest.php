@@ -1,15 +1,13 @@
 <?php
 namespace tests\orm;
 
-use config\generales;
+
+use gamboamartin\documento\models\doc_acl_tipo_documento;
+use gamboamartin\documento\models\doc_documento;
+use gamboamartin\documento\models\doc_tipo_documento;
+use gamboamartin\documento\models\doc_version;
 use gamboamartin\errores\errores;
-use gamboamartin\test\test;
-use models\doc_acl_tipo_documento;
-use models\doc_documento;
-use models\doc_extension;
-use models\doc_extension_permitido;
-use models\doc_tipo_documento;
-use models\doc_version;
+
 use tests\base_test;
 
 

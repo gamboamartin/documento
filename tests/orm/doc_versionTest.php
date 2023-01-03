@@ -1,8 +1,8 @@
 <?php
 namespace tests\orm;
 
+use gamboamartin\documento\models\doc_version;
 use gamboamartin\errores\errores;
-use models\doc_version;
 use tests\base_test;
 
 

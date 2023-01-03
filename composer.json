@@ -13,12 +13,9 @@
     "autoload": {
         "psr-4": {
             "gamboamartin\\documento\\controllers\\": "controllers",
+            "gamboamartin\\documento\\models\\": "orm",
             "config\\": "config/",
-            "base\\": "base/",
             "html\\": "templates/directivas/",
-            "orm\\": "orm/base",
-            "models\\": "orm",
-            "validacion\\": "validacion/",
             "tests\\": "tests/"
 
         }

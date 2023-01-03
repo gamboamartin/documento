@@ -1,15 +1,15 @@
 <?php
 namespace tests;
 use gamboamartin\administrador\models\adm_grupo;
+use gamboamartin\documento\models\doc_acl_tipo_documento;
+use gamboamartin\documento\models\doc_documento;
+use gamboamartin\documento\models\doc_extension;
+use gamboamartin\documento\models\doc_extension_permitido;
+use gamboamartin\documento\models\doc_tipo_documento;
+use gamboamartin\documento\models\doc_version;
 use gamboamartin\errores\errores;
 use gamboamartin\test\test;
 use JsonException;
-use models\doc_acl_tipo_documento;
-use models\doc_documento;
-use models\doc_extension;
-use models\doc_extension_permitido;
-use models\doc_tipo_documento;
-use models\doc_version;
 use stdClass;
 
 class base_test extends test{

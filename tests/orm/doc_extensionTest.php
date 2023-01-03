@@ -1,9 +1,9 @@
 <?php
 namespace tests\orm;
 
+use gamboamartin\documento\models\doc_extension;
 use gamboamartin\errores\errores;
 
-use models\doc_extension;
 use tests\base_test;
 
 
