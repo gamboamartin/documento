@@ -67,6 +67,12 @@ class controlador_doc_tipo_documento extends _ctl_base{
 
         return $campos_view;
     }
+
+    /**
+     * Genera los keys para inputs de frontend
+     * @param array $keys_selects Keys predefinidos
+     * @return array
+     */
     protected function key_selects_txt(array $keys_selects): array
     {
 

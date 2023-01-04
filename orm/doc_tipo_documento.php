@@ -17,6 +17,7 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
         $columnas = array($tabla=>false);
         $campos_obligatorios = array();
         parent::__construct(link: $link,tabla:  $tabla,campos_obligatorios: $campos_obligatorios, columnas:  $columnas);
+        $this->NAMESPACE = __NAMESPACE__;
     }
 
     /**

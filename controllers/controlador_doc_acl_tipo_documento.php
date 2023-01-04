@@ -37,6 +37,18 @@ class controlador_doc_acl_tipo_documento extends _ctl_base{
                 mensaje: 'Error al inicializar alta',data:  $r_alta, header: $header,ws:  $ws);
         }
 
+        $keys_selects = $this->key_select(cols:6, con_registros: true,filtro:  array(), key: 'adm_grupo_id',
+            keys_selects: array(), id_selected: -1, label: 'Grupo');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
+        }
+
+        $keys_selects = $this->key_select(cols:6, con_registros: true,filtro:  array(), key: 'doc_tipo_documento_id',
+            keys_selects: $keys_selects, id_selected: -1, label: 'Tipo Doc');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
+        }
+
 
         $keys_selects['descripcion'] = new stdClass();
         $keys_selects['descripcion']->cols = 12;
@@ -78,10 +90,12 @@ class controlador_doc_acl_tipo_documento extends _ctl_base{
             return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Seccion');
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'ACL Tipo Doc');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
+
+
 
         return $keys_selects;
     }
@@ -93,6 +107,19 @@ class controlador_doc_acl_tipo_documento extends _ctl_base{
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al generar salida de template',data:  $r_modifica,header: $header,ws: $ws);
+        }
+
+
+        $keys_selects = $this->key_select(cols:6, con_registros: true,filtro:  array(), key: 'adm_grupo_id',
+            keys_selects: array(), id_selected: $this->registro['adm_grupo_id'], label: 'Grupo');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
+        }
+
+        $keys_selects = $this->key_select(cols:6, con_registros: true,filtro:  array(), key: 'doc_tipo_documento_id',
+            keys_selects: $keys_selects, id_selected:$this->registro['doc_tipo_documento_id'], label: 'Tipo Doc');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
 
 
