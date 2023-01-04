@@ -111,7 +111,7 @@ class controlador_doc_tipo_documento extends _ctl_base{
     protected function inputs_children(stdClass $registro): stdClass|array
     {
         $select_doc_tipo_documento_id = (new doc_tipo_documento_html(html: $this->html_base))->select_doc_tipo_documento_id(
-            cols:6,con_registros: true,id_selected:  $registro->doc_tipo_documento_id,link:  $this->link, disabled: true);
+            cols:6,con_registros: true,id_selected:  $this->registro_id,link:  $this->link, disabled: true);
 
         if(errores::$error){
             return $this->errores->error(
@@ -120,7 +120,7 @@ class controlador_doc_tipo_documento extends _ctl_base{
 
 
         $select_adm_grupo_id = (new adm_grupo_html(html: $this->html_base))->select_adm_grupo_id(
-            cols:6,con_registros: true,id_selected:  $this->registro_id,link:  $this->link, disabled: false);
+            cols:6,con_registros: true,id_selected:  -1,link:  $this->link, disabled: false);
 
         if(errores::$error){
             return $this->errores->error(
@@ -174,7 +174,7 @@ class controlador_doc_tipo_documento extends _ctl_base{
         $keys_selects['codigo'] = new stdClass();
         $keys_selects['codigo']->disabled = true;
 
-        $base = $this->base_upd(keys_selects: $keys_selects, not_actions: array(__FUNCTION__), params: array(),params_ajustados: array());
+        $base = $this->base_upd(keys_selects: $keys_selects, params: array(),params_ajustados: array());
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al integrar base',data:  $base, header: $header,ws:  $ws);
         }
