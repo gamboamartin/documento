@@ -28,6 +28,7 @@ class doc_documento extends modelo{ //FINALIZADAS
      * PRUEBA P ORDER P INT
      * Funcion sobrescrita la cual solo devuelve error
      * @param bool $reactiva
+     * @param int $registro_id
      * @return array
      */
     public function activa_bd(bool $reactiva = false, int $registro_id = -1): array
@@ -40,7 +41,6 @@ class doc_documento extends modelo{ //FINALIZADAS
      * Inserta registro de documento en la base de datos
      * @param array $file
      * @return array|stdClass
-     * @throws JsonException
      */
     public function alta_bd(array $file = array()): array|stdClass
     {

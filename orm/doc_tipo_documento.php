@@ -45,13 +45,16 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
     }
 
     /**
-     * PRUEBA P ORDER P INT
+     *
      * Obtienes todas las extensiones permitidas por tipo de documento
      * @param int $tipo_documento_id Tipo de documento del registro a insertar
      * @return array
      */
     private function extensiones_permitidas(int $tipo_documento_id): array
     {
+        if($tipo_documento_id<=0){
+            return $this->error->error(mensaje: 'Error tipo_documento_id debe ser mayor a 0', data: $tipo_documento_id);
+        }
         $filtro['doc_tipo_documento.id'] = $tipo_documento_id;
 
         $extension_permitido = (new doc_extension_permitido($this->link))->filtro_and(filtro: $filtro);
