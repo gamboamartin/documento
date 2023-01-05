@@ -4,11 +4,13 @@ namespace gamboamartin\documento\controllers;
 use gamboamartin\documento\models\doc_documento;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
+use gamboamartin\system\actions;
 use gamboamartin\system\links_menu;
 use gamboamartin\template_1\html;
 use html\doc_documento_html;
 use PDO;
 use stdClass;
+use Throwable;
 
 class controlador_doc_documento extends _ctl_base{
     public function __construct(PDO $link,  html $html = new html(), stdClass $paths_conf = new stdClass()){
@@ -77,6 +79,44 @@ class controlador_doc_documento extends _ctl_base{
             return $this->retorno_error(
                 mensaje: 'Error al generar insertar registro',data:  $r_alta_bd,header: $header,ws: $ws);
         }
+
+        $siguiente_view = (new actions())->init_alta_bd();
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener siguiente view', data: $siguiente_view,
+                header:  $header, ws: $ws);
+        }
+
+        $seccion_retorno = $this->tabla;
+        if(isset($_POST['seccion_retorno'])){
+            $seccion_retorno = $_POST['seccion_retorno'];
+            unset($_POST['seccion_retorno']);
+        }
+
+        $id_retorno = -1;
+        if(isset($_POST['id_retorno'])){
+            $id_retorno = $_POST['id_retorno'];
+            unset($_POST['id_retorno']);
+        }
+
+        if($header){
+            if($id_retorno === -1) {
+                $id_retorno = $r_alta_bd->registro_id;
+            }
+            $this->retorno_base(registro_id:$id_retorno, result: $r_alta_bd, siguiente_view: $siguiente_view,
+                ws:  $ws,seccion_retorno: $seccion_retorno);
+        }
+        if($ws){
+            header('Content-Type: application/json');
+            try {
+                echo json_encode($r_alta_bd, JSON_THROW_ON_ERROR);
+            }
+            catch (Throwable $e){
+                $error = (new errores())->error(mensaje: 'Error al maquetar JSON' , data: $e);
+                print_r($error);
+            }
+            exit;
+        }
+
         return $r_alta_bd;
     }
 
@@ -99,6 +139,29 @@ class controlador_doc_documento extends _ctl_base{
 
 
         return $campos_view;
+    }
+
+    public function descarga(bool $header, bool $ws = false){
+        ob_clean();
+        $doc_documento = $this->modelo->registro(registro_id: $this->registro_id, retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(
+                mensaje: 'Error al generar obtener documento',data:  $doc_documento,header: $header,ws: $ws);
+        }
+        $ruta_absoluta = $doc_documento->doc_documento_ruta_absoluta;
+        if(file_exists($ruta_absoluta)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($ruta_absoluta).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($ruta_absoluta));
+            flush(); // Flush system output buffer
+            readfile($ruta_absoluta);
+        }
+        exit;
+
     }
 
 
