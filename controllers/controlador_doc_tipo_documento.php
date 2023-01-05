@@ -8,6 +8,7 @@ use gamboamartin\system\links_menu;
 use gamboamartin\template_1\html;
 use html\adm_grupo_html;
 use html\doc_documento_html;
+use html\doc_extension_html;
 use html\doc_tipo_documento_html;
 use PDO;
 use stdClass;
@@ -15,6 +16,8 @@ use stdClass;
 class controlador_doc_tipo_documento extends _ctl_base{
     public string $link_doc_acl_tipo_documento_alta_bd = '';
     public string $link_doc_documento_alta_bd = '';
+
+    public string $link_doc_extension_permitido_alta_bd = '';
     public function __construct(PDO $link,  html $html = new html(), stdClass $paths_conf = new stdClass()){
         $modelo = new doc_tipo_documento($link);
 
@@ -48,6 +51,14 @@ class controlador_doc_tipo_documento extends _ctl_base{
             exit;
         }
         $this->link_doc_documento_alta_bd = $link_doc_documento_alta_bd;
+
+        $link_doc_extension_permitido_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'doc_extension_permitido');
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al obtener link',data:  $link_doc_extension_permitido_alta_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_doc_extension_permitido_alta_bd = $link_doc_extension_permitido_alta_bd;
 
         $this->lista_get_data = true;
 
@@ -149,6 +160,29 @@ class controlador_doc_tipo_documento extends _ctl_base{
 
     }
 
+    public function ext_permitida(bool $header = true, bool $ws = false): array|string
+    {
+
+        $data_view = new stdClass();
+        $data_view->names = array('Id','Tipo Doc', 'Extension','Acciones');
+        $data_view->keys_data = array('doc_extension_permitido_id','doc_tipo_documento_descripcion','doc_extension_descripcion');
+        $data_view->key_actions = 'acciones';
+        $data_view->namespace_model = 'gamboamartin\\documento\\models';
+        $data_view->name_model_children = 'doc_extension_permitido';
+
+
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        if(errores::$error){
+            return $this->retorno_error(
+                mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
+        }
+
+
+        return $contenido_table;
+
+
+    }
+
     protected function inputs_children(stdClass $registro): stdClass|array
     {
         $select_doc_tipo_documento_id = (new doc_tipo_documento_html(html: $this->html_base))->select_doc_tipo_documento_id(
@@ -157,6 +191,14 @@ class controlador_doc_tipo_documento extends _ctl_base{
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener select_doc_tipo_documento_id',data:  $select_doc_tipo_documento_id);
+        }
+
+        $select_doc_extension_id = (new doc_extension_html(html: $this->html_base))->select_doc_extension_id(
+            cols:6,con_registros: true,id_selected:  -1,link:  $this->link);
+
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener select_doc_extension_id',data:  $select_doc_extension_id);
         }
 
 
@@ -169,10 +211,13 @@ class controlador_doc_tipo_documento extends _ctl_base{
         }
 
 
+
+
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
         $this->inputs->select->adm_grupo_id = $select_adm_grupo_id;
         $this->inputs->select->doc_tipo_documento_id = $select_doc_tipo_documento_id;
+        $this->inputs->select->doc_extension_id = $select_doc_extension_id;
 
         return $this->inputs;
     }

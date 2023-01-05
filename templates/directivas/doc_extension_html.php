@@ -8,7 +8,7 @@ use PDO;
 
 class doc_extension_html extends html_controler {
 
-    public function select_extension_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+    public function select_doc_extension_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
                                                  bool $disabled = false): array|string
     {
         $modelo = new doc_extension(link: $link);
