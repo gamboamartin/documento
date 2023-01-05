@@ -29,6 +29,8 @@ class controlador_doc_tipo_documento extends _ctl_base{
         $datatables->columns['doc_tipo_documento_id']['titulo'] = 'Id';
         $datatables->columns['doc_tipo_documento_descripcion']['titulo'] = 'Tipos de documento';
         $datatables->columns['doc_tipo_documento_n_permisos']['titulo'] = 'N Permisos';
+        $datatables->columns['doc_tipo_documento_n_documentos']['titulo'] = 'N Documentos';
+        $datatables->columns['doc_tipo_documento_n_extensiones']['titulo'] = 'N Extensiones';
 
 
         parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link, datatables: $datatables,

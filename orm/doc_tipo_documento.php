@@ -20,6 +20,14 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
             "(SELECT COUNT(*) FROM doc_acl_tipo_documento 
             WHERE doc_acl_tipo_documento.doc_tipo_documento_id = doc_tipo_documento.id)";
 
+        $columnas_extra['doc_tipo_documento_n_documentos'] = /** @lang sql */
+            "(SELECT COUNT(*) FROM doc_documento 
+            WHERE doc_documento.doc_tipo_documento_id = doc_tipo_documento.id)";
+
+        $columnas_extra['doc_tipo_documento_n_extensiones'] = /** @lang sql */
+            "(SELECT COUNT(*) FROM doc_extension_permitido 
+            WHERE doc_extension_permitido.doc_tipo_documento_id = doc_tipo_documento.id)";
+
         parent::__construct(link: $link, tabla: $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas, columnas_extra: $columnas_extra);
         $this->NAMESPACE = __NAMESPACE__;
