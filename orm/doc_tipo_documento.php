@@ -54,6 +54,7 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
      * Obtienes todas las extensiones permitidas por tipo de documento
      * @param int $tipo_documento_id Tipo de documento del registro a insertar
      * @return array
+     * @version 3.6.0
      */
     private function extensiones_permitidas(int $tipo_documento_id): array
     {

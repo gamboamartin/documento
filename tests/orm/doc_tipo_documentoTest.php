@@ -47,5 +47,23 @@ class doc_tipo_documentoTest extends base_test {
 
         errores::$error = false;
     }
+
+    public function test_extensiones_permitidas()
+    {
+        errores::$error = false;
+        $tipo_doc = new doc_tipo_documento($this->link);
+        $tipo_doc = new liberator($tipo_doc);
+
+
+
+        $tipo_documento_id = 1;
+        $resultado = $tipo_doc->extensiones_permitidas($tipo_documento_id);
+        $this->assertIsArray($resultado);
+        $this->assertNotTrue(errores::$error);
+
+
+        errores::$error = false;
+
+    }
 }
 
