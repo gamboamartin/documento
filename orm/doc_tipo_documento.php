@@ -3,7 +3,6 @@ namespace gamboamartin\documento\models;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
-use stdClass;
 
 
 class doc_tipo_documento extends modelo{ //FINALIZADAS
@@ -21,8 +20,8 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
             "(SELECT COUNT(*) FROM doc_acl_tipo_documento 
             WHERE doc_acl_tipo_documento.doc_tipo_documento_id = doc_tipo_documento.id)";
 
-        parent::__construct(link: $link,tabla:  $tabla,campos_obligatorios: $campos_obligatorios, columnas:  $columnas,
-            columnas_extra: $columnas_extra);
+        parent::__construct(link: $link, tabla: $tabla, campos_obligatorios: $campos_obligatorios,
+            columnas: $columnas, columnas_extra: $columnas_extra);
         $this->NAMESPACE = __NAMESPACE__;
     }
 

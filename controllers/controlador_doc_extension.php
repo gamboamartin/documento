@@ -6,9 +6,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
 use gamboamartin\template_1\html;
-use html\adm_grupo_html;
 use html\doc_extension_html;
-use html\doc_tipo_documento_html;
 use PDO;
 use stdClass;
 

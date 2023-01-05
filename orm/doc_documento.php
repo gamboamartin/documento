@@ -4,13 +4,12 @@ use base\orm\modelo;
 use config\generales;
 use gamboamartin\errores\errores;
 use gamboamartin\plugins\files;
-use JsonException;
 use PDO;
-use RuntimeException;
 use stdClass;
 
 
 class doc_documento extends modelo{ //FINALIZADAS
+    public array $file = array();
     /**
      * DEBUG INI
      * accion constructor.
@@ -44,6 +43,11 @@ class doc_documento extends modelo{ //FINALIZADAS
      */
     public function alta_bd(array $file = array()): array|stdClass
     {
+        if(count($file) === 0){
+            $file = $this->file;
+        }
+
+
         $keys = array('name','tmp_name');
         $valida = $this->validacion->valida_existencia_keys(keys: $keys,registro:  $file);
         if(errores::$error){
@@ -106,6 +110,11 @@ class doc_documento extends modelo{ //FINALIZADAS
         if(!file_exists($file['tmp_name'])){
             return $this->error->error('Error al guardar archivo temporal', $file);
         }
+
+        if(!isset($this->registro['descripcion'])){
+            $this->registro['descripcion'] = $file['name'];
+        }
+
 
         $this->registro['status'] = 'activo';
         $this->registro['nombre'] = $nombre_doc;
