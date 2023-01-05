@@ -75,6 +75,30 @@ class controlador_doc_extension extends _ctl_base{
         return $campos_view;
     }
 
+    public function documentos(bool $header = true, bool $ws = false): array|string
+    {
+
+
+        $data_view = new stdClass();
+        $data_view->names = array('Id','Tipo Doc', 'Doc','Acciones');
+        $data_view->keys_data = array('doc_documento_id','doc_tipo_documento_descripcion','doc_documento_descripcion');
+        $data_view->key_actions = 'acciones';
+        $data_view->namespace_model = 'gamboamartin\\documento\\models';
+        $data_view->name_model_children = 'doc_documento';
+
+
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        if(errores::$error){
+            return $this->retorno_error(
+                mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
+        }
+
+
+        return $contenido_table;
+
+
+    }
+
 
 
     /**
