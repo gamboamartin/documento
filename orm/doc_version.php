@@ -18,7 +18,7 @@ class doc_version extends modelo
     public function __construct(PDO $link)
     {
         $tabla = 'doc_version';
-        $columnas = array($tabla => false, 'doc_documento' => $tabla, 'doc_extension' => $tabla);
+        $columnas = array($tabla => false, 'doc_documento' => $tabla, 'doc_extension' => $tabla,'doc_tipo_documento'=>'doc_documento');
         $campos_obligatorios = array('doc_documento_id', 'doc_extension_id');
         parent::__construct(link: $link, tabla: $tabla, campos_obligatorios: $campos_obligatorios, columnas: $columnas);
         $this->NAMESPACE = __NAMESPACE__;

@@ -1,12 +1,131 @@
 <?php
 namespace gamboamartin\documento\controllers;
 
-use base\controller\controlador_base;
+use gamboamartin\documento\models\doc_documento;
 use gamboamartin\documento\models\doc_version;
+use gamboamartin\errores\errores;
+use gamboamartin\system\_ctl_base;
+use gamboamartin\system\actions;
+use gamboamartin\system\links_menu;
+use gamboamartin\template_1\html;
+use html\doc_documento_html;
+use html\doc_version_html;
+use PDO;
+use stdClass;
+use Throwable;
 
-class controlador_doc_version extends controlador_base{
-    public function __construct($link){
+class controlador_doc_version extends _ctl_base{
+    public function __construct(PDO $link,  html $html = new html(), stdClass $paths_conf = new stdClass()){
         $modelo = new doc_version($link);
-        parent::__construct($link, $modelo);
+
+        $html_ = new doc_version_html(html: $html);
+        $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
+
+        $datatables = new stdClass();
+        $datatables->columns = array();
+        $datatables->columns['doc_version_id']['titulo'] = 'Id';
+        $datatables->columns['doc_documento_id']['titulo'] = 'Id Doc';
+        $datatables->columns['doc_extension_descripcion']['titulo'] = 'Extension';
+        $datatables->columns['doc_tipo_documento_descripcion']['titulo'] = 'Tipo Doc';
+
+
+        parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link, datatables: $datatables,
+            paths_conf: $paths_conf);
+
+        $this->titulo_lista = 'Versiones';
+
+
+        $this->lista_get_data = true;
+
+        $this->modelo = $modelo;
+
+    }
+
+
+    public function alta(bool $header, bool $ws = false): array|string
+    {
+        return $this->retorno_error(
+                mensaje: 'Error esta accion no se puede ejecutar desde esta parte',data:  array(), header: $header,ws:  $ws);
+
+    }
+
+
+    protected function campos_view(): array
+    {
+        $keys = new stdClass();
+        $keys->inputs = array('codigo','descripcion');
+        $keys->selects = array();
+
+
+        $init_data = array();
+        $init_data['doc_documento'] = "gamboamartin\\documento";
+
+        $campos_view = $this->campos_view_base(init_data: $init_data,keys:  $keys);
+
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al inicializar campo view',data:  $campos_view);
+        }
+
+
+        return $campos_view;
+    }
+
+    public function descarga(bool $header, bool $ws = false){
+        ob_clean();
+        $doc_version = $this->modelo->registro(registro_id: $this->registro_id, retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(
+                mensaje: 'Error al generar obtener documento',data:  $doc_version,header: $header,ws: $ws);
+        }
+        $ruta_absoluta = $doc_version->doc_version_ruta_absoluta;
+        if(file_exists($ruta_absoluta)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($ruta_absoluta).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($ruta_absoluta));
+            flush(); // Flush system output buffer
+            readfile($ruta_absoluta);
+        }
+        exit;
+
+    }
+
+
+
+    /**
+     * Genera los keys para inputs de frontend
+     * @param array $keys_selects Keys predefinidos
+     * @return array
+     */
+    protected function key_selects_txt(array $keys_selects): array
+    {
+
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12, key: 'codigo', keys_selects: $keys_selects, place_holder: 'Cod');
+        if (errores::$error) {
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
+        }
+
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Extension');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
+        }
+
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'documento', keys_selects:$keys_selects, place_holder: 'Documento');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
+        }
+
+        return $keys_selects;
+    }
+
+    public function modifica(
+        bool $header, bool $ws = false): array|stdClass
+    {
+        return $this->retorno_error(
+            mensaje: 'Error esta accion no se puede ejecutar desde esta parte',data:  array(), header: $header,ws:  $ws);
     }
 }

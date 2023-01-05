@@ -144,7 +144,7 @@ class controlador_doc_extension extends _ctl_base{
         }
 
 
-        $select_doc_extension_id = (new doc_extension_html(html: $this->html_base))->select_extension_id(
+        $select_doc_extension_id = (new doc_extension_html(html: $this->html_base))->select_doc_extension_id(
             cols:6,con_registros: true,id_selected:  $this->registro_id,link:  $this->link, disabled: true);
 
         if(errores::$error){
