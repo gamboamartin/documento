@@ -213,6 +213,13 @@ class doc_documento extends modelo{ //FINALIZADAS
      */
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
+
+        if(isset($_FILES['documento'])){
+            $files = $_FILES['documento'];
+            unset($_FILES);
+            $_FILES = $files;
+        }
+
         if(isset($registro['status'])){
             return $this->error->error(mensaje: 'Error no puedes modificar status', data: $registro);
         }

@@ -138,7 +138,13 @@ class controlador_doc_documento extends _ctl_base{
                 mensaje: 'Error al generar salida de template',data:  $r_modifica,header: $header,ws: $ws);
         }
 
+        $this->modelo->campos_view['documento']['type'] = 'files';
 
+        $keys_selects = $this->key_select(cols:6, con_registros: true,filtro:  array(), key: 'doc_tipo_documento_id',
+            keys_selects: array(), id_selected: $this->registro['doc_tipo_documento_id'], label: 'Tipo Doc');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
+        }
 
         $keys_selects['descripcion'] = new stdClass();
         $keys_selects['descripcion']->cols = 12;
