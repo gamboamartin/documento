@@ -7,12 +7,14 @@ use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
 use gamboamartin\template_1\html;
 use html\adm_grupo_html;
+use html\doc_documento_html;
 use html\doc_tipo_documento_html;
 use PDO;
 use stdClass;
 
 class controlador_doc_tipo_documento extends _ctl_base{
     public string $link_doc_acl_tipo_documento_alta_bd = '';
+    public string $link_doc_documento_alta_bd = '';
     public function __construct(PDO $link,  html $html = new html(), stdClass $paths_conf = new stdClass()){
         $modelo = new doc_tipo_documento($link);
 
@@ -38,6 +40,14 @@ class controlador_doc_tipo_documento extends _ctl_base{
             exit;
         }
         $this->link_doc_acl_tipo_documento_alta_bd = $link_doc_acl_tipo_documento_alta_bd;
+
+        $link_doc_documento_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'doc_documento');
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al obtener link',data:  $link_doc_documento_alta_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_doc_documento_alta_bd = $link_doc_documento_alta_bd;
 
         $this->lista_get_data = true;
 
@@ -110,8 +120,6 @@ class controlador_doc_tipo_documento extends _ctl_base{
 
     public function documentos(bool $header = true, bool $ws = false): array|string
     {
-
-
         $data_view = new stdClass();
         $data_view->names = array('Id','Tipo Doc', 'Doc','Acciones');
         $data_view->keys_data = array('doc_documento_id','doc_tipo_documento_descripcion','doc_documento_descripcion');
@@ -125,6 +133,15 @@ class controlador_doc_tipo_documento extends _ctl_base{
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
         }
+
+        $documento = (new doc_documento_html(html: $this->html_base))->input_file(cols: 6, name: 'documento',row_upd: new stdClass(),value_vacio: false);
+        if(errores::$error){
+            return $this->retorno_error(
+                mensaje: 'Error al obtener documento',data:  $documento, header: $header,ws:  $ws);
+        }
+
+        $this->inputs->documento = $documento;
+
 
 
         return $contenido_table;
