@@ -1,18 +1,14 @@
 <?php
 namespace gamboamartin\documento\controllers;
 
-use gamboamartin\documento\models\doc_documento;
 use gamboamartin\documento\models\doc_version;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
-use gamboamartin\system\actions;
 use gamboamartin\system\links_menu;
 use gamboamartin\template_1\html;
-use html\doc_documento_html;
 use html\doc_version_html;
 use PDO;
 use stdClass;
-use Throwable;
 
 class controlador_doc_version extends _ctl_base{
     public function __construct(PDO $link,  html $html = new html(), stdClass $paths_conf = new stdClass()){
@@ -80,15 +76,14 @@ class controlador_doc_version extends _ctl_base{
         }
         $ruta_absoluta = $doc_version->doc_version_ruta_absoluta;
         if(file_exists($ruta_absoluta)) {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename="'.basename($ruta_absoluta).'"');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($ruta_absoluta));
-            flush(); // Flush system output buffer
-            readfile($ruta_absoluta);
+
+            $download = (new _docs())->download(header: $header, ruta_absoluta: $ruta_absoluta);
+            if(errores::$error){
+                return $this->retorno_error(
+                    mensaje: 'Error al generar descargar documento',data:  $download,header: $header,ws: $ws);
+            }
+
+
         }
         exit;
 

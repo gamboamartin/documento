@@ -156,15 +156,11 @@ class controlador_doc_documento extends _ctl_base{
         }
         $ruta_absoluta = $doc_documento->doc_documento_ruta_absoluta;
         if(file_exists($ruta_absoluta)) {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename="'.basename($ruta_absoluta).'"');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($ruta_absoluta));
-            flush(); // Flush system output buffer
-            readfile($ruta_absoluta);
+            $download = (new _docs())->download(header: $header, ruta_absoluta: $ruta_absoluta);
+            if(errores::$error){
+                return $this->retorno_error(
+                    mensaje: 'Error al generar descargar documento',data:  $download,header: $header,ws: $ws);
+            }
         }
         exit;
 
