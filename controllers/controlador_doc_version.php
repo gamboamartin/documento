@@ -23,6 +23,7 @@ class controlador_doc_version extends _ctl_base{
         $datatables->columns['doc_documento_id']['titulo'] = 'Id Doc';
         $datatables->columns['doc_extension_descripcion']['titulo'] = 'Extension';
         $datatables->columns['doc_tipo_documento_descripcion']['titulo'] = 'Tipo Doc';
+        $datatables->columns['doc_version_fecha_alta']['titulo'] = 'F Alta';
 
 
         parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link, datatables: $datatables,
