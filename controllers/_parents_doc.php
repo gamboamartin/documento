@@ -43,10 +43,10 @@ class _parents_doc extends _ctl_base{
 
     }
 
-    public function ext_permitida(bool $header = true, bool $ws = false): array|string
+    public function ext_permitida(bool $header = true, bool $ws = false, array $not_actions= array()): array|string
     {
 
-        $contenido_table = (new _docs())->ext_permitida(controler: $this, function: __FUNCTION__);
+        $contenido_table = (new _docs())->ext_permitida(controler: $this, function: __FUNCTION__, not_actions: $not_actions);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);

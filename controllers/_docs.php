@@ -79,6 +79,10 @@ class _docs {
         return $data_view;
     }
 
+    /**
+     * Genera la salida de views de docs childrens
+     * @return stdClass
+     */
     private function data_view_documento(): stdClass
     {
         $data_view = new stdClass();
@@ -132,14 +136,15 @@ class _docs {
         return file_get_contents($ruta_absoluta);
     }
 
-    public function ext_permitida(_ctl_base $controler, string $function){
+    public function ext_permitida(_ctl_base $controler, string $function, array $not_actions){
         $data_view = $this->data_view_ext_permitida();
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener data_view',data:  $data_view);
         }
 
 
-        $contenido_table = $controler->contenido_children(data_view: $data_view, next_accion: $function);
+        $contenido_table = $controler->contenido_children(data_view: $data_view, next_accion: $function,
+            not_actions: $not_actions);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener tbody',data:  $contenido_table);
         }
