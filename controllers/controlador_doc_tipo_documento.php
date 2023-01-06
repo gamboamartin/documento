@@ -83,7 +83,8 @@ class controlador_doc_tipo_documento extends _parents_doc {
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $$contenido_table, header: $header,ws:  $ws);
         }
-        $documento = (new doc_documento_html(html: $this->html_base))->input_file(cols: 6, name: 'documento',row_upd: new stdClass(),value_vacio: false);
+        $documento = (new doc_documento_html(html: $this->html_base))->input_file(cols: 6, name: 'documento',
+            row_upd: new stdClass(),value_vacio: false);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener documento',data:  $documento, header: $header,ws:  $ws);

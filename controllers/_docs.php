@@ -63,6 +63,10 @@ class _docs {
         return $campos_view;
     }
 
+    /**
+     * Genera los datos de salida para una vista children
+     * @return stdClass
+     */
     private function data_view_acl_tipo_documento(): stdClass
     {
         $data_view = new stdClass();
@@ -97,14 +101,15 @@ class _docs {
         return $data_view;
     }
 
-    public function documentos(_ctl_base $controler, string $function){
+    public function documentos(_ctl_base $controler, string $function, array $not_actions = array()){
         $data_view = $this->data_view_documento();
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener data view',data:  $data_view);
         }
 
 
-        $contenido_table = $controler->contenido_children(data_view: $data_view, next_accion: $function);
+        $contenido_table = $controler->contenido_children(data_view: $data_view, next_accion: $function,
+            not_actions: $not_actions);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener tbody',data:  $contenido_table);
         }
