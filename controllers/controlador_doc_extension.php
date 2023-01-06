@@ -93,7 +93,7 @@ class controlador_doc_extension extends _parents_doc {
 
 
 
-    public function versiones(bool $header = true, bool $ws = false): array|string
+    public function versiones(bool $header = true, bool $ws = false, array $not_actions = array()): array|string
     {
 
 
@@ -105,7 +105,7 @@ class controlador_doc_extension extends _parents_doc {
         $data_view->name_model_children = 'doc_version';
 
 
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__,not_actions: $not_actions);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);

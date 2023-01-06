@@ -43,7 +43,7 @@ class _docs {
             return $this->error->error(mensaje: 'Error al obtener inputs',data:  $inputs);
         }
 
-        return $inputs;
+        return $r_alta;
     }
 
     public function campos_view_base(_ctl_base $controlador){
@@ -94,6 +94,10 @@ class _docs {
         return $data_view;
     }
 
+    /**
+     * Genera los datos de una vista children
+     * @return stdClass
+     */
     private function data_view_ext_permitida(): stdClass
     {
         $data_view = new stdClass();
