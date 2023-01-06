@@ -66,9 +66,9 @@ class controlador_doc_tipo_documento extends _parents_doc {
 
     }
 
-    public function acl_tipo_documento(bool $header = true, bool $ws = false): array|string
+    public function acl_tipo_documento(bool $header = true, bool $ws = false, array $not_actions = array()): array|string
     {
-        $contenido_table = (new _docs())->acl_tipo_documento(controler: $this, function: __FUNCTION__);
+        $contenido_table = (new _docs())->acl_tipo_documento(controler: $this, function: __FUNCTION__, not_actions: $not_actions);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener contenido_table',data:  $contenido_table, header: $header,ws:  $ws);

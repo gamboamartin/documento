@@ -13,13 +13,13 @@ class _docs {
         $this->error = new errores();
     }
 
-    public function acl_tipo_documento(_ctl_base $controler, string $function){
+    public function acl_tipo_documento(_ctl_base $controler, string $function, array $not_actions){
 
         $data_view = $this->data_view_acl_tipo_documento();
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener data_view',data:  $data_view);
         }
-        $contenido_table = $controler->contenido_children(data_view: $data_view, next_accion: $function);
+        $contenido_table = $controler->contenido_children(data_view: $data_view, next_accion: $function,not_actions: $not_actions);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener tbody',data:  $contenido_table);
         }
