@@ -39,26 +39,12 @@ class controlador_adm_grupo extends \gamboamartin\acl\controllers\controlador_ad
 
     public function acl_tipo_documento(bool $header = true, bool $ws = false): array|string
     {
-
-
-        $data_view = new stdClass();
-        $data_view->names = array('Id','Tipo Doc', 'Grupo','Acciones');
-        $data_view->keys_data = array('doc_acl_tipo_documento_id','doc_tipo_documento_descripcion','adm_grupo_descripcion');
-        $data_view->key_actions = 'acciones';
-        $data_view->namespace_model = 'gamboamartin\\documento\\models';
-        $data_view->name_model_children = 'doc_acl_tipo_documento';
-
-
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        $contenido_table = (new _docs())->acl_tipo_documento(controler: $this, function: __FUNCTION__);
         if(errores::$error){
             return $this->retorno_error(
-                mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
+                mensaje: 'Error al obtener contenido_table',data:  $contenido_table, header: $header,ws:  $ws);
         }
-
-
         return $contenido_table;
-
-
     }
 
     protected function inputs_children(stdClass $registro): stdClass|array

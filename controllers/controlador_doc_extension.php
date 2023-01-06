@@ -47,41 +47,20 @@ class controlador_doc_extension extends _ctl_base{
     public function alta(bool $header, bool $ws = false): array|string
     {
 
-        $r_alta = $this->init_alta();
+        $r_alta = (new _docs())->alta_base(controlador: $this);
         if(errores::$error){
-            return $this->retorno_error(
-                mensaje: 'Error al inicializar alta',data:  $r_alta, header: $header,ws:  $ws);
+            return $this->retorno_error(mensaje: 'Error al inicializar alta',data:  $r_alta, header: $header,ws:  $ws);
         }
-
-
-
-        $keys_selects['descripcion'] = new stdClass();
-        $keys_selects['descripcion']->cols = 12;
-
-        $inputs = $this->inputs(keys_selects: $keys_selects);
-        if(errores::$error){
-            return $this->retorno_error(
-                mensaje: 'Error al obtener inputs',data:  $inputs, header: $header,ws:  $ws);
-        }
-
 
         return $r_alta;
     }
 
     protected function campos_view(): array
     {
-        $keys = new stdClass();
-        $keys->inputs = array('codigo','descripcion');
-        $keys->selects = array();
-
-        $init_data = array();
-
-        $campos_view = $this->campos_view_base(init_data: $init_data,keys:  $keys);
-
+        $campos_view = (new _docs())->campos_view_base(controlador: $this);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al inicializar campo view',data:  $campos_view);
         }
-
 
         return $campos_view;
     }
@@ -90,15 +69,7 @@ class controlador_doc_extension extends _ctl_base{
     {
 
 
-        $data_view = new stdClass();
-        $data_view->names = array('Id','Tipo Doc', 'Doc','Acciones');
-        $data_view->keys_data = array('doc_documento_id','doc_tipo_documento_descripcion','doc_documento_descripcion');
-        $data_view->key_actions = 'acciones';
-        $data_view->namespace_model = 'gamboamartin\\documento\\models';
-        $data_view->name_model_children = 'doc_documento';
-
-
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        $contenido_table = (new _docs())->documentos(controler: $this,function: __FUNCTION__);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
