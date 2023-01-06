@@ -3,7 +3,7 @@ namespace gamboamartin\documento\controllers;
 
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
-use gamboamartin\system\_ctl_parent;
+
 use stdClass;
 
 class _docs {
@@ -86,6 +86,17 @@ class _docs {
         return $data_view;
     }
 
+    private function data_view_ext_permitida(): stdClass
+    {
+        $data_view = new stdClass();
+        $data_view->names = array('Id','Tipo Doc', 'Extension','Acciones');
+        $data_view->keys_data = array('doc_extension_permitido_id','doc_tipo_documento_descripcion','doc_extension_descripcion');
+        $data_view->key_actions = 'acciones';
+        $data_view->namespace_model = 'gamboamartin\\documento\\models';
+        $data_view->name_model_children = 'doc_extension_permitido';
+        return $data_view;
+    }
+
     public function documentos(_ctl_base $controler, string $function){
         $data_view = $this->data_view_documento();
         if(errores::$error){
@@ -114,6 +125,20 @@ class _docs {
             readfile($ruta_absoluta);
         }
         return file_get_contents($ruta_absoluta);
+    }
+
+    public function ext_permitida(_ctl_base $controler, string $function){
+        $data_view = $this->data_view_ext_permitida();
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener data_view',data:  $data_view);
+        }
+
+
+        $contenido_table = $controler->contenido_children(data_view: $data_view, next_accion: $function);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener tbody',data:  $contenido_table);
+        }
+        return $contenido_table;
     }
 
 }

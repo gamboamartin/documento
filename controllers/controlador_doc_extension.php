@@ -84,15 +84,7 @@ class controlador_doc_extension extends _ctl_base{
     public function ext_permitida(bool $header = true, bool $ws = false): array|string
     {
 
-        $data_view = new stdClass();
-        $data_view->names = array('Id','Tipo Doc', 'Extension','Acciones');
-        $data_view->keys_data = array('doc_extension_permitido_id','doc_tipo_documento_descripcion','doc_extension_descripcion');
-        $data_view->key_actions = 'acciones';
-        $data_view->namespace_model = 'gamboamartin\\documento\\models';
-        $data_view->name_model_children = 'doc_extension_permitido';
-
-
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        $contenido_table = (new _docs())->ext_permitida(controler: $this, function: __FUNCTION__);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);

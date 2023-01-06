@@ -1,6 +1,7 @@
 <?php
 namespace gamboamartin\documento\controllers;
 
+use base\controller\init;
 use gamboamartin\documento\models\doc_tipo_documento;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
@@ -124,15 +125,7 @@ class controlador_doc_tipo_documento extends _ctl_base{
     public function ext_permitida(bool $header = true, bool $ws = false): array|string
     {
 
-        $data_view = new stdClass();
-        $data_view->names = array('Id','Tipo Doc', 'Extension','Acciones');
-        $data_view->keys_data = array('doc_extension_permitido_id','doc_tipo_documento_descripcion','doc_extension_descripcion');
-        $data_view->key_actions = 'acciones';
-        $data_view->namespace_model = 'gamboamartin\\documento\\models';
-        $data_view->name_model_children = 'doc_extension_permitido';
-
-
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        $contenido_table = (new _docs())->ext_permitida(controler: $this, function: __FUNCTION__);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
@@ -164,7 +157,7 @@ class controlador_doc_tipo_documento extends _ctl_base{
 
 
         $select_adm_grupo_id = (new adm_grupo_html(html: $this->html_base))->select_adm_grupo_id(
-            cols:6,con_registros: true,id_selected:  -1,link:  $this->link, disabled: false);
+            cols:6,con_registros: true,id_selected:  -1,link:  $this->link);
 
         if(errores::$error){
             return $this->errores->error(
@@ -191,12 +184,12 @@ class controlador_doc_tipo_documento extends _ctl_base{
     protected function key_selects_txt(array $keys_selects): array
     {
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12, key: 'codigo', keys_selects: $keys_selects, place_holder: 'Cod');
+        $keys_selects = (new init())->key_select_txt(cols: 12, key: 'codigo', keys_selects: $keys_selects, place_holder: 'Cod');
         if (errores::$error) {
             return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Tipo Doc');
+        $keys_selects = (new init())->key_select_txt(cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Tipo Doc');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
