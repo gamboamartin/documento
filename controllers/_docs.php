@@ -109,6 +109,17 @@ class _docs {
         return $data_view;
     }
 
+    private function data_view_versiones(): stdClass
+    {
+        $data_view = new stdClass();
+        $data_view->names = array('Id','Tipo Doc', 'Doc', 'Ext',' Fecha','Acciones');
+        $data_view->keys_data = array('doc_documento_id','doc_tipo_documento_descripcion','doc_documento_descripcion', 'doc_extension_descripcion', 'doc_version_fecha_alta');
+        $data_view->key_actions = 'acciones';
+        $data_view->namespace_model = 'gamboamartin\\documento\\models';
+        $data_view->name_model_children = 'doc_version';
+        return $data_view;
+    }
+
     public function documentos(_ctl_base $controler, string $function, array $not_actions = array()){
         $data_view = $this->data_view_documento();
         if(errores::$error){
@@ -153,6 +164,21 @@ class _docs {
             return $this->error->error(mensaje: 'Error al obtener tbody',data:  $contenido_table);
         }
         return $contenido_table;
+    }
+
+    public function versiones(_ctl_base $controler, string $function, array $not_actions){
+
+        $data_view = $this->data_view_versiones();
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener data_view',data:  $data_view);
+        }
+        $contenido_table = $controler->contenido_children(data_view: $data_view, next_accion: $function,not_actions: $not_actions);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener tbody',data:  $contenido_table);
+        }
+
+        return $contenido_table;
+
     }
 
 }

@@ -90,9 +90,6 @@ class controlador_doc_version extends _parents_doc_base {
     }
 
 
-
-
-
     public function modifica(
         bool $header, bool $ws = false): array|stdClass
     {

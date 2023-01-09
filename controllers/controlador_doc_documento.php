@@ -101,7 +101,7 @@ class controlador_doc_documento extends _parents_doc_base{
             if($id_retorno === -1) {
                 $id_retorno = $r_alta_bd->registro_id;
             }
-            
+
 
             $this->retorno_base(registro_id:$id_retorno, result: $r_alta_bd, siguiente_view: $siguiente_view,
                 ws:  $ws,seccion_retorno: $seccion_retorno);
@@ -193,16 +193,7 @@ class controlador_doc_documento extends _parents_doc_base{
     public function versiones(bool $header = true, bool $ws = false, array $not_actions = array()): array|string
     {
 
-
-        $data_view = new stdClass();
-        $data_view->names = array('Id','Tipo Doc', 'Doc', 'Ext',' Fecha','Acciones');
-        $data_view->keys_data = array('doc_documento_id','doc_tipo_documento_descripcion','doc_documento_descripcion', 'doc_extension_descripcion', 'doc_version_fecha_alta');
-        $data_view->key_actions = 'acciones';
-        $data_view->namespace_model = 'gamboamartin\\documento\\models';
-        $data_view->name_model_children = 'doc_version';
-
-
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__,not_actions: $not_actions);
+        $contenido_table = (new _docs())->versiones(controler: $this,function: __FUNCTION__, not_actions: $not_actions);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);

@@ -4,7 +4,6 @@ namespace gamboamartin\documento\controllers;
 use base\controller\init;
 use gamboamartin\documento\models\doc_extension;
 use gamboamartin\errores\errores;
-use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
 use gamboamartin\template_1\html;
 use html\doc_extension_html;
@@ -48,7 +47,7 @@ class controlador_doc_extension extends _parents_doc {
     protected function inputs_children(stdClass $registro): stdClass|array
     {
         $select_doc_tipo_documento_id = (new doc_tipo_documento_html(html: $this->html_base))->select_doc_tipo_documento_id(
-            cols:6,con_registros: true,id_selected:  -1,link:  $this->link, disabled: false);
+            cols:6,con_registros: true,id_selected:  -1,link:  $this->link);
 
         if(errores::$error){
             return $this->errores->error(
@@ -91,29 +90,13 @@ class controlador_doc_extension extends _parents_doc {
 
     }
 
-
-
     public function versiones(bool $header = true, bool $ws = false, array $not_actions = array()): array|string
     {
-
-
-        $data_view = new stdClass();
-        $data_view->names = array('Id','Tipo Doc', 'Doc', 'Ext',' Fecha','Acciones');
-        $data_view->keys_data = array('doc_documento_id','doc_tipo_documento_descripcion','doc_documento_descripcion', 'doc_extension_descripcion', 'doc_version_fecha_alta');
-        $data_view->key_actions = 'acciones';
-        $data_view->namespace_model = 'gamboamartin\\documento\\models';
-        $data_view->name_model_children = 'doc_version';
-
-
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__,not_actions: $not_actions);
+        $contenido_table = (new _docs())->versiones(controler: $this,function: __FUNCTION__, not_actions: $not_actions);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
         }
-
-
         return $contenido_table;
-
-
     }
 }

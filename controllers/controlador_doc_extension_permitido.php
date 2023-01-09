@@ -1,18 +1,15 @@
 <?php
 namespace gamboamartin\documento\controllers;
 
-use gamboamartin\documento\models\doc_documento;
+use base\controller\init;
 use gamboamartin\documento\models\doc_extension_permitido;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
-use gamboamartin\system\actions;
 use gamboamartin\system\links_menu;
 use gamboamartin\template_1\html;
-use html\doc_documento_html;
 use html\doc_extension_permitido_html;
 use PDO;
 use stdClass;
-use Throwable;
 
 class controlador_doc_extension_permitido extends _ctl_base{
     public function __construct(PDO $link,  html $html = new html(), stdClass $paths_conf = new stdClass()){
@@ -108,12 +105,12 @@ class controlador_doc_extension_permitido extends _ctl_base{
     protected function key_selects_txt(array $keys_selects): array
     {
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12, key: 'codigo', keys_selects: $keys_selects, place_holder: 'Cod');
+        $keys_selects = (new init())->key_select_txt(cols: 12, key: 'codigo', keys_selects: $keys_selects, place_holder: 'Cod');
         if (errores::$error) {
             return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Extension');
+        $keys_selects = (new init())->key_select_txt(cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Extension');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
