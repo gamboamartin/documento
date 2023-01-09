@@ -211,13 +211,7 @@ class controlador_doc_documento extends _ctl_base{
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
 
-        $keys_selects['descripcion'] = new stdClass();
-        $keys_selects['descripcion']->cols = 12;
-
-        $keys_selects['codigo'] = new stdClass();
-        $keys_selects['codigo']->disabled = true;
-
-        $base = $this->base_upd(keys_selects: $keys_selects, params: array(),params_ajustados: array());
+        $base = $this->upd_base_template(keys_selects: $keys_selects);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al integrar base',data:  $base, header: $header,ws:  $ws);
         }
@@ -225,7 +219,7 @@ class controlador_doc_documento extends _ctl_base{
         return $r_modifica;
     }
 
-    public function versiones(bool $header = true, bool $ws = false): array|string
+    public function versiones(bool $header = true, bool $ws = false, array $not_actions = array()): array|string
     {
 
 
@@ -237,7 +231,7 @@ class controlador_doc_documento extends _ctl_base{
         $data_view->name_model_children = 'doc_version';
 
 
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__,not_actions: $not_actions);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);

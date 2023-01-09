@@ -123,14 +123,7 @@ class controlador_doc_acl_tipo_documento extends _ctl_base{
         }
 
 
-
-        $keys_selects['descripcion'] = new stdClass();
-        $keys_selects['descripcion']->cols = 12;
-
-        $keys_selects['codigo'] = new stdClass();
-        $keys_selects['codigo']->disabled = true;
-
-        $base = $this->base_upd(keys_selects: $keys_selects, params: array(),params_ajustados: array());
+        $base = $this->upd_base_template(keys_selects: $keys_selects);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al integrar base',data:  $base, header: $header,ws:  $ws);
         }
