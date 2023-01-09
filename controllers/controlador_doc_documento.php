@@ -1,9 +1,10 @@
 <?php
 namespace gamboamartin\documento\controllers;
 
+
 use gamboamartin\documento\models\doc_documento;
 use gamboamartin\errores\errores;
-use gamboamartin\system\_ctl_base;
+
 use gamboamartin\system\actions;
 use gamboamartin\system\links_menu;
 use gamboamartin\template_1\html;
@@ -12,7 +13,7 @@ use PDO;
 use stdClass;
 use Throwable;
 
-class controlador_doc_documento extends _ctl_base{
+class controlador_doc_documento extends _parents_doc_base{
     public function __construct(PDO $link,  html $html = new html(), stdClass $paths_conf = new stdClass()){
         $modelo = new doc_documento($link);
 
@@ -100,8 +101,7 @@ class controlador_doc_documento extends _ctl_base{
             if($id_retorno === -1) {
                 $id_retorno = $r_alta_bd->registro_id;
             }
-
-
+            
 
             $this->retorno_base(registro_id:$id_retorno, result: $r_alta_bd, siguiente_view: $siguiente_view,
                 ws:  $ws,seccion_retorno: $seccion_retorno);
@@ -163,31 +163,7 @@ class controlador_doc_documento extends _ctl_base{
 
 
 
-    /**
-     * Genera los keys para inputs de frontend
-     * @param array $keys_selects Keys predefinidos
-     * @return array
-     */
-    protected function key_selects_txt(array $keys_selects): array
-    {
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12, key: 'codigo', keys_selects: $keys_selects, place_holder: 'Cod');
-        if (errores::$error) {
-            return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
-        }
-
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Extension');
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
-        }
-
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'documento', keys_selects:$keys_selects, place_holder: 'Documento');
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
-        }
-
-        return $keys_selects;
-    }
 
     public function modifica(
         bool $header, bool $ws = false): array|stdClass
