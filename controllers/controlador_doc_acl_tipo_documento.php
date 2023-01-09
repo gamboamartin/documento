@@ -1,6 +1,7 @@
 <?php
 namespace gamboamartin\documento\controllers;
 
+use base\controller\init;
 use gamboamartin\documento\models\doc_acl_tipo_documento;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
@@ -50,10 +51,8 @@ class controlador_doc_acl_tipo_documento extends _ctl_base{
         }
 
 
-        $keys_selects['descripcion'] = new stdClass();
-        $keys_selects['descripcion']->cols = 12;
 
-        $inputs = $this->inputs(keys_selects: $keys_selects);
+        $inputs = $this->inputs_base_alta(keys_selects: $keys_selects);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener inputs',data:  $inputs, header: $header,ws:  $ws);
@@ -85,12 +84,12 @@ class controlador_doc_acl_tipo_documento extends _ctl_base{
     protected function key_selects_txt(array $keys_selects): array
     {
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12, key: 'codigo', keys_selects: $keys_selects, place_holder: 'Cod');
+        $keys_selects = (new init())->key_select_txt(cols: 12, key: 'codigo', keys_selects: $keys_selects, place_holder: 'Cod');
         if (errores::$error) {
             return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'ACL Tipo Doc');
+        $keys_selects = (new init())->key_select_txt(cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'ACL Tipo Doc');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }

@@ -56,12 +56,7 @@ class controlador_doc_documento extends _ctl_base{
         }
 
 
-        $keys_selects['descripcion'] = new stdClass();
-        $keys_selects['descripcion']->cols = 12;
-
-
-
-        $inputs = $this->inputs(keys_selects: $keys_selects);
+        $inputs = $this->inputs_base_alta(keys_selects: $keys_selects);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener inputs',data:  $inputs, header: $header,ws:  $ws);
