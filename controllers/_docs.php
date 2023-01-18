@@ -66,6 +66,7 @@ class _docs {
     /**
      * Genera los datos de salida para una vista children
      * @return stdClass
+     * @version 4.0.0
      */
     private function data_view_acl_tipo_documento(): stdClass
     {
