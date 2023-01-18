@@ -22,7 +22,7 @@ class _docs {
         $contenido_table = $controler->contenido_children(data_view: $data_view, next_accion: $function,not_actions: $not_actions);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener tbody',data:  $contenido_table);
-        }
+        } 
 
         return $contenido_table;
 
