@@ -26,7 +26,7 @@ class controlador_adm_grupo extends \gamboamartin\acl\controllers\controlador_ad
             datatables_custom_cols_omite: $datatables_custom_cols_omite, paths_conf: $paths_conf);
 
 
-        $this->modelo = new adm_grupo($link);
+        $this->modelo = new adm_grupo(link: $link);
 
         $link_doc_acl_tipo_documento_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'doc_acl_tipo_documento');
         if(errores::$error){

@@ -2,8 +2,6 @@
 namespace gamboamartin\documento\models;
 use PDO;
 
-;
-
 
 
 class adm_grupo extends \gamboamartin\administrador\models\adm_grupo {
