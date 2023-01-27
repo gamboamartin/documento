@@ -12,7 +12,7 @@ use PDO;
 use stdClass;
 
 class controlador_adm_grupo extends \gamboamartin\acl\controllers\controlador_adm_grupo {
-    protected array $not_actions = array('asigna_permiso');
+    public array $not_actions = array('asigna_permiso');
     public string $link_doc_acl_tipo_documento_alta_bd = '';
 
     public function __construct(PDO $link, html $html = new html(), stdClass $paths_conf = new stdClass())
