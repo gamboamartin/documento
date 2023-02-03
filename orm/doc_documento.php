@@ -136,7 +136,7 @@ class doc_documento extends modelo{ //FINALIZADAS
         return $r_alta_doc;
     }
 
-    public function alta_registro(array $registro, array $file = array()): array|stdClass
+    public function alta_documento(array $registro, array $file = array()): array|stdClass
     {
         $this->registro = $registro;
         $r_alta = $this->alta_bd(file:$file);

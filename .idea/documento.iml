@@ -15,10 +15,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/validacion" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/calculo" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/plugins" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-docblock" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/type-resolver" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/test" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-common" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/graham-campbell/guzzle-factory" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-client" />
@@ -37,7 +34,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-file-iterator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/phpunit" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/phpspec/prophecy" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-code-coverage" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-timer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-ctype" />
@@ -45,7 +41,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-text-template" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/deprecation-contracts" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-mbstring" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/setasign/fpdf" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/maennchen/zipstream-php" />
@@ -71,7 +66,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/lines-of-code" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/complexity" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/object-enumerator" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/chillerlan/php-qrcode" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/recursion-context" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/comparator" />
@@ -88,12 +82,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/template_1" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/template" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/js_base" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/cat_sat" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/services" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/organigrama" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/direccion_postal" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/empleado" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/im_registro_patronal" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/acl" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
