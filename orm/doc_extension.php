@@ -18,6 +18,7 @@ class doc_extension extends modelo{ //FINALIZADAS
         $campos_obligatorios = array();
         parent::__construct(link: $link,tabla:  $tabla,campos_obligatorios: $campos_obligatorios, columnas:  $columnas);
         $this->NAMESPACE = __NAMESPACE__;
+        $this->etiqueta = 'Extension';
     }
 
 

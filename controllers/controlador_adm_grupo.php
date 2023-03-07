@@ -36,6 +36,8 @@ class controlador_adm_grupo extends \gamboamartin\acl\controllers\controlador_ad
         }
         $this->link_doc_acl_tipo_documento_alta_bd = $link_doc_acl_tipo_documento_alta_bd;
 
+        $this->childrens_data['doc_acl_tipo_documento']['title'] = 'ACL por Doc';
+
     }
 
     public function acl_tipo_documento(bool $header = true, bool $ws = false, array $not_actions = array()): array|string

@@ -2,7 +2,9 @@
 namespace gamboamartin\documento\controllers;
 
 use base\controller\init;
+use gamboamartin\documento\models\adm_grupo;
 use gamboamartin\documento\models\doc_acl_tipo_documento;
+use gamboamartin\documento\models\doc_tipo_documento;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
@@ -27,6 +29,10 @@ class controlador_doc_acl_tipo_documento extends _ctl_base{
 
         parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link, datatables: $datatables,
             paths_conf: $paths_conf);
+
+        $this->parents_verifica['doc_tipo_documento'] = (new doc_tipo_documento(link: $this->link));
+        $this->parents_verifica['adm_grupo'] = (new adm_grupo(link: $this->link));
+        $this->verifica_parents_alta = true;
     }
 
     public function alta(bool $header, bool $ws = false): array|string

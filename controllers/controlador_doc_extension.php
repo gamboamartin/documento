@@ -41,6 +41,9 @@ class controlador_doc_extension extends _parents_doc {
         }
         $this->link_doc_extension_permitido_alta_bd = $link_doc_extension_permitido_alta_bd;
 
+        $this->childrens_data['doc_documento']['title'] = 'Documento';
+
+
     }
 
 

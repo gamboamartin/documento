@@ -18,6 +18,8 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
         parent::__construct(link: $link,tabla:  $tabla,campos_obligatorios: $campos_obligatorios, columnas:  $columnas);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'ACL Por Doc';
     }
 
     /**

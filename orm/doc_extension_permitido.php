@@ -17,5 +17,7 @@ class doc_extension_permitido extends modelo{ //FINALIZADAS
         $campos_obligatorios = array('doc_tipo_documento_id', 'doc_extension_id');
         parent::__construct(link: $link,tabla:  $tabla,campos_obligatorios: $campos_obligatorios, columnas:  $columnas);
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Extension Permitida';
     }
 }

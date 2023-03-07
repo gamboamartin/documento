@@ -3,6 +3,4 @@
 <?php echo $controlador->inputs->adm_grupo_id; ?>
 <?php echo $controlador->inputs->doc_tipo_documento_id; ?>
 
-
-
 <?php include (new views())->ruta_templates.'botons/submit/alta_bd_otro.php';?>

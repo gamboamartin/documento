@@ -3,6 +3,8 @@ namespace gamboamartin\documento\controllers;
 
 
 use gamboamartin\documento\models\doc_documento;
+use gamboamartin\documento\models\doc_extension;
+use gamboamartin\documento\models\doc_tipo_documento;
 use gamboamartin\errores\errores;
 
 use gamboamartin\system\actions;
@@ -35,6 +37,10 @@ class controlador_doc_documento extends _parents_doc_base{
         $this->lista_get_data = true;
 
         $this->modelo = $modelo;
+
+        $this->parents_verifica['doc_extension'] = (new doc_extension(link: $this->link));
+        $this->parents_verifica['doc_tipo_documento'] = (new doc_tipo_documento(link: $this->link));
+        $this->verifica_parents_alta = true;
 
     }
 

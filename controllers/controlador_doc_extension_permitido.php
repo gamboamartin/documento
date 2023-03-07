@@ -2,7 +2,9 @@
 namespace gamboamartin\documento\controllers;
 
 use base\controller\init;
+use gamboamartin\documento\models\doc_extension;
 use gamboamartin\documento\models\doc_extension_permitido;
+use gamboamartin\documento\models\doc_tipo_documento;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
@@ -28,12 +30,16 @@ class controlador_doc_extension_permitido extends _ctl_base{
         parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link, datatables: $datatables,
             paths_conf: $paths_conf);
 
-        $this->titulo_lista = 'Documentos';
+        $this->titulo_lista = 'Extensiones';
 
 
         $this->lista_get_data = true;
 
         $this->modelo = $modelo;
+
+        $this->parents_verifica['doc_extension'] = (new doc_extension(link: $this->link));
+        $this->parents_verifica['doc_tipo_documento'] = (new doc_tipo_documento(link: $this->link));
+        $this->verifica_parents_alta = true;
 
     }
 

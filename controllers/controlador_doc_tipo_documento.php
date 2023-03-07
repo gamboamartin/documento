@@ -64,6 +64,10 @@ class controlador_doc_tipo_documento extends _parents_doc {
 
         $this->lista_get_data = true;
 
+        $this->childrens_data['doc_acl_tipo_documento']['title'] = 'ACL por Doc';
+        $this->childrens_data['doc_documento']['title'] = 'Documento';
+        $this->childrens_data['doc_extension_permitido']['title'] = 'Extensiones';
+
     }
 
     public function acl_tipo_documento(bool $header = true, bool $ws = false, array $not_actions = array()): array|string

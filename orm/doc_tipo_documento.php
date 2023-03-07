@@ -31,6 +31,8 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
         parent::__construct(link: $link, tabla: $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas, columnas_extra: $columnas_extra);
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Tipo Documento';
     }
 
     /**

@@ -48,7 +48,7 @@ class base_test extends test{
         $_FILES['name'] = 'a.a';
         $_FILES['tmp_name'] = '/var/www/html/documento/tests/files/a.a';
 
-        $alta_documento = (new doc_documento($this->link))->alta_registro(registro: $doc_documento, file: $_FILES);
+        $alta_documento = (new doc_documento($this->link))->alta_documento(registro: $doc_documento, file: $_FILES);
         if (errores::$error) {
             return $this->error->error(mensaje: 'Error al insertar documento', data: $alta_documento);
         }
