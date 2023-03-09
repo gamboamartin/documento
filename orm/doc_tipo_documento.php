@@ -35,6 +35,7 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
 
         $this->etiqueta = 'Tipo Documento';
 
+
         if(!isset($_SESSION['init'][$tabla])) {
 
             $catalogo = array();
@@ -54,6 +55,7 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
             }
             $_SESSION['init'][$tabla] = true;
         }
+        
     }
 
     /**

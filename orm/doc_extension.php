@@ -21,6 +21,7 @@ class doc_extension extends modelo{ //FINALIZADAS
         $this->NAMESPACE = __NAMESPACE__;
         $this->etiqueta = 'Extension';
 
+
         if(!isset($_SESSION['init'][$tabla])) {
 
             $catalogo = array();
@@ -43,6 +44,7 @@ class doc_extension extends modelo{ //FINALIZADAS
             }
             $_SESSION['init'][$tabla] = true;
         }
+
 
     }
 

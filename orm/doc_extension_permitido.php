@@ -22,6 +22,7 @@ class doc_extension_permitido extends modelo{ //FINALIZADAS
 
         $this->etiqueta = 'Extension Permitida';
 
+
         if(!isset($_SESSION['init'][$tabla])) {
 
             unset($_SESSION['init']['doc_tipo_documento']);
@@ -47,6 +48,7 @@ class doc_extension_permitido extends modelo{ //FINALIZADAS
             }
             $_SESSION['init'][$tabla] = true;
         }
+
 
     }
 }

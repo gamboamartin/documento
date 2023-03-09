@@ -22,6 +22,7 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
 
         $this->etiqueta = 'ACL Por Doc';
 
+
         if(!isset($_SESSION['init'][$tabla])) {
 
             unset($_SESSION['init']['doc_tipo_documento']);
@@ -46,6 +47,7 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
             }
             $_SESSION['init'][$tabla] = true;
         }
+
 
     }
 
