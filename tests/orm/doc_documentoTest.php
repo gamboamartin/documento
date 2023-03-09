@@ -21,6 +21,7 @@ class doc_documentoTest extends base_test {
 
     public function test_alta_bd()
     {
+        $_SESSION['usuario_id'] = 2;
         errores::$error = false;
 
 

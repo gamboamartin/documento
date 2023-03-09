@@ -1,5 +1,6 @@
 <?php
 namespace gamboamartin\documento\models;
+use base\orm\_defaults;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
@@ -19,6 +20,30 @@ class doc_extension extends modelo{ //FINALIZADAS
         parent::__construct(link: $link,tabla:  $tabla,campos_obligatorios: $campos_obligatorios, columnas:  $columnas);
         $this->NAMESPACE = __NAMESPACE__;
         $this->etiqueta = 'Extension';
+
+        if(!isset($_SESSION['init'][$tabla])) {
+
+            $catalogo = array();
+            $catalogo[] = array('id'=>1,'codigo' => 'xml', 'descripcion' => 'xml');
+            $catalogo[] = array('id'=>2,'codigo' => 'txt', 'descripcion' => 'txt');
+            $catalogo[] = array('id'=>3,'codigo' => 'cer', 'descripcion' => 'cer');
+            $catalogo[] = array('id'=>4,'codigo' => 'key', 'descripcion' => 'key');
+            $catalogo[] = array('id'=>5,'codigo' => 'xlsx', 'descripcion' => 'xlsx');
+            $catalogo[] = array('id'=>6,'codigo' => 'docx', 'descripcion' => 'docx');
+            $catalogo[] = array('id'=>7,'codigo' => 'jpg', 'descripcion' => 'jpg');
+            $catalogo[] = array('id'=>8,'codigo' => 'png', 'descripcion' => 'png');
+            $catalogo[] = array('id'=>9,'codigo' => 'pdf', 'descripcion' => 'pdf');
+
+
+            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
+                print_r($error);
+                exit;
+            }
+            $_SESSION['init'][$tabla] = true;
+        }
+
     }
 
 

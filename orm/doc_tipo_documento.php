@@ -1,5 +1,6 @@
 <?php
 namespace gamboamartin\documento\models;
+use base\orm\_defaults;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
@@ -33,6 +34,26 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
         $this->NAMESPACE = __NAMESPACE__;
 
         $this->etiqueta = 'Tipo Documento';
+
+        if(!isset($_SESSION['init'][$tabla])) {
+
+            $catalogo = array();
+            $catalogo[] = array('id'=>1,'codigo' => '01', 'descripcion' => 'xml_sin_timbrar');
+            $catalogo[] = array('id'=>2,'codigo' => '02', 'descripcion' => 'xml_timbrado');
+            $catalogo[] = array('id'=>3,'codigo' => '03', 'descripcion' => 'qr_cfdi');
+            $catalogo[] = array('id'=>4,'codigo' => '04', 'descripcion' => 'cadena_orginal_cfdi');
+            $catalogo[] = array('id'=>5,'codigo' => '05', 'descripcion' => 'CSDKEY');
+            $catalogo[] = array('id'=>6,'codigo' => '06', 'descripcion' => 'CSDCER');
+
+
+            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
+                print_r($error);
+                exit;
+            }
+            $_SESSION['init'][$tabla] = true;
+        }
     }
 
     /**

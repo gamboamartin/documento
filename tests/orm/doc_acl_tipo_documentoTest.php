@@ -16,6 +16,7 @@ class doc_acl_tipo_documentoTest extends test {
 
     public function test_tipo_documento_permiso()
     {
+        $_SESSION['usuario_id'] = 2;
         errores::$error = false;
         $acl_tipo_doc = new doc_acl_tipo_documento($this->link);
         //$inicializacion = new liberator($inicializacion);

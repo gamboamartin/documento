@@ -1,5 +1,6 @@
 <?php
 namespace gamboamartin\documento\models;
+use base\orm\_defaults;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
@@ -20,6 +21,32 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
         $this->NAMESPACE = __NAMESPACE__;
 
         $this->etiqueta = 'ACL Por Doc';
+
+        if(!isset($_SESSION['init'][$tabla])) {
+
+            unset($_SESSION['init']['doc_tipo_documento']);
+            unset($_SESSION['init']['adm_grupo']);
+
+            new doc_tipo_documento(link: $this->link);
+            new adm_grupo(link: $this->link);
+
+            $catalago = array();
+            $catalago[] = array('id'=>1,'doc_tipo_documento_id'=>1,'adm_grupo_id'=>2);
+            $catalago[] = array('id'=>2,'doc_tipo_documento_id'=>2,'adm_grupo_id'=>2);
+            $catalago[] = array('id'=>3,'doc_tipo_documento_id'=>3,'adm_grupo_id'=>2);
+            $catalago[] = array('id'=>4,'doc_tipo_documento_id'=>4,'adm_grupo_id'=>2);
+            $catalago[] = array('id'=>5,'doc_tipo_documento_id'=>5,'adm_grupo_id'=>2);
+            $catalago[] = array('id'=>6,'doc_tipo_documento_id'=>6,'adm_grupo_id'=>2);
+
+            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalago, entidad: $this);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
+                print_r($error);
+                exit;
+            }
+            $_SESSION['init'][$tabla] = true;
+        }
+
     }
 
     /**
