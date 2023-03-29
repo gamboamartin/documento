@@ -38,6 +38,7 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
             $catalago[] = array('id'=>4,'doc_tipo_documento_id'=>4,'adm_grupo_id'=>2);
             $catalago[] = array('id'=>5,'doc_tipo_documento_id'=>5,'adm_grupo_id'=>2);
             $catalago[] = array('id'=>6,'doc_tipo_documento_id'=>6,'adm_grupo_id'=>2);
+            $catalago[] = array('id'=>7,'doc_tipo_documento_id'=>7,'adm_grupo_id'=>2);
 
             $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalago, entidad: $this);
             if (errores::$error) {

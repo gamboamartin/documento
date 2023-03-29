@@ -24,6 +24,7 @@ class doc_documento extends modelo{ //FINALIZADAS
         $this->etiqueta = 'Documento';
     }
 
+
     /**
      * PRUEBA P ORDER P INT
      * Funcion sobrescrita la cual solo devuelve error

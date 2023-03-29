@@ -45,6 +45,7 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
             $catalogo[] = array('id'=>4,'codigo' => '04', 'descripcion' => 'cadena_orginal_cfdi');
             $catalogo[] = array('id'=>5,'codigo' => '05', 'descripcion' => 'CSDKEY');
             $catalogo[] = array('id'=>6,'codigo' => '06', 'descripcion' => 'CSDCER');
+            $catalogo[] = array('id'=>7,'codigo' => '07', 'descripcion' => 'CSDCERPEM');
 
 
             $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
@@ -55,7 +56,7 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
             }
             $_SESSION['init'][$tabla] = true;
         }
-        
+
     }
 
     /**

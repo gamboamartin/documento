@@ -38,6 +38,7 @@ class doc_extension_permitido extends modelo{ //FINALIZADAS
             $catalago[] = array('id'=>4,'doc_tipo_documento_id'=>4,'doc_extension_id'=>2);
             $catalago[] = array('id'=>5,'doc_tipo_documento_id'=>5,'doc_extension_id'=>4);
             $catalago[] = array('id'=>6,'doc_tipo_documento_id'=>6,'doc_extension_id'=>3);
+            $catalago[] = array('id'=>7,'doc_tipo_documento_id'=>7,'doc_extension_id'=>10);
 
 
             $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalago, entidad: $this);

@@ -34,6 +34,7 @@ class doc_extension extends modelo{ //FINALIZADAS
             $catalogo[] = array('id'=>7,'codigo' => 'jpg', 'descripcion' => 'jpg');
             $catalogo[] = array('id'=>8,'codigo' => 'png', 'descripcion' => 'png');
             $catalogo[] = array('id'=>9,'codigo' => 'pdf', 'descripcion' => 'pdf');
+            $catalogo[] = array('id'=>10,'codigo' => 'pem', 'descripcion' => 'pem');
 
 
             $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
