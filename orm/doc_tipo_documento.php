@@ -1,6 +1,5 @@
 <?php
 namespace gamboamartin\documento\models;
-use base\orm\_defaults;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
@@ -40,11 +39,11 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
     }
 
     /**
-     * PRUEBA P ORDER P INT
      * Funcion válida si las extensiones sean iguales
      * @param string $extension Descripcion de extension a insertar
      * @param array $extensiones_permitidas Arreglo de extensiones que se identifican como permitidas
      * @return bool|array
+     * @version 6.4.0
      */
     private function es_extension_permitida(string $extension, array $extensiones_permitidas): bool|array
     {
@@ -86,13 +85,12 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
     }
 
     /**
-     * PRUEBA P ORDER P INT
-     * Devuelve un valor booleano el cual confimar si la extension es validad o invalida
+     * Devuelve un valor booleano el cual confirma si la extension es valida o invalida
      * @param string $extension Extension del documento a insertar
      * @param int $tipo_documento_id Tipo de documento del registro a insertar
      * @return bool|array
      */
-    public function valida_extension_permitida(string $extension, int $tipo_documento_id): bool|array
+    final public function valida_extension_permitida(string $extension, int $tipo_documento_id): bool|array
     {
         $extensiones_permitidas = $this->extensiones_permitidas(tipo_documento_id: $tipo_documento_id);
         if(errores::$error) {

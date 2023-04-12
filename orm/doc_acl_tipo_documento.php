@@ -61,7 +61,7 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
      * @return array|bool
      * @version 0.9.1
      */
-    public function tipo_documento_permiso(int $grupo_id, int $tipo_documento_id): bool|array
+    final public function tipo_documento_permiso(int $grupo_id, int $tipo_documento_id): bool|array
     {
 
         if($grupo_id <= 0){
