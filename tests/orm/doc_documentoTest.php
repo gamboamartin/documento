@@ -4,6 +4,8 @@ namespace tests\orm;
 
 use gamboamartin\documento\models\doc_acl_tipo_documento;
 use gamboamartin\documento\models\doc_documento;
+use gamboamartin\documento\models\doc_extension;
+use gamboamartin\documento\models\doc_extension_permitido;
 use gamboamartin\documento\models\doc_tipo_documento;
 use gamboamartin\documento\models\doc_version;
 use gamboamartin\errores\errores;
@@ -42,6 +44,27 @@ class doc_documentoTest extends base_test {
             die('Error');
         }
 
+        $permi = (new doc_extension_permitido($this->link))->elimina_todo();
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al eliminar permi', data: $permi);
+            print_r($error);
+            die('Error');
+        }
+        $extension = (new doc_extension($this->link))->elimina_todo();
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al eliminar extension', data: $extension);
+            print_r($error);
+            die('Error');
+        }
+
+        $alta = (new base_test())->alta_extension(id: 7);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            die('Error');
+        }
+
+        errores::$error = false;
         $resultado = $doc_documento->alta_bd();
         $this->assertIsArray($resultado);
         $this->assertTrue(errores::$error);

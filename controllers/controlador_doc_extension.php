@@ -46,6 +46,21 @@ class controlador_doc_extension extends _parents_doc {
 
     }
 
+    /**
+     * Cambia el estado de una extension a si es imagen
+     * @param bool $header
+     * @param bool $ws
+     * @return array|stdClass
+     */
+    public function es_imagen(bool $header = true, bool $ws = false): array|stdClass
+    {
+        $ejecuta = $this->row_upd(key: __FUNCTION__);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener ejecutar',data:  $ejecuta, header: $header,ws:  $ws);
+        }
+        $this->header_out(result: $ejecuta, header: $header,ws:  $ws);
+        return $ejecuta;
+    }
 
     protected function inputs_children(stdClass $registro): stdClass|array
     {
@@ -74,9 +89,6 @@ class controlador_doc_extension extends _parents_doc {
 
         return $this->inputs;
     }
-
-
-
 
     protected function key_selects_txt(array $keys_selects): array
     {
