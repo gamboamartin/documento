@@ -8,13 +8,22 @@ use PDO;
 
 class doc_tipo_documento_html extends html_controler {
 
+    /**
+     * @param int $cols
+     * @param bool $con_registros
+     * @param int $id_selected
+     * @param PDO $link
+     * @param bool $disabled
+     * @param array $registros
+     * @return array|string
+     */
     public function select_doc_tipo_documento_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
-                                                 bool $disabled = false): array|string
+                                                 bool $disabled = false, array $registros = array()): array|string
     {
         $modelo = new doc_tipo_documento(link: $link);
 
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
-            modelo: $modelo, disabled: $disabled, label: 'Tipo Documento', required: true);
+            modelo: $modelo, disabled: $disabled, label: 'Tipo Documento', registros: $registros, required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
