@@ -74,6 +74,7 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
 
         $filtro['doc_tipo_documento.id'] = $tipo_documento_id;
         $filtro['adm_grupo.id'] = $grupo_id;
+        $filtro['doc_acl_tipo_documento.status'] = 'activo';
 
         $existe = $this->existe(filtro: $filtro);
         if(errores::$error) {
