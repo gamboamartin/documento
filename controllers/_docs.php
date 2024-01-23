@@ -64,9 +64,17 @@ class _docs {
     }
 
     /**
-     * Genera los datos de salida para una vista children
-     * @return stdClass
-     * @version 4.0.0
+     * POR DOCUMENTAR EN WIKI
+     * Este método genera y retorna un objeto con los datos necesarios para la vista de 'acl_tipo_documento'.
+     *
+     * @return stdClass Este método retorna un objeto stdClass con las siguientes propiedades:
+     *                  - 'names': Un array con los nombres de las columnas para la tabla en la vista.
+     *                  - 'keys_data': Un array con las claves de los datos para cada columna de la tabla.
+     *                  - 'key_actions': Un string que representa la clave para las acciones que se pueden realizar en cada fila de la tabla.
+     *                  - 'namespace_model': Un string con el namespace del modelo que se utilizará.
+     *                  - 'name_model_children': Un string con el nombre del modelo de hijos o que dependen que se utilizará.
+     *
+     * @version 16.0.0
      */
     private function data_view_acl_tipo_documento(): stdClass
     {
