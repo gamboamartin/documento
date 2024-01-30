@@ -12,7 +12,6 @@ class _docs {
     public function __construct(){
         $this->error = new errores();
     }
-
     public function acl_tipo_documento(_ctl_base $controler, string $function, array $not_actions){
 
         $data_view = $this->data_view_acl_tipo_documento();
