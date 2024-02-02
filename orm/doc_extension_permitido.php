@@ -1,12 +1,13 @@
 <?php
 namespace gamboamartin\documento\models;
-use base\orm\_defaults;
 use base\orm\modelo;
+use gamboamartin\errores\errores;
 use PDO;
+use stdClass;
 
 
 
-class doc_extension_permitido extends modelo{ //FINALIZADAS
+class doc_extension_permitido extends modelo{
     /**
      * DEBUG INI
      * accion constructor.
@@ -21,9 +22,25 @@ class doc_extension_permitido extends modelo{ //FINALIZADAS
 
         $this->etiqueta = 'Extension Permitida';
 
+    }
 
+    public function alta_bd(): array|stdClass
+    {
+        $codigo = $this->registro['doc_tipo_documento_id'].'.'.$this->registro['doc_extension_id'];
+        if(!isset($this->registro['codigo'])){
+            $this->registro['codigo'] = $codigo;
+        }
 
+        $descripcion = $this->registro['doc_tipo_documento_id'].'.'.$this->registro['doc_extension_id'];
+        if(!isset($this->registro['descripcion'])){
+            $this->registro['descripcion'] = $descripcion;
+        }
 
+        $r_alta_bd = parent::alta_bd();
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al insertar extension permitida',data:  $r_alta_bd);
+        }
+        return $r_alta_bd;
 
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace tests\orm;
 
+use gamboamartin\documento\instalacion\instalacion;
 use gamboamartin\documento\models\doc_acl_tipo_documento;
 use gamboamartin\errores\errores;
 use gamboamartin\test\test;
@@ -17,9 +18,19 @@ class doc_acl_tipo_documentoTest extends test {
     public function test_tipo_documento_permiso()
     {
         $_SESSION['usuario_id'] = 2;
+
+        $init = (new instalacion())->instala(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al instalar',data:  $init);
+            print_r($error);
+            exit;
+        }
+
+
         errores::$error = false;
         $acl_tipo_doc = new doc_acl_tipo_documento($this->link);
         //$inicializacion = new liberator($inicializacion);
+
 
         $grupo_id = -1;
         $tipo_documento_id = 1;

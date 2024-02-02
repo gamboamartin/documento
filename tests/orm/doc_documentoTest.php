@@ -2,6 +2,7 @@
 namespace tests\orm;
 
 
+use gamboamartin\documento\instalacion\instalacion;
 use gamboamartin\documento\models\doc_acl_tipo_documento;
 use gamboamartin\documento\models\doc_documento;
 use gamboamartin\documento\models\doc_extension;
@@ -26,6 +27,12 @@ class doc_documentoTest extends base_test {
         $_SESSION['usuario_id'] = 2;
         errores::$error = false;
 
+        $ins = (new instalacion())->instala(link: $this->link);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al ins ins', data: $ins);
+            print_r($error);
+            die('Error');
+        }
 
         $doc_documento = new doc_documento($this->link);
         //$inicializacion = new liberator($inicializacion);
@@ -168,6 +175,7 @@ class doc_documentoTest extends base_test {
 
 
         $resultado = $doc_documento->alta_bd($_FILES);
+        //print_r($resultado);exit;
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
 
@@ -231,6 +239,12 @@ class doc_documentoTest extends base_test {
         $this->assertStringContainsStringIgnoringCase('Error al guardar archivo temporal', $resultado['mensaje']);
 
         errores::$error = false;
+        $del = (new doc_documento(link: $this->link))->elimina_todo();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al del', data: $del);
+            print_r($error);
+            die('Error');
+        }
         $_FILES['name'] = 'a.a';
         copy("/var/www/html/documento/tests/files/1.pdf","/var/www/html/documento/tests/files/a.a");
         $doc_documento->registro['doc_tipo_documento_id'] = 1;
@@ -238,7 +252,7 @@ class doc_documentoTest extends base_test {
         $_SESSION['usuario_id'] = 1;
 
         $resultado = $doc_documento->alta_bd($_FILES);
-
+        //print_r($resultado);exit;
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
 
@@ -250,7 +264,12 @@ class doc_documentoTest extends base_test {
         $_SESSION['usuario_id'] = 1;
 
 
-
+        $del = (new doc_documento(link: $this->link))->elimina_todo();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al del', data: $del);
+            print_r($error);
+            die('Error');
+        }
         $inserta_extension_permitido = $this->inserta_extension_permitido();
         if (errores::$error) {
             $error = $this->errores->error(mensaje: 'Error al insertar extension permitido', data: $inserta_extension_permitido);
@@ -260,6 +279,7 @@ class doc_documentoTest extends base_test {
 
 
         $resultado = $doc_documento->alta_bd($_FILES);
+        //print_r($resultado);exit;
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertFileExists($resultado->registro['doc_documento_ruta_absoluta']);

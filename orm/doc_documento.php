@@ -116,6 +116,18 @@ class doc_documento extends modelo{ //FINALIZADAS
         if(!isset($this->registro['descripcion'])){
             $this->registro['descripcion'] = $file['name'];
         }
+        if(!isset($this->registro['codigo'])){
+            $this->registro['codigo'] = mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+        }
 
 
         $this->registro['status'] = 'activo';

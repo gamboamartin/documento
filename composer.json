@@ -14,6 +14,7 @@
         "psr-4": {
             "gamboamartin\\documento\\controllers\\": "controllers",
             "gamboamartin\\documento\\models\\": "orm",
+            "gamboamartin\\documento\\instalacion\\": "instalacion",
             "config\\": "config/",
             "html\\": "templates/directivas/",
             "tests\\": "tests/"

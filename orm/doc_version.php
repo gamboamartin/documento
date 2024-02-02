@@ -110,6 +110,32 @@ class doc_version extends modelo
             unlink($doc['doc_documento_ruta_absoluta']);
         }
 
+        if(!isset($this->registro['codigo'])){
+            $this->registro['codigo'] = mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+            $this->registro['codigo'] .= mt_rand(10,99);
+        }
+
+        if(!isset($this->registro['descripcion'])){
+            $this->registro['descripcion'] = mt_rand(10,99);
+            $this->registro['descripcion'] .= mt_rand(10,99);
+            $this->registro['descripcion'] .= mt_rand(10,99);
+            $this->registro['descripcion'] .= mt_rand(10,99);
+            $this->registro['descripcion'] .= mt_rand(10,99);
+            $this->registro['descripcion'] .= mt_rand(10,99);
+            $this->registro['descripcion'] .= mt_rand(10,99);
+            $this->registro['descripcion'] .= mt_rand(10,99);
+            $this->registro['descripcion'] .= mt_rand(10,99);
+            $this->registro['descripcion'] .= mt_rand(10,99);
+        }
+
         $r_alta_doc = parent::alta_bd();
         if(errores::$error){
             return $this->error->error(mensaje:'Error al guardar registro', data: $r_alta_doc);
