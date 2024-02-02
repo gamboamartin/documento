@@ -13,12 +13,12 @@ use stdClass;
 class instalacion
 {
 
-    private function doc_acl_tipo_documento(PDO $link): array|stdClass
+    private function _add_doc_acl_tipo_documento(PDO $link): array|stdClass
     {
         $result = new stdClass();
         $init = (new _instalacion(link: $link));
 
-        $create = $init->create_table_new(table: __FUNCTION__);
+        $create = $init->create_table_new(table: 'doc_acl_tipo_documento');
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al create', data:  $create);
         }
@@ -29,39 +29,33 @@ class instalacion
         $foraneas['adm_grupo_id'] = new stdClass();
 
 
-        $foraneas_r = $init->foraneas(foraneas: $foraneas,table:  __FUNCTION__);
+        $foraneas_r = $init->foraneas(foraneas: $foraneas,table:  'doc_acl_tipo_documento');
 
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
         }
-
-
+        $result->foraneas_r = $foraneas_r;
 
         return $result;
-
     }
-    private function doc_documento(PDO $link): array|stdClass
+
+    private function _add_doc_documento(PDO $link): array|stdClass
     {
         $result = new stdClass();
         $init = (new _instalacion(link: $link));
 
-        $create = $init->create_table_new(table: __FUNCTION__);
+        $create = $init->create_table_new(table: 'doc_documento');
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al create', data:  $create);
         }
         $result->create = $create;
-
-        $doc_version = $this->doc_version(link: $link);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al ajustar doc_version', data:  $doc_version);
-        }
 
         $foraneas = array();
         $foraneas['doc_tipo_documento_id'] = new stdClass();
         $foraneas['doc_extension_id'] = new stdClass();
 
 
-        $foraneas_r = $init->foraneas(foraneas: $foraneas,table:  __FUNCTION__);
+        $foraneas_r = $init->foraneas(foraneas: $foraneas,table:  'doc_documento');
 
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
@@ -74,7 +68,7 @@ class instalacion
         $campos->nombre = new stdClass();
 
 
-        $campos_r = $init->add_columns(campos: $campos,table:  __FUNCTION__);
+        $campos_r = $init->add_columns(campos: $campos,table:  'doc_documento');
 
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $campos_r);
@@ -83,9 +77,71 @@ class instalacion
 
 
         $result->campos_r = $campos_r;
+        return $result;
+    }
 
+    private function _add_doc_extension_permitido(PDO $link): array|stdClass
+    {
+        $result = new stdClass();
+        $init = (new _instalacion(link: $link));
+
+        $create = $init->create_table_new(table: 'doc_extension_permitido');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create', data:  $create);
+        }
+        $result->create = $create;
+
+        $foraneas = array();
+        $foraneas['doc_tipo_documento_id'] = new stdClass();
+        $foraneas['doc_extension_id'] = new stdClass();
+
+
+        $foraneas_r = $init->foraneas(foraneas: $foraneas,table:  'doc_extension_permitido');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+
+
+        $result->foraneas_r = $foraneas_r;
 
         return $result;
+    }
+
+    private function _add_doc_tipo_documento(PDO $link): array|stdClass
+    {
+        $result = new stdClass();
+        $init = (new _instalacion(link: $link));
+
+
+        $create = $init->create_table_new(table: 'doc_tipo_documento');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create', data:  $create);
+        }
+        $result->create = $create;
+        return  $result;
+    }
+    private function doc_acl_tipo_documento(PDO $link): array|stdClass
+    {
+        $result = new stdClass();
+
+        $create = $this->_add_doc_acl_tipo_documento(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create', data:  $create);
+        }
+
+        return $result;
+
+    }
+    private function doc_documento(PDO $link): array|stdClass
+    {
+
+        $create = $this->_add_doc_documento(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create', data:  $create);
+        }
+
+        return $create;
 
     }
 
@@ -170,32 +226,12 @@ class instalacion
 
     private function doc_extension_permitido(PDO $link): array|stdClass
     {
-        $result = new stdClass();
-        $init = (new _instalacion(link: $link));
-
-        $create = $init->create_table_new(table: __FUNCTION__);
+        $create = $this->_add_doc_extension_permitido(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al create', data:  $create);
         }
-        $result->create = $create;
 
-        $foraneas = array();
-        $foraneas['doc_tipo_documento_id'] = new stdClass();
-        $foraneas['doc_extension_id'] = new stdClass();
-
-
-        $foraneas_r = $init->foraneas(foraneas: $foraneas,table:  __FUNCTION__);
-
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
-        }
-
-
-
-
-        $result->foraneas_r = $foraneas_r;
-
-        return $result;
+        return $create;
 
     }
 
@@ -208,30 +244,30 @@ class instalacion
     PUBLIC function doc_tipo_documento(PDO $link): array|stdClass
     {
         $result = new stdClass();
-        $init = (new _instalacion(link: $link));
 
-
-        $create = $init->create_table_new(table: __FUNCTION__);
+        $create = $this->_add_doc_tipo_documento(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al create', data:  $create);
         }
         $result->create = $create;
 
-        $create = $this->doc_acl_tipo_documento(link: $link);
+        $create = $this->_add_doc_acl_tipo_documento(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al create', data:  $create);
         }
+        $result->doc_acl_tipo_documento = $create;
 
-        $create = $this->doc_documento(link: $link);
+        $create = $this->_add_doc_documento(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al create', data:  $create);
         }
+        $result->doc_documento = $create;
 
-        $create = $this->doc_extension_permitido(link: $link);
+        $create = $this->_add_doc_extension_permitido(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al create', data:  $create);
         }
-
+        $result->doc_extension_permitido = $create;
 
         $importador = new Importador();
         $columnas = array();
@@ -273,7 +309,7 @@ class instalacion
                 if (errores::$error) {
                     return (new errores())->error(mensaje: 'Error al insertar doc_extension_ins', data: $alta);
                 }
-                $altas[] = $alta->registro_id;
+                $altas[] = $alta;
             }
         }
         $result->altas = $altas;

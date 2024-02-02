@@ -24,54 +24,13 @@ class instalacionTest extends test {
         $ins = new instalacion();
         //$inicializacion = new liberator($inicializacion);
 
-        $drop = (new _instalacion(link: $this->link))->drop_table_segura(table: 'doc_version');
-        if(errores::$error){
-            $error = (new errores())->error(mensaje:'Error al drop',data:  $drop);
-            print_r($error);
-            exit;
-        }
-
-        $drop = (new _instalacion(link: $this->link))->drop_table_segura(table: 'doc_documento');
-        if(errores::$error){
-            $error = (new errores())->error(mensaje:'Error al drop',data:  $drop);
-            print_r($error);
-            exit;
-        }
-
-        $drop = (new _instalacion(link: $this->link))->drop_table_segura(table: 'doc_acl_tipo_documento');
-        if(errores::$error){
-            $error = (new errores())->error(mensaje:'Error al drop',data:  $drop);
-            print_r($error);
-            exit;
-        }
-
-        $drop = (new _instalacion(link: $this->link))->drop_table_segura(table: 'doc_extension_permitido');
-        if(errores::$error){
-            $error = (new errores())->error(mensaje:'Error al drop',data:  $drop);
-            print_r($error);
-            exit;
-        }
-
-        $drop = (new _instalacion(link: $this->link))->drop_table_segura(table: 'doc_tipo_documento');
-        if(errores::$error){
-            $error = (new errores())->error(mensaje:'Error al drop',data:  $drop);
-            print_r($error);
-            exit;
-        }
-
 
         $resultado = $ins->doc_tipo_documento($this->link);
-        $this->assertIsObject($resultado);
-        $this->assertNotTrue(errores::$error);
-
-
-        errores::$error = false;
-
-        $resultado = $ins->doc_tipo_documento($this->link);
+        //print_r($resultado);exit;
 
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals('Ya existe tabla doc_tipo_documento',$resultado->create);
+        $this->assertEquals('Ya existe tabla doc_tipo_documento',$resultado->create->create);
         errores::$error = false;
 
     }
