@@ -80,6 +80,35 @@ class instalacion
         return $result;
     }
 
+    private function _add_doc_extension(PDO $link): array|stdClass
+    {
+        $result = new stdClass();
+        $init = (new _instalacion(link: $link));
+
+        $create = $init->create_table_new(table: 'doc_extension');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create', data:  $create);
+        }
+        $result->create = $create;
+
+        $campos = new stdClass();
+
+        $campos->es_imagen = new stdClass();
+        $campos->es_imagen->tipo_dato = 'VARCHAR';
+        $campos->es_imagen->default = 'inactivo';
+
+
+        $campos_r = $init->add_columns(campos: $campos,table:  'doc_extension');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $campos_r);
+        }
+
+        $result->campos_r = $campos_r;
+
+        return $result;
+    }
+
     private function _add_doc_extension_permitido(PDO $link): array|stdClass
     {
         $result = new stdClass();
@@ -148,28 +177,12 @@ class instalacion
     private function doc_extension(PDO $link): array|stdClass
     {
         $result = new stdClass();
-        $init = (new _instalacion(link: $link));
 
-        $create = $init->create_table_new(table: __FUNCTION__);
+        $create = $this->_add_doc_extension(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al create', data:  $create);
         }
-        $result->create = $create;
 
-        $campos = new stdClass();
-
-        $campos->es_imagen = new stdClass();
-        $campos->es_imagen->tipo_dato = 'VARCHAR';
-        $campos->es_imagen->default = 'inactivo';
-
-
-        $campos_r = $init->add_columns(campos: $campos,table:  __FUNCTION__);
-
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $campos_r);
-        }
-
-        $result->campos_r = $campos_r;
 
         $doc_extension_modelo = new doc_extension(link: $link);
 
@@ -241,7 +254,7 @@ class instalacion
      * @param PDO $link Conexion a la base de datos.
      * @return array|stdClass Si hay error retorna un array.
      */
-    PUBLIC function doc_tipo_documento(PDO $link): array|stdClass
+    private function doc_tipo_documento(PDO $link): array|stdClass
     {
         $result = new stdClass();
 
@@ -256,6 +269,12 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al create', data:  $create);
         }
         $result->doc_acl_tipo_documento = $create;
+
+        $create = $this->_add_doc_extension(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create', data:  $create);
+        }
+        $result->doc_documento = $create;
 
         $create = $this->_add_doc_documento(link: $link);
         if(errores::$error){

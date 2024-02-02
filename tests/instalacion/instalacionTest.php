@@ -6,6 +6,7 @@ use gamboamartin\documento\instalacion\instalacion;
 use gamboamartin\documento\models\doc_acl_tipo_documento;
 use gamboamartin\errores\errores;
 use gamboamartin\system\table;
+use gamboamartin\test\liberator;
 use gamboamartin\test\test;
 
 
@@ -22,7 +23,7 @@ class instalacionTest extends test {
         $_SESSION['usuario_id'] = 2;
         errores::$error = false;
         $ins = new instalacion();
-        //$inicializacion = new liberator($inicializacion);
+        $ins = new liberator($ins);
 
 
         $resultado = $ins->doc_tipo_documento($this->link);
