@@ -3,6 +3,7 @@ namespace gamboamartin\documento\models;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
+use SplFileInfo;
 
 
 class doc_extension extends modelo{ //FINALIZADAS
@@ -24,14 +25,11 @@ class doc_extension extends modelo{ //FINALIZADAS
     }
 
 
-
-
     /**
      *
      * Esta funcion obtienen de la id de la extension
      * @param string $extension Descripcion de extension de documento a insertar
      * @return array|int
-     * @version 9.0.0
      */
     final public function doc_extension_id(string $extension): int|array
     {
@@ -51,5 +49,11 @@ class doc_extension extends modelo{ //FINALIZADAS
         }
 
         return (int)$r_extension->registros[0]['doc_extension_id'];
+    }
+
+    final public function extension(string $name_file): string
+    {
+        $info = new SplFileInfo($name_file);
+        return $info->getExtension();
     }
 }
