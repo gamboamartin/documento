@@ -53,5 +53,22 @@ class doc_extensionTest extends base_test {
 
         errores::$error = false;
     }
+
+    public function test_extension()
+    {
+        errores::$error = false;
+        $tipo_doc = new doc_extension($this->link);
+        //$inicializacion = new liberator($inicializacion);
+
+        $name_file = 'a.a.c';
+        $resultado = $tipo_doc->extension($name_file);
+        //print_r($resultado);exit;
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('c', $resultado);
+
+        errores::$error = false;
+
+    }
 }
 

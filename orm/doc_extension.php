@@ -51,9 +51,17 @@ class doc_extension extends modelo{ //FINALIZADAS
         return (int)$r_extension->registros[0]['doc_extension_id'];
     }
 
-    final public function extension(string $name_file): string
+    final public function extension(string $name_file): string|array
     {
+        $name_file = trim($name_file);
+        if($name_file === ''){
+            return $this->error->error(mensaje: 'Error name_file esta vacio', data: $name_file);
+        }
         $info = new SplFileInfo($name_file);
-        return $info->getExtension();
+        $extension = $info->getExtension();
+        if($extension === ''){
+            return $this->error->error(mensaje: 'Error el archivo no tiene extension', data: $name_file);
+        }
+        return $extension;
     }
 }
