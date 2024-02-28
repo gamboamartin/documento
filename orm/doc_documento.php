@@ -135,6 +135,10 @@ class doc_documento extends modelo{ //FINALIZADAS
         $this->registro['ruta_relativa'] = $ruta_relativa.$nombre_doc;
         $this->registro['ruta_absoluta'] = $ruta_absoluta_directorio.$nombre_doc;
         $this->registro['doc_extension_id'] = $extension_id;
+        
+        if(!isset($this->registro['name_out']) || $this->registro['name_out'] === ''){
+            $this->registro['name_out'] = $nombre_doc;
+        }
 
         $r_alta_doc = parent::alta_bd();
         if(errores::$error){
