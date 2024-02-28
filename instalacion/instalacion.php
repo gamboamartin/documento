@@ -3,6 +3,7 @@ namespace gamboamartin\documento\instalacion;
 
 use config\generales;
 use gamboamartin\administrador\models\_instalacion;
+use gamboamartin\documento\models\doc_documento;
 use gamboamartin\documento\models\doc_extension;
 use gamboamartin\documento\models\doc_tipo_documento;
 use gamboamartin\errores\errores;
@@ -69,7 +70,8 @@ class instalacion
         $campos->codigo = new stdClass();
         $campos->alias = new stdClass();
         $campos->codigo_bis = new stdClass();
-
+        $campos->name_out = new stdClass();
+        $campos->name_out->default = 'SN';
 
         $campos_r = $init->add_columns(campos: $campos,table:  'doc_documento');
 
@@ -171,6 +173,21 @@ class instalacion
         $create = $this->_add_doc_documento(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al create', data:  $create);
+        }
+
+        $registros = (new doc_documento(link: $link))->registros(columnas_en_bruto: true);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener registros', data:  $registros);
+        }
+
+        foreach ($registros as $registro){
+            if($registro['name_out']==='SN'){
+                $upd['name_out'] = $registro['nombre'];
+                $r_doc = (new doc_documento(link: $link))->modifica_bd_base(registro: $upd,id: $registro['id']);
+                if(errores::$error){
+                    return (new errores())->error(mensaje: 'Error al actualizar doc_documento', data:  $r_doc);
+                }
+            }
         }
 
         return $create;
