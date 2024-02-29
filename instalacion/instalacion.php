@@ -5,6 +5,7 @@ use config\generales;
 use gamboamartin\administrador\models\_instalacion;
 use gamboamartin\documento\models\doc_documento;
 use gamboamartin\documento\models\doc_extension;
+use gamboamartin\documento\models\doc_extension_permitido;
 use gamboamartin\documento\models\doc_tipo_documento;
 use gamboamartin\errores\errores;
 use gamboamartin\plugins\Importador;
@@ -354,13 +355,13 @@ class instalacion
 
             foreach ($data as $row) {
                 $row = (array)$row;
-                $doc_extension_ins['id'] = trim($row['id']);
-                $doc_extension_ins['codigo'] = trim($row['codigo']);
-                $doc_extension_ins['descripcion'] = trim($row['descripcion']);
-                $doc_extension_ins['descripcion_select'] = trim($row['codigo']) . ' ' . trim($row['descripcion']);
-                $doc_extension_ins['alias'] =  trim($row['descripcion']);
-                $doc_extension_ins['codigo_bis'] =  trim($row['codigo']);
-                $alta = $doc_tipo_documento_modelo->inserta_registro_si_no_existe(registro: $doc_extension_ins);
+                $row_ins['id'] = trim($row['id']);
+                $row_ins['codigo'] = trim($row['codigo']);
+                $row_ins['descripcion'] = trim($row['descripcion']);
+                $row_ins['descripcion_select'] = trim($row['codigo']) . ' ' . trim($row['descripcion']);
+                $row_ins['alias'] =  trim($row['descripcion']);
+                $row_ins['codigo_bis'] =  trim($row['codigo']);
+                $alta = $doc_tipo_documento_modelo->inserta_registro_si_no_existe(registro: $row_ins);
                 if (errores::$error) {
                     return (new errores())->error(mensaje: 'Error al insertar doc_extension_ins', data: $alta);
                 }
@@ -368,6 +369,30 @@ class instalacion
             }
         }
         $result->altas = $altas;
+
+
+        $doc_extensiones = (new doc_extension(link: $link))->registros();
+        foreach ($doc_extensiones as $doc_extension){
+            $filtro = array();
+            $filtro['doc_extension.id'] = $doc_extension['doc_extension_id'];
+            $filtro['doc_tipo_documento.id'] = 9;
+            $existe = (new doc_extension_permitido(link: $link))->existe(filtro: $filtro);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error valida si existe', data: $existe);
+            }
+
+            if(!$existe){
+                $doc_extension_permitido_ins['doc_extension_id'] = $doc_extension['doc_extension_id'];
+                $doc_extension_permitido_ins['doc_tipo_documento_id'] = 9;
+                $ins = (new doc_extension_permitido(link: $link))->alta_registro(registro: $doc_extension_permitido_ins);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error insertar', data: $ins);
+                }
+            }
+        }
+
+
+
 
         return $result;
 
