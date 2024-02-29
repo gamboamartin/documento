@@ -40,6 +40,22 @@ class instalacion
         }
         $result->foraneas_r = $foraneas_r;
 
+        $campos = new stdClass();
+
+        $campos->codigo = new stdClass();
+        $campos->descripcion = new stdClass();
+        $campos->descripcion_select = new stdClass();
+        $campos->alias = new stdClass();
+        $campos->codigo_bis = new stdClass();
+        $campos->predeterminado = new stdClass();
+        $campos->predeterminado->default = 'inactivo';
+
+        $campos_r = $init->add_columns(campos: $campos,table:  'doc_acl_tipo_documento');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $campos_r);
+        }
+
         return $result;
     }
 
