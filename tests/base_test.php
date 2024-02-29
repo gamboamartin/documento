@@ -10,6 +10,7 @@ use gamboamartin\documento\models\doc_version;
 use gamboamartin\errores\errores;
 use gamboamartin\test\test;
 use JsonException;
+use PDO;
 use stdClass;
 
 class base_test extends test{
@@ -111,6 +112,17 @@ class base_test extends test{
             return $this->error->error(mensaje: 'Error al insertar extension permitido', data: $alta_tipo_documento);
         }
         return true;
+    }
+
+    public function del_doc_documento(PDO $link): array|\stdClass
+    {
+
+        $del = (new doc_documento($link))->elimina_todo();
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+
+        }
+        return $del;
     }
 
     protected function elimina_acl_tipo_documento(): bool|array
