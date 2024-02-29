@@ -329,7 +329,7 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al contar n_tipos_documento', data: $n_tipos_documento);
         }
         $altas = array();
-        if($n_tipos_documento !== 8) {
+        if($n_tipos_documento !== 9) {
 
             $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
             if (errores::$error) {

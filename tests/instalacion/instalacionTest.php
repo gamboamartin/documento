@@ -18,6 +18,30 @@ class instalacionTest extends test {
         $this->errores = new errores();
     }
 
+    public function test__add_doc_tipo_documento()
+    {
+        $_SESSION['usuario_id'] = 2;
+        errores::$error = false;
+        $ins = new instalacion();
+        $ins = new liberator($ins);
+
+
+        $resultado = $ins->_add_doc_tipo_documento($this->link);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+
+        $entidad = (new _instalacion(link: $this->link))->describe_table(table: 'doc_tipo_documento');
+        $this->assertIsObject($entidad);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('id',$entidad->registros[0]['Field']);
+        $this->assertEquals('codigo',$entidad->registros[1]['Field']);
+        $this->assertEquals('descripcion',$entidad->registros[2]['Field']);
+        $this->assertEquals('status',$entidad->registros[3]['Field']);
+        errores::$error = false;
+
+    }
+
     public function test_doc_tipo_documento()
     {
         $_SESSION['usuario_id'] = 2;
