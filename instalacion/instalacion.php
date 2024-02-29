@@ -146,6 +146,7 @@ class instalacion
         $campos = new stdClass();
 
         $campos->codigo = new stdClass();
+        $campos->descripcion = new stdClass();
         $campos->descripcion_select = new stdClass();
         $campos->alias = new stdClass();
         $campos->codigo_bis = new stdClass();
