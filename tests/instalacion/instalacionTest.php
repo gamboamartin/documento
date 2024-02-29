@@ -51,7 +51,7 @@ class instalacionTest extends test {
 
 
         $resultado = $ins->doc_tipo_documento($this->link);
-        //print_r($resultado);exit;
+       // print_r($resultado);exit;
 
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);

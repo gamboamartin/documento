@@ -3,6 +3,8 @@ namespace gamboamartin\documento\instalacion;
 
 use config\generales;
 use gamboamartin\administrador\models\_instalacion;
+use gamboamartin\documento\models\adm_grupo;
+use gamboamartin\documento\models\doc_acl_tipo_documento;
 use gamboamartin\documento\models\doc_documento;
 use gamboamartin\documento\models\doc_extension;
 use gamboamartin\documento\models\doc_extension_permitido;
@@ -372,6 +374,9 @@ class instalacion
 
 
         $doc_extensiones = (new doc_extension(link: $link))->registros();
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error obtener extensiones', data: $doc_extensiones);
+        }
         foreach ($doc_extensiones as $doc_extension){
             $filtro = array();
             $filtro['doc_extension.id'] = $doc_extension['doc_extension_id'];
@@ -391,8 +396,28 @@ class instalacion
             }
         }
 
+        $adm_grupos = (new adm_grupo(link: $link))->registros();
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error obtener adm_grupos', data: $adm_grupos);
+        }
+        foreach ($adm_grupos as $adm_grupo){
+            $filtro = array();
+            $filtro['adm_grupo.id'] = $adm_grupo['adm_grupo_id'];
+            $filtro['doc_tipo_documento.id'] = 9;
+            $existe = (new doc_acl_tipo_documento(link: $link))->existe(filtro: $filtro);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error valida si existe', data: $existe);
+            }
 
-
+            if(!$existe){
+                $doc_acl_tipo_documento_ins['adm_grupo_id'] = $adm_grupo['adm_grupo_id'];
+                $doc_acl_tipo_documento_ins['doc_tipo_documento_id'] = 9;
+                $ins = (new doc_acl_tipo_documento(link: $link))->alta_registro(registro: $doc_acl_tipo_documento_ins);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error insertar', data: $ins);
+                }
+            }
+        }
 
         return $result;
 
