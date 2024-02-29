@@ -153,6 +153,22 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al create', data:  $create);
         }
         $result->create = $create;
+
+
+        $campos = new stdClass();
+
+        $campos->descripcion_select = new stdClass();
+        $campos->alias = new stdClass();
+        $campos->codigo_bis = new stdClass();
+        $campos->predeterminado = new stdClass();
+        $campos->predeterminado->default = 'inactivo';
+
+        $campos_r = $init->add_columns(campos: $campos,table:  'doc_tipo_documento');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $campos_r);
+        }
+
         return  $result;
     }
     private function doc_acl_tipo_documento(PDO $link): array|stdClass
