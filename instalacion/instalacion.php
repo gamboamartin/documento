@@ -488,6 +488,8 @@ class instalacion
         $campos->codigo = new stdClass();
         $campos->alias = new stdClass();
         $campos->codigo_bis = new stdClass();
+        $campos->descripcion = new stdClass();
+        $campos->descripcion_select = new stdClass();
 
 
         $campos_r = $init->add_columns(campos: $campos,table:  'doc_version');
