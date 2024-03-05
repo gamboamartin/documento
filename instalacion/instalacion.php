@@ -485,6 +485,16 @@ class instalacion
         $campos->ruta_absoluta = new stdClass();
         $campos->ruta_relativa = new stdClass();
         $campos->nombre = new stdClass();
+        $campos->codigo = new stdClass();
+        $campos->alias = new stdClass();
+        $campos->codigo_bis = new stdClass();
+
+
+        $campos_r = $init->add_columns(campos: $campos,table:  'doc_version');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $campos_r);
+        }
 
 
         $campos_r = $init->add_columns(campos: $campos,table:  __FUNCTION__);
