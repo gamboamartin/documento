@@ -15,9 +15,9 @@ use stdClass;
 
 class base_test extends test{
     private errores $error;
-    public function __construct(?string $name = null, array $data = [], string $dataName = '', string $tipo_conexion = 'PDO')
+    public function __construct(?string $name = '')
     {
-        parent::__construct($name, $data, $dataName, $tipo_conexion);
+        parent::__construct($name);
         $this->error = new errores();
     }
 
