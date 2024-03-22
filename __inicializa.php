@@ -16,27 +16,41 @@ $administrador = new gamboamartin\administrador\instalacion\instalacion();
 
 $instala = $administrador->instala(link: $link);
 if(errores::$error){
-    $link->rollBack();
-    $error = (new errores())->error(mensaje: 'Error al instalar administrador', data: $administrador);
-    print_r($error);
-    exit;
+    (new errores())->error(mensaje: 'Error al instalar',data:  $instala);
+    if($link->inTransaction()) {
+        $link->rollBack();
+    }
+    $out = array_reverse(errores::$out);
+    foreach ($out as $msj){
+        echo $msj;
+        echo "<br>";
+        echo "<hr>";
+    }
+    die('Error');
 }
 
-print_r($instala);
 
 
 $documento = new gamboamartin\documento\instalacion\instalacion();
 
 $instala = $documento->instala(link: $link);
 if(errores::$error){
-    $link->rollBack();
-    $error = (new errores())->error(mensaje: 'Error al instalar documento', data: $instala);
-    print_r($error);
-    exit;
+    (new errores())->error(mensaje: 'Error al instalar',data:  $instala);
+    if($link->inTransaction()) {
+        $link->rollBack();
+    }
+    $out = array_reverse(errores::$out);
+    foreach ($out as $msj){
+        echo $msj;
+        echo "<br>";
+        echo "<hr>";
+    }
+    die('Error');
 }
 
-print_r($instala);
 
-$link->commit();
+if($link->inTransaction()) {
+    $link->commit();
+}
 
 

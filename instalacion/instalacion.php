@@ -289,7 +289,7 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al contar n_extensiones', data: $n_extensiones);
         }
         $altas = array();
-        if($n_extensiones !== 10) {
+        if($n_extensiones !== 13) {
 
             $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
             if (errores::$error) {
@@ -313,6 +313,30 @@ class instalacion
             }
         }
         $result->altas = $altas;
+
+
+        $doc_extensiones = (new doc_extension(link: $link))->registros();
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error obtener extensiones', data: $doc_extensiones);
+        }
+        $ins = $this->inserta_extensiones_permitidas(doc_extensiones: $doc_extensiones,doc_tipo_documento_id:  9, link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error insertar', data: $ins);
+        }
+
+        $doc_extensiones  = array();
+        $doc_extensiones[]['doc_extension_id'] = 5;
+        $doc_extensiones[]['doc_extension_id'] = 11;
+        $doc_extensiones[]['doc_extension_id'] = 12;
+        $doc_extensiones[]['doc_extension_id'] = 13;
+
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error obtener extensiones', data: $doc_extensiones);
+        }
+        $ins = $this->inserta_extensiones_permitidas(doc_extensiones: $doc_extensiones,doc_tipo_documento_id:  10, link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error insertar', data: $ins);
+        }
 
 
 
@@ -379,14 +403,7 @@ class instalacion
         $result->altas = $altas;
 
 
-        $doc_extensiones = (new doc_extension(link: $link))->registros();
-        if (errores::$error) {
-            return (new errores())->error(mensaje: 'Error obtener extensiones', data: $doc_extensiones);
-        }
-        $ins = $this->inserta_extensiones_permitidas(doc_extensiones: $doc_extensiones,doc_tipo_documento_id:  9, link: $link);
-        if (errores::$error) {
-            return (new errores())->error(mensaje: 'Error insertar', data: $ins);
-        }
+
 
         $adm_grupos = (new adm_grupo(link: $link))->registros();
         if (errores::$error) {
