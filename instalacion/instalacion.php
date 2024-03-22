@@ -207,6 +207,17 @@ class instalacion
 
         return  $result;
     }
+
+    private function columnas_tipo_doc(): array
+    {
+        $columnas = array();
+        $columnas[] = 'id';
+        $columnas[] = 'descripcion';
+        $columnas[] = 'codigo';
+        $columnas[] = 'status';
+        return $columnas;
+
+    }
     private function doc_acl_tipo_documento(PDO $link): array|stdClass
     {
         $result = new stdClass();
@@ -360,48 +371,10 @@ class instalacion
         }
         $result->doc_extension_permitido = $create;
 
-        $importador = new Importador();
-        $columnas = array();
-        $columnas[] = 'id';
-        $columnas[] = 'descripcion';
-        $columnas[] = 'codigo';
-        $columnas[] = 'status';
 
-        $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
-
-        if((new generales())->sistema !== 'documento'){
-            $ruta = (new generales())->path_base;
-            $ruta .= "vendor/gamboa.martin/documento/instalacion/doc_tipo_documento.ods";
-        }
-
-        $doc_tipo_documento_modelo = new doc_tipo_documento(link: $link);
-
-        $n_tipos_documento = $doc_tipo_documento_modelo->cuenta();
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al contar n_tipos_documento', data: $n_tipos_documento);
-        }
-        $altas = array();
-        if($n_tipos_documento !== 10) {
-
-            $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
-            if (errores::$error) {
-                return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
-            }
-
-            foreach ($data as $row) {
-                $row = (array)$row;
-                $row_ins['id'] = trim($row['id']);
-                $row_ins['codigo'] = trim($row['codigo']);
-                $row_ins['descripcion'] = trim($row['descripcion']);
-                $row_ins['descripcion_select'] = trim($row['codigo']) . ' ' . trim($row['descripcion']);
-                $row_ins['alias'] =  trim($row['descripcion']);
-                $row_ins['codigo_bis'] =  trim($row['codigo']);
-                $alta = $doc_tipo_documento_modelo->inserta_registro_si_no_existe(registro: $row_ins);
-                if (errores::$error) {
-                    return (new errores())->error(mensaje: 'Error al insertar doc_extension_ins', data: $alta);
-                }
-                $altas[] = $alta;
-            }
+        $altas = $this->inserta_doc_tipo_documentos(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar tipos documentos', data: $altas);
         }
         $result->altas = $altas;
 
@@ -410,23 +383,9 @@ class instalacion
         if (errores::$error) {
             return (new errores())->error(mensaje: 'Error obtener extensiones', data: $doc_extensiones);
         }
-        foreach ($doc_extensiones as $doc_extension){
-            $filtro = array();
-            $filtro['doc_extension.id'] = $doc_extension['doc_extension_id'];
-            $filtro['doc_tipo_documento.id'] = 9;
-            $existe = (new doc_extension_permitido(link: $link))->existe(filtro: $filtro);
-            if (errores::$error) {
-                return (new errores())->error(mensaje: 'Error valida si existe', data: $existe);
-            }
-
-            if(!$existe){
-                $doc_extension_permitido_ins['doc_extension_id'] = $doc_extension['doc_extension_id'];
-                $doc_extension_permitido_ins['doc_tipo_documento_id'] = 9;
-                $ins = (new doc_extension_permitido(link: $link))->alta_registro(registro: $doc_extension_permitido_ins);
-                if (errores::$error) {
-                    return (new errores())->error(mensaje: 'Error insertar', data: $ins);
-                }
-            }
+        $ins = $this->inserta_extensiones_permitidas(doc_extensiones: $doc_extensiones,doc_tipo_documento_id:  9, link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error insertar', data: $ins);
         }
 
         $adm_grupos = (new adm_grupo(link: $link))->registros();
@@ -513,6 +472,144 @@ class instalacion
 
     }
 
+    private function existe_doc_extension_permitido(array $doc_extension, int $doc_tipo_documento_id, PDO $link): bool|array
+    {
+        $filtro = $this->filtro_extension_permitido(doc_extension: $doc_extension,doc_tipo_documento_id:  $doc_tipo_documento_id);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error integrar filtro', data: $filtro);
+        }
+
+        $existe = (new doc_extension_permitido(link: $link))->existe(filtro: $filtro);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error valida si existe', data: $existe);
+        }
+        return $existe;
+
+    }
+
+    private function filtro_extension_permitido(array $doc_extension, int $doc_tipo_documento_id): array
+    {
+        $filtro = array();
+        $filtro['doc_extension.id'] = $doc_extension['doc_extension_id'];
+        $filtro['doc_tipo_documento.id'] = $doc_tipo_documento_id;
+        return $filtro;
+
+    }
+
+    private function inserta_doc_extension_permitido(array $doc_extension, int $doc_tipo_documento_id, PDO $link): array|stdClass
+    {
+        $doc_extension_permitido_ins['doc_extension_id'] = $doc_extension['doc_extension_id'];
+        $doc_extension_permitido_ins['doc_tipo_documento_id'] = $doc_tipo_documento_id;
+        $ins = (new doc_extension_permitido(link: $link))->alta_registro(registro: $doc_extension_permitido_ins);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error insertar', data: $ins);
+        }
+        return $ins;
+
+    }
+
+    private function inserta_doc_extension_permitida_full(array $doc_extension, int $doc_tipo_documento_id, PDO $link): array|stdClass
+    {
+        $ins = new stdClass();
+        $existe = $this->existe_doc_extension_permitido(doc_extension: $doc_extension,doc_tipo_documento_id:  $doc_tipo_documento_id,link:  $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error valida si existe', data: $existe);
+        }
+
+        if(!$existe){
+            $ins = $this->inserta_doc_extension_permitido(doc_extension: $doc_extension, doc_tipo_documento_id: $doc_tipo_documento_id, link: $link);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error insertar', data: $ins);
+            }
+        }
+        return  $ins;
+
+    }
+
+    private function inserta_doc_tipo_documentos(PDO $link): array
+    {
+        $doc_tipo_documento_modelo = new doc_tipo_documento(link: $link);
+
+        $n_tipos_documento = $doc_tipo_documento_modelo->cuenta();
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al contar n_tipos_documento', data: $n_tipos_documento);
+        }
+        $altas = array();
+        if($n_tipos_documento !== 10) {
+
+            $params = $this->params_tipo_doc();
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al obtener params', data: $params);
+            }
+            $altas = $this->inserta_tipo_docs_xls(altas: $altas,columnas:  $params->columnas,
+                doc_tipo_documento_modelo:  $doc_tipo_documento_modelo,ruta:  $params->ruta);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al insertar doc_extension_ins', data: $altas);
+            }
+        }
+        return $altas;
+
+    }
+
+    private function inserta_extensiones_permitidas(array $doc_extensiones, int $doc_tipo_documento_id, PDO $link): array
+    {
+        $inss = array();
+        foreach ($doc_extensiones as $doc_extension){
+            $ins = $this->inserta_doc_extension_permitida_full(doc_extension: $doc_extension,doc_tipo_documento_id:  $doc_tipo_documento_id,link:  $link);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error insertar', data: $ins);
+            }
+            $inss[] = $ins;
+        }
+        return $inss;
+
+    }
+
+    private function inserta_tipo_docs_xls(array $altas, array $columnas, doc_tipo_documento $doc_tipo_documento_modelo,
+                                           string $ruta): array
+    {
+        $importador = new Importador();
+
+        $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
+        }
+        $altas = $this->inserta_tipos_documento(altas: $altas,data:  $data,doc_tipo_documento_modelo:  $doc_tipo_documento_modelo);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar doc_extension_ins', data: $altas);
+        }
+        return $altas;
+
+    }
+
+    private function inserta_tipo_documento(doc_tipo_documento $doc_tipo_documento_modelo, stdClass|array $row): array|string|stdClass
+    {
+        $row = (array)$row;
+        $row_ins = $this->row_ins_tipo_doc(row: $row);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al maquetar row', data: $row_ins);
+        }
+        $alta = $doc_tipo_documento_modelo->inserta_registro_si_no_existe(registro: $row_ins);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar doc_extension_ins', data: $alta);
+        }
+        return $alta;
+
+    }
+
+    private function inserta_tipos_documento(array $altas, array $data, doc_tipo_documento $doc_tipo_documento_modelo): array
+    {
+        foreach ($data as $row) {
+            $alta = $this->inserta_tipo_documento(doc_tipo_documento_modelo: $doc_tipo_documento_modelo,row:  $row);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al insertar doc_extension_ins', data: $alta);
+            }
+            $altas[] = $alta;
+        }
+        return $altas;
+
+    }
+
     final public function instala(PDO $link): array|stdClass
     {
 
@@ -548,6 +645,49 @@ class instalacion
         }
 
         return $result;
+
+    }
+
+    private function params_tipo_doc(): array|stdClass
+    {
+        $columnas = $this->columnas_tipo_doc();
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener columnas', data:  $columnas);
+        }
+
+        $ruta = $this->ruta_tipo_documento();
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al obtener ruta', data: $ruta);
+        }
+        $data = new stdClass();
+        $data->columnas = $columnas;
+        $data->ruta = $ruta;
+        return $data;
+
+    }
+
+    private function row_ins_tipo_doc(array $row): array
+    {
+        $row_ins['id'] = trim($row['id']);
+        $row_ins['codigo'] = trim($row['codigo']);
+        $row_ins['descripcion'] = trim($row['descripcion']);
+        $row_ins['descripcion_select'] = trim($row['codigo']) . ' ' . trim($row['descripcion']);
+        $row_ins['alias'] =  trim($row['descripcion']);
+        $row_ins['codigo_bis'] =  trim($row['codigo']);
+
+        return $row_ins;
+
+    }
+
+    private function ruta_tipo_documento(): string
+    {
+        $ruta = (new generales())->path_base."instalacion/doc_tipo_documento.ods";
+
+        if((new generales())->sistema !== 'documento'){
+            $ruta = (new generales())->path_base;
+            $ruta .= "vendor/gamboa.martin/documento/instalacion/doc_tipo_documento.ods";
+        }
+        return $ruta;
 
     }
 
