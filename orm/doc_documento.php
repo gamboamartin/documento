@@ -8,7 +8,7 @@ use PDO;
 use stdClass;
 
 
-class doc_documento extends modelo{ //FINALIZADAS
+class doc_documento extends modelo{
     public array $file = array();
     /**
      * DEBUG INI
