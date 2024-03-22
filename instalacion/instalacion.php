@@ -120,6 +120,15 @@ class instalacion
         $campos->es_imagen = new stdClass();
         $campos->es_imagen->tipo_dato = 'VARCHAR';
         $campos->es_imagen->default = 'inactivo';
+        $campos->descripcion_select = new stdClass();
+        $campos->descripcion_select->default = 'SD';
+        $campos->codigo_bis = new stdClass();
+        $campos->codigo_bis->default = 'SC';
+        $campos->alias = new stdClass();
+        $campos->alias->default = 'SA';
+        $campos->predeterminado = new stdClass();
+        $campos->predeterminado->tipo_dato = 'VARCHAR';
+        $campos->predeterminado->default = 'inactivo';
 
 
         $campos_r = $init->add_columns(campos: $campos,table:  'doc_extension');
