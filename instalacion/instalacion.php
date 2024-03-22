@@ -403,8 +403,6 @@ class instalacion
         $result->altas = $altas;
 
 
-
-
         $adm_grupos = (new adm_grupo(link: $link))->registros();
         if (errores::$error) {
             return (new errores())->error(mensaje: 'Error obtener adm_grupos', data: $adm_grupos);
@@ -421,6 +419,27 @@ class instalacion
             if(!$existe){
                 $doc_acl_tipo_documento_ins['adm_grupo_id'] = $adm_grupo['adm_grupo_id'];
                 $doc_acl_tipo_documento_ins['doc_tipo_documento_id'] = 9;
+                $ins = (new doc_acl_tipo_documento(link: $link))->alta_registro(registro: $doc_acl_tipo_documento_ins);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error insertar', data: $ins);
+                }
+            }
+        }
+
+        $adm_grupos = arraY();
+        $adm_grupos[]['adm_grupo_id'] = 2;
+        foreach ($adm_grupos as $adm_grupo){
+            $filtro = array();
+            $filtro['adm_grupo.id'] = $adm_grupo['adm_grupo_id'];
+            $filtro['doc_tipo_documento.id'] = 10;
+            $existe = (new doc_acl_tipo_documento(link: $link))->existe(filtro: $filtro);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error valida si existe', data: $existe);
+            }
+
+            if(!$existe){
+                $doc_acl_tipo_documento_ins['adm_grupo_id'] = $adm_grupo['adm_grupo_id'];
+                $doc_acl_tipo_documento_ins['doc_tipo_documento_id'] = 10;
                 $ins = (new doc_acl_tipo_documento(link: $link))->alta_registro(registro: $doc_acl_tipo_documento_ins);
                 if (errores::$error) {
                     return (new errores())->error(mensaje: 'Error insertar', data: $ins);
