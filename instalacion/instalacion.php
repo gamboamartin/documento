@@ -350,6 +350,11 @@ class instalacion
             return (new errores())->error(mensaje: 'Error insertar', data: $ins);
         }
 
+        $ins = $this->inserta_extensiones_permitidas(doc_extensiones: $doc_extensiones,doc_tipo_documento_id:  12, link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error insertar', data: $ins);
+        }
+
 
         return $result;
 
@@ -435,6 +440,11 @@ class instalacion
             }
 
             $ins = $this->inserta_row_acl(adm_grupo: $adm_grupo, doc_tipo_documento_id: 11,link:  $link);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error insertar', data: $ins);
+            }
+
+            $ins = $this->inserta_row_acl(adm_grupo: $adm_grupo, doc_tipo_documento_id: 12,link:  $link);
             if (errores::$error) {
                 return (new errores())->error(mensaje: 'Error insertar', data: $ins);
             }
@@ -601,7 +611,7 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al contar n_tipos_documento', data: $n_tipos_documento);
         }
         $altas = array();
-        if($n_tipos_documento !== 11) {
+        if($n_tipos_documento !== 12) {
 
             $params = $this->params_tipo_doc();
             if (errores::$error) {
