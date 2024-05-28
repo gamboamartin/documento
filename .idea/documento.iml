@@ -2,15 +2,13 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/base" isTestSource="false" packagePrefix="base\" />
       <sourceFolder url="file://$MODULE_DIR$/config" isTestSource="false" packagePrefix="config\" />
       <sourceFolder url="file://$MODULE_DIR$/controllers" isTestSource="false" packagePrefix="gamboamartin\documento\controllers\" />
-      <sourceFolder url="file://$MODULE_DIR$/frontend/html" isTestSource="false" packagePrefix="html\" />
-      <sourceFolder url="file://$MODULE_DIR$/orm" isTestSource="false" packagePrefix="models\" />
-      <sourceFolder url="file://$MODULE_DIR$/orm/base" isTestSource="false" packagePrefix="orm\" />
+      <sourceFolder url="file://$MODULE_DIR$/orm" isTestSource="false" packagePrefix="gamboamartin\documento\models\" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="false" packagePrefix="tests\" />
-      <sourceFolder url="file://$MODULE_DIR$/validacion" isTestSource="false" packagePrefix="validacion\" />
+      <sourceFolder url="file://$MODULE_DIR$/instalacion" isTestSource="false" packagePrefix="gamboamartin\documento\instalacion\" />
+      <sourceFolder url="file://$MODULE_DIR$/templates/directivas" isTestSource="false" packagePrefix="html\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/base_modelos" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/validacion" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/calculo" />
@@ -84,6 +82,10 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/js_base" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/services" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/acl" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/copilot/chatSessions" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/where" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mpdf/psr-http-message-shim" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mpdf/psr-log-aware-trait" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
