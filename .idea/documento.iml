@@ -5,7 +5,6 @@
       <sourceFolder url="file://$MODULE_DIR$/config" isTestSource="false" packagePrefix="config\" />
       <sourceFolder url="file://$MODULE_DIR$/controllers" isTestSource="false" packagePrefix="gamboamartin\documento\controllers\" />
       <sourceFolder url="file://$MODULE_DIR$/orm" isTestSource="false" packagePrefix="gamboamartin\documento\models\" />
-      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="false" packagePrefix="tests\" />
       <sourceFolder url="file://$MODULE_DIR$/instalacion" isTestSource="false" packagePrefix="gamboamartin\documento\instalacion\" />
       <sourceFolder url="file://$MODULE_DIR$/templates/directivas" isTestSource="false" packagePrefix="html\" />
@@ -86,6 +85,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/where" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mpdf/psr-http-message-shim" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mpdf/psr-log-aware-trait" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/proceso" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
