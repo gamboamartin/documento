@@ -6,6 +6,7 @@ use gamboamartin\administrador\models\_instalacion;
 use gamboamartin\documento\models\adm_grupo;
 use gamboamartin\documento\models\doc_acl_tipo_documento;
 use gamboamartin\documento\models\doc_documento;
+use gamboamartin\documento\models\doc_documento_etapa;
 use gamboamartin\documento\models\doc_extension;
 use gamboamartin\documento\models\doc_extension_permitido;
 use gamboamartin\documento\models\doc_tipo_documento;
@@ -103,6 +104,44 @@ class instalacion
         $result->campos_r = $campos_r;
         return $result;
     }
+
+    private function _add_doc_documento_etapa(PDO $link): array|stdClass
+    {
+        $result = new stdClass();
+        $init = (new _instalacion(link: $link));
+
+        $create = $init->create_table_new(table: 'doc_documento_etapa');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create', data:  $create);
+        }
+        $result->create = $create;
+
+        $foraneas = array();
+        $foraneas['doc_documento_id'] = new stdClass();
+        $foraneas['pr_etapa_proceso_id'] = new stdClass();
+
+        $foraneas_r = $init->foraneas(foraneas: $foraneas,table:  'doc_documento_etapa');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+
+        $campos = new stdClass();
+        $campos->codigo = new stdClass();
+        $campos->descripcion = new stdClass();
+        $campos->status = new stdClass();
+        $campos->fecha = new stdClass();
+
+        $campos_r = $init->add_columns(campos: $campos,table:  'doc_documento');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $campos_r);
+        }
+
+        $result->campos_r = $campos_r;
+        return $result;
+    }
+
+
 
     private function _add_doc_extension(PDO $link): array|stdClass
     {
@@ -258,6 +297,33 @@ class instalacion
                 $r_doc = (new doc_documento(link: $link))->modifica_bd_base(registro: $upd,id: $registro['id']);
                 if(errores::$error){
                     return (new errores())->error(mensaje: 'Error al actualizar doc_documento', data:  $r_doc);
+                }
+            }
+        }
+
+        return $create;
+
+    }
+
+    private function doc_documento_etapa(PDO $link): array|stdClass
+    {
+
+        $create = $this->_add_doc_documento_etapa(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create', data:  $create);
+        }
+
+        $registros = (new doc_documento_etapa(link: $link))->registros(columnas_en_bruto: true);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener registros', data:  $registros);
+        }
+
+        foreach ($registros as $registro){
+            if($registro['name_out']==='SN'){
+                $upd['name_out'] = $registro['nombre'];
+                $r_doc = (new doc_documento(link: $link))->modifica_bd_base(registro: $upd,id: $registro['id']);
+                if(errores::$error){
+                    return (new errores())->error(mensaje: 'Error al actualizar doc_documento_etapa', data:  $r_doc);
                 }
             }
         }
@@ -738,8 +804,12 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al ajustar doc_version', data:  $doc_version);
         }
 
-        return $result;
+        $doc_documento_etapa = $this->doc_documento_etapa(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar doc_documento_etapa', data:  $doc_documento_etapa);
+        }
 
+        return $result;
     }
 
     private function params_tipo_doc(): array|stdClass
