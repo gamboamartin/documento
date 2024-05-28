@@ -63,6 +63,8 @@ class controlador_doc_documento_etapa extends _parents_doc_base
                 ws: $ws);
         }
 
+        $this->row_upd->fecha = date("Y-m-d");
+
         $inputs = $this->inputs_base_alta(keys_selects: $keys_selects);
         if (errores::$error) {
             return $this->retorno_error(
@@ -137,6 +139,9 @@ class controlador_doc_documento_etapa extends _parents_doc_base
 
         $keys_selects['doc_documento_id']->id_selected = $this->registro['doc_documento_id'];
         $keys_selects['pr_etapa_proceso_id']->id_selected = $this->registro['pr_etapa_proceso_id'];
+
+        $partes = explode(" ", $this->row_upd->fecha);
+        $this->row_upd->fecha = $partes[0];
 
         $base = $this->upd_base_template(keys_selects: $keys_selects);
         if (errores::$error) {
