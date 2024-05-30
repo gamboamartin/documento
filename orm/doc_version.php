@@ -160,7 +160,7 @@ class doc_version extends modelo
      * @param int $id Identificador de un registro version
      * @return array
      */
-    public function elimina_bd(int $id): array
+    public function elimina_bd(int $id): array|stdClass
     {
         $version = $this->registro(registro_id: $id);
         if(errores::$error){

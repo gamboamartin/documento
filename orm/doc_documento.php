@@ -174,7 +174,7 @@ class doc_documento extends modelo{
         return $this->error->error(mensaje: 'Error la funcion de desactiva_bd no esta permitada para este modelo', data: $this);
     }
 
-    public function elimina_bd(int $id): array
+    public function elimina_bd(int $id): array|stdClass
     {
         $documento = $this->registro(registro_id: $id);
         if(errores::$error){
@@ -202,7 +202,7 @@ class doc_documento extends modelo{
             return $this->error->error(mensaje: 'Error obtener versiones', data: $versiones);
         }
 
-        foreach ($versiones as $version){
+        foreach ($versiones->registros as $version){
             $elimina_version = (new doc_version($this->link))->elimina_bd(id: $version['doc_version_id']);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al eliminar versiones', data: $elimina_version);
