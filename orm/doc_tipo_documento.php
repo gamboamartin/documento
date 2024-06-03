@@ -16,6 +16,14 @@ class doc_tipo_documento extends modelo{ //FINALIZADAS
         $columnas = array($tabla=>false);
         $campos_obligatorios = array();
 
+        $doc_documento_etapa = "(SELECT pr_etapa.descripcion FROM pr_etapa 
+            LEFT JOIN pr_etapa_proceso ON pr_etapa_proceso.pr_etapa_id = pr_etapa.id 
+            LEFT JOIN doc_documento_etapa ON doc_documento_etapa.pr_etapa_proceso_id = pr_etapa_proceso.id 
+            LEFT JOIN doc_documento ON doc_documento_etapa.doc_documento_id = doc_documento.id 
+			WHERE doc_documento.doc_tipo_documento_id = doc_tipo_documento.id ORDER BY doc_tipo_documento.id DESC LIMIT 1)";
+
+        $columnas_extra['doc_etapa'] = "IFNULL($doc_documento_etapa,'SIN ETAPA')";
+
         $columnas_extra['doc_tipo_documento_n_permisos'] = /** @lang sql */
             "(SELECT COUNT(*) FROM doc_acl_tipo_documento 
             WHERE doc_acl_tipo_documento.doc_tipo_documento_id = doc_tipo_documento.id)";
