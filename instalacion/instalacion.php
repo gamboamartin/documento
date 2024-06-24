@@ -141,8 +141,6 @@ class instalacion
         return $result;
     }
 
-
-
     private function _add_doc_extension(PDO $link): array|stdClass
     {
         $result = new stdClass();
@@ -304,7 +302,6 @@ class instalacion
         return $create;
 
     }
-
     private function doc_documento_etapa(PDO $link): array|stdClass
     {
 
@@ -331,7 +328,6 @@ class instalacion
         return $create;
 
     }
-
     private function doc_extension(PDO $link): array|stdClass
     {
         $result = new stdClass();
@@ -425,7 +421,6 @@ class instalacion
         return $result;
 
     }
-
     private function doc_extension_permitido(PDO $link): array|stdClass
     {
         $create = $this->_add_doc_extension_permitido(link: $link);
@@ -526,7 +521,6 @@ class instalacion
         return $result;
 
     }
-
     private function doc_version(PDO $link): array|stdClass
     {
         $result = new stdClass();
@@ -583,7 +577,6 @@ class instalacion
         return $result;
 
     }
-
     private function existe_acl(array $adm_grupo, int $doc_tipo_documento_id, PDO $link): bool|array
     {
         $filtro = $this->filtro_tipo_documento(adm_grupo: $adm_grupo,doc_tipo_documento_id:  $doc_tipo_documento_id);
@@ -598,7 +591,6 @@ class instalacion
         return $existe;
 
     }
-
     private function existe_doc_extension_permitido(array $doc_extension, int $doc_tipo_documento_id, PDO $link): bool|array
     {
         $filtro = $this->filtro_extension_permitido(doc_extension: $doc_extension,doc_tipo_documento_id:  $doc_tipo_documento_id);
@@ -613,7 +605,6 @@ class instalacion
         return $existe;
 
     }
-
     private function filtro_extension_permitido(array $doc_extension, int $doc_tipo_documento_id): array
     {
         $filtro = array();
@@ -622,7 +613,6 @@ class instalacion
         return $filtro;
 
     }
-
     private function filtro_tipo_documento(array $adm_grupo, int $doc_tipo_documento_id): array
     {
         $filtro = array();
@@ -631,7 +621,6 @@ class instalacion
         return $filtro;
 
     }
-
     private function inserta_acl(array $adm_grupo, int $doc_tipo_documento_id, PDO $link): array|stdClass
     {
         $doc_acl_tipo_documento_ins['adm_grupo_id'] = $adm_grupo['adm_grupo_id'];
@@ -643,7 +632,6 @@ class instalacion
         return $ins;
 
     }
-
     private function inserta_doc_extension_permitido(array $doc_extension, int $doc_tipo_documento_id, PDO $link): array|stdClass
     {
         $doc_extension_permitido_ins['doc_extension_id'] = $doc_extension['doc_extension_id'];
@@ -655,7 +643,6 @@ class instalacion
         return $ins;
 
     }
-
     private function inserta_doc_extension_permitida_full(array $doc_extension, int $doc_tipo_documento_id, PDO $link): array|stdClass
     {
         $ins = new stdClass();
@@ -673,7 +660,6 @@ class instalacion
         return  $ins;
 
     }
-
     private function inserta_doc_tipo_documentos(PDO $link): array
     {
         $doc_tipo_documento_modelo = new doc_tipo_documento(link: $link);
@@ -698,7 +684,6 @@ class instalacion
         return $altas;
 
     }
-
     private function inserta_extensiones_permitidas(array $doc_extensiones, int $doc_tipo_documento_id, PDO $link): array
     {
         $inss = array();
@@ -712,7 +697,6 @@ class instalacion
         return $inss;
 
     }
-
     private function inserta_row_acl(array $adm_grupo, int $doc_tipo_documento_id, PDO $link): array|stdClass
     {
         $ins = new stdClass();
@@ -730,7 +714,6 @@ class instalacion
         return $ins;
 
     }
-
     private function inserta_tipo_docs_xls(array $altas, array $columnas, doc_tipo_documento $doc_tipo_documento_modelo,
                                            string $ruta): array
     {
