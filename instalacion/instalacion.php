@@ -471,6 +471,12 @@ class instalacion
         }
         $result->doc_documento = $create;
 
+        $create = $this->_add_doc_documento_etapa(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create', data:  $create);
+        }
+        $result->doc_documento = $create;
+
         $create = $this->_add_doc_extension_permitido(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al create', data:  $create);
