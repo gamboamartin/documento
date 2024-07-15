@@ -1,13 +1,14 @@
 <?php
 namespace gamboamartin\documento\models;
 use base\orm\_defaults;
+use base\orm\_modelo_parent;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
 use stdClass;
 
 
-class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
+class doc_acl_tipo_documento extends _modelo_parent{ //FINALIZADAS
     /**
      * DEBUG INI
      * accion constructor.
@@ -25,7 +26,7 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
 
     }
 
-    public function alta_bd(): array|stdClass
+    public function alta_bd(array $keys_integra_ds = array('codigo', 'descripcion')): array|stdClass
     {
         $codigo = $this->registro['doc_tipo_documento_id'].'.'.$this->registro['adm_grupo_id'];
         if(!isset($this->registro['codigo'])){
@@ -37,12 +38,11 @@ class doc_acl_tipo_documento extends modelo{ //FINALIZADAS
             $this->registro['descripcion'] = $descripcion;
         }
 
-        $r_alta_bd = parent::alta_bd();
+        $r_alta_bd = parent::alta_bd($keys_integra_ds);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al insertar extension permitida',data:  $r_alta_bd);
         }
         return $r_alta_bd;
-
     }
 
     /**
