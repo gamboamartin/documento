@@ -1,11 +1,12 @@
 <?php
 namespace gamboamartin\documento\models;
+use base\orm\_modelo_parent;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
 
 
-class doc_tipo_documento extends modelo{ //FINALIZADAS
+class doc_tipo_documento extends _modelo_parent{ //FINALIZADAS
     /**
      * DEBUG INI
      * accion constructor.
