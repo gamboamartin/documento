@@ -241,90 +241,92 @@ class doc_documento extends modelo{
         if(isset($registro['status'])){
             return $this->error->error(mensaje: 'Error no puedes modificar status', data: $registro);
         }
-        $keys = array('name','tmp_name');
-        $valida = $this->validacion->valida_existencia_keys(keys: $keys,registro:  $_FILES);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al validar FILES', data: $valida);
-        }
-        $keys = array('doc_tipo_documento_id');
-        $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $registro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al validar registro a insertar', data: $valida);
-        }
-
-        $valida = (new files())->valida_extension(archivo: $_FILES['name']);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al validar extension', data: $valida);
-        }
-
-        $extension = (new files())->extension(archivo: $_FILES['name']);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error obtener extension', data: $extension);
-        }
-
-        $grupo_id = -1;
-        if(isset($_SESSION['grupo_id']) && $_SESSION['grupo_id']!==''){
-            $grupo_id = $_SESSION['grupo_id'];
-        }
-
-        $validaciones = $this->validaciones_documentos(extension: $extension, grupo_id: $grupo_id,
-            tipo_documento_id: $registro['doc_tipo_documento_id']);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error validar documento', data: $validaciones);
-        }
-
-        $documento = $this->registro(registro_id: $id);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener documento', data: $documento);
-        }
-
-        if(!file_exists($_FILES['tmp_name'])){
-            return $this->error->error('Error al guardar archivo temporal', $_FILES);
-        }
-
-        if($documento['doc_extension_descripcion'] !== $extension){
-            $extension_id = (new doc_extension($this->link))->doc_extension_id(extension: $extension);
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error obtener extension id', data: $extension_id);
+        if(count($_FILES) > 0) {
+            $keys = array('name', 'tmp_name');
+            $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $_FILES);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al validar FILES', data: $valida);
+            }
+            $keys = array('doc_tipo_documento_id');
+            $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $registro);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al validar registro a insertar', data: $valida);
             }
 
-            $ruta_archivos = (new generales())->path_base.'/archivos/';
-
-            $ruta_relativa = 'archivos/'.$this->tabla.'/';
-
-            if(!is_dir($ruta_archivos) && !mkdir($ruta_archivos) && !is_dir($ruta_archivos)) {
-                return $this->error->error(mensaje: 'Error crear directorio', data: $ruta_archivos);
+            $valida = (new files())->valida_extension(archivo: $_FILES['name']);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al validar extension', data: $valida);
             }
 
-            $ruta_absoluta_directorio = (new generales())->path_base.$ruta_relativa;
-
-            if(!is_dir($ruta_absoluta_directorio) && !mkdir($ruta_absoluta_directorio) &&
-                !is_dir($ruta_absoluta_directorio)) {
-                return $this->error->error(mensaje: 'Error crear directorio', data: $ruta_absoluta_directorio);
+            $extension = (new files())->extension(archivo: $_FILES['name']);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error obtener extension', data: $extension);
             }
 
-            $nombre_doc = str_replace($documento['doc_extension_descripcion'], $extension,
-                $documento['doc_documento_nombre']);
+            $grupo_id = -1;
+            if (isset($_SESSION['grupo_id']) && $_SESSION['grupo_id'] !== '') {
+                $grupo_id = $_SESSION['grupo_id'];
+            }
 
-            $registro['nombre'] = $nombre_doc;
-            $registro['ruta_relativa'] = $ruta_relativa.$nombre_doc;
-            $registro['ruta_absoluta'] = $ruta_absoluta_directorio.$nombre_doc;
-            $registro['doc_extension_id'] = $extension_id;
+            $validaciones = $this->validaciones_documentos(extension: $extension, grupo_id: $grupo_id,
+                tipo_documento_id: $registro['doc_tipo_documento_id']);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error validar documento', data: $validaciones);
+            }
 
-            $documento['doc_documento_ruta_absoluta'] = $registro['ruta_absoluta'];
-        }
+            $documento = $this->registro(registro_id: $id);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al obtener documento', data: $documento);
+            }
 
-        $doc_version_modelo = new doc_version($this->link);
-        $doc_version_modelo->registro['doc_documento_id'] = $id;
-        $r_alta_version = $doc_version_modelo->alta_bd();
-        if(errores::$error){
-            return $this->error->error('Error al guardar registro', $r_alta_version);
-        }
+            if (!file_exists($_FILES['tmp_name'])) {
+                return $this->error->error('Error al guardar archivo temporal', $_FILES);
+            }
 
-        $guarda = (new files())->guarda_archivo_fisico(contenido_file:  file_get_contents($_FILES['tmp_name']),
-            ruta_file: $documento['doc_documento_ruta_absoluta']);
-        if(errores::$error){
-            return $this->error->error('Error al guardar archivo', $guarda);
+            if ($documento['doc_extension_descripcion'] !== $extension) {
+                $extension_id = (new doc_extension($this->link))->doc_extension_id(extension: $extension);
+                if (errores::$error) {
+                    return $this->error->error(mensaje: 'Error obtener extension id', data: $extension_id);
+                }
+
+                $ruta_archivos = (new generales())->path_base . '/archivos/';
+
+                $ruta_relativa = 'archivos/' . $this->tabla . '/';
+
+                if (!is_dir($ruta_archivos) && !mkdir($ruta_archivos) && !is_dir($ruta_archivos)) {
+                    return $this->error->error(mensaje: 'Error crear directorio', data: $ruta_archivos);
+                }
+
+                $ruta_absoluta_directorio = (new generales())->path_base . $ruta_relativa;
+
+                if (!is_dir($ruta_absoluta_directorio) && !mkdir($ruta_absoluta_directorio) &&
+                    !is_dir($ruta_absoluta_directorio)) {
+                    return $this->error->error(mensaje: 'Error crear directorio', data: $ruta_absoluta_directorio);
+                }
+
+                $nombre_doc = str_replace($documento['doc_extension_descripcion'], $extension,
+                    $documento['doc_documento_nombre']);
+
+                $registro['nombre'] = $nombre_doc;
+                $registro['ruta_relativa'] = $ruta_relativa . $nombre_doc;
+                $registro['ruta_absoluta'] = $ruta_absoluta_directorio . $nombre_doc;
+                $registro['doc_extension_id'] = $extension_id;
+
+                $documento['doc_documento_ruta_absoluta'] = $registro['ruta_absoluta'];
+            }
+
+            $doc_version_modelo = new doc_version($this->link);
+            $doc_version_modelo->registro['doc_documento_id'] = $id;
+            $r_alta_version = $doc_version_modelo->alta_bd();
+            if (errores::$error) {
+                return $this->error->error('Error al guardar registro', $r_alta_version);
+            }
+
+            $guarda = (new files())->guarda_archivo_fisico(contenido_file: file_get_contents($_FILES['tmp_name']),
+                ruta_file: $documento['doc_documento_ruta_absoluta']);
+            if (errores::$error) {
+                return $this->error->error('Error al guardar archivo', $guarda);
+            }
         }
 
         $r_modifica_doc = parent::modifica_bd($registro, $id, $reactiva);
