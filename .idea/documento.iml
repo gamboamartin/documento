@@ -86,6 +86,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/mpdf/psr-http-message-shim" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mpdf/psr-log-aware-trait" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/proceso" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/sql" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gamboa.martin/validaciones" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
