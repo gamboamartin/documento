@@ -9,18 +9,12 @@
 namespace gamboamartin\documento\controllers;
 
 use base\controller\controler;
-use gamboamartin\comercial\models\com_conf_tipo_doc_cliente;
-use gamboamartin\comercial\models\com_contacto;
 use gamboamartin\documento\models\doc_conf_tipo_documento_seccion;
-use gamboamartin\empleado\models\em_conf_tipo_doc_empleado;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
-use html\com_conf_tipo_doc_cliente_html;
-use html\com_contacto_html;
 use html\doc_conf_tipo_documento_seccion_html;
-use html\em_conf_tipo_doc_empleado_html;
 use PDO;
 use stdClass;
 
