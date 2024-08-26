@@ -141,6 +141,43 @@ class instalacion
         return $result;
     }
 
+    private function _add_doc_conf_tipo_documento_seccion(PDO $link): array|stdClass
+    {
+        $result = new stdClass();
+        $init = (new _instalacion(link: $link));
+
+        $create = $init->create_table_new(table: 'doc_conf_tipo_documento_seccion');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create', data:  $create);
+        }
+        $result->create = $create;
+
+        $foraneas = array();
+        $foraneas['doc_tipo_documento_id'] = new stdClass();
+        $foraneas['adm_seccion_id'] = new stdClass();
+
+        $foraneas_r = $init->foraneas(foraneas: $foraneas,table:  'doc_conf_tipo_documento_seccion');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+
+        $campos = new stdClass();
+        $campos->codigo = new stdClass();
+        $campos->descripcion = new stdClass();
+        $campos->status = new stdClass();
+
+        $campos_r = $init->add_columns(campos: $campos,table:  'doc_conf_tipo_documento_seccion');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $campos_r);
+        }
+
+        $result->campos_r = $campos_r;
+        return $result;
+    }
+
+
+
     private function _add_doc_extension(PDO $link): array|stdClass
     {
         $result = new stdClass();
@@ -324,6 +361,19 @@ class instalacion
                 }
             }
         }
+
+        return $create;
+
+    }
+
+    private function doc_conf_tipo_documento_seccion(PDO $link): array|stdClass
+    {
+
+        $create = $this->_add_doc_conf_tipo_documento_seccion(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create', data:  $create);
+        }
+
 
         return $create;
 
@@ -796,6 +846,12 @@ class instalacion
         $doc_documento_etapa = $this->doc_documento_etapa(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar doc_documento_etapa', data:  $doc_documento_etapa);
+        }
+
+        $doc_conf_tipo_documento_seccion = $this->doc_conf_tipo_documento_seccion(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar doc_conf_tipo_documento_seccion',
+                data:  $doc_conf_tipo_documento_seccion);
         }
 
         return $result;

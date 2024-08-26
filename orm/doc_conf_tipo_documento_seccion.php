@@ -1,6 +1,5 @@
 <?php
 namespace gamboamartin\documento\models;
-use base\orm\_modelo_parent;
 use base\orm\_modelo_parent_sin_codigo;
 use gamboamartin\errores\errores;
 use PDO;
@@ -43,8 +42,32 @@ class doc_conf_tipo_documento_seccion extends _modelo_parent_sin_codigo {
         return $r_alta_bd;
     }
 
-    protected function inicializa_campos(array $registros): array
+    /**
+     * TOTAL
+     * Inicializa y valida ciertos campos en un registro.
+     *
+     * Esta función realiza las siguientes operaciones:
+     * 1. Valida la existencia y validez de los campos clave `doc_tipo_documento_id` y `adm_seccion_id`.
+     * 2. Genera un código aleatorio y lo asigna al campo `codigo` en el registro.
+     * 3. Si el campo `descripcion` no está presente, lo inicializa concatenando los valores de
+     * `doc_tipo_documento_id` y `adm_seccion_id`, separados por un guion.
+     *
+     * @param array $registros Arreglo asociativo que representa un registro con posibles campos a inicializar.
+     *
+     * @return array Arreglo actualizado con los campos inicializados o un mensaje de error en caso de falla.
+     * - En caso de éxito, retorna el arreglo con los campos `codigo` y `descripcion` inicializados.
+     * - En caso de error, retorna un arreglo con un mensaje de error.
+     *
+     * @url https://github.com/gamboamartin/documento/wiki/orm.doc_conf_tipo_documento_seccion.inicializa_campos
+     */
+    final protected function inicializa_campos(array $registros): array
     {
+        $keys = array('doc_tipo_documento_id','adm_seccion_id');
+        $valida = $this->validacion->valida_ids(keys: $keys,registro:  $registros);
+        if (errores::$error) {
+            return $this->error->error(mensaje: 'Error validar registros', data: $valida);
+        }
+
         $registros['codigo'] = $this->get_codigo_aleatorio();
         if (errores::$error) {
             return $this->error->error(mensaje: 'Error generar codigo', data: $registros);
