@@ -164,6 +164,32 @@ class doc_documento extends modelo{
         return $r_alta;
     }
 
+    function borrar_directorio($directorio) {
+        if (!is_dir($directorio)) {
+            return false;
+        }
+
+        $items = scandir($directorio);
+
+        foreach ($items as $item) {
+            if ($item == '.' || $item == '..') {
+                continue;
+            }
+
+            $ruta_item = $directorio . '/' . $item;
+
+            if (is_dir($ruta_item)) {
+                $this->borrar_directorio($ruta_item);
+            } else {
+                unlink($ruta_item);
+            }
+        }
+
+        rmdir($directorio);
+
+        return true;
+    }
+
     /**
      * PRUEBA P ORDER P INT
      * Funcion sobrescrita la cual solo devuelve error
