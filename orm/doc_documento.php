@@ -164,6 +164,22 @@ class doc_documento extends modelo{
         return $r_alta;
     }
 
+    public function validar_permisos_documento(string $modelo): array|stdClass
+    {
+        $filtro['doc_tipo_documento.codigo'] = constantes::DOC_TIPO_DOCUMENTO_CIF;
+        $filtro['adm_seccion.descripcion'] = $modelo;
+        $conf = (new doc_conf_tipo_documento_seccion(link: $this->link))->filtro_and(filtro: $filtro);
+        if (errores::$error) {
+            return $this->error->error(mensaje: 'Error al obtener configuracion', data: $conf);
+        }
+
+        if ($conf->n_registros == 0) {
+            return $this->error->error(mensaje: 'No existe configuracion para el documento', data: $conf);
+        }
+
+        return $conf->registros[0];
+    }
+
     function borrar_directorio($directorio) {
         if (!is_dir($directorio)) {
             return false;
