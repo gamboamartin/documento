@@ -164,7 +164,7 @@ class doc_documento extends modelo{
         return $r_alta;
     }
 
-    public function validar_permisos_documento(string $modelo): array|stdClass
+    final public function validar_permisos_documento(string $modelo): array|stdClass
     {
         $filtro['doc_tipo_documento.codigo'] = constantes::DOC_TIPO_DOCUMENTO_CIF;
         $filtro['adm_seccion.descripcion'] = $modelo;
