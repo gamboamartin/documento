@@ -46,21 +46,60 @@ class doc_acl_tipo_documento extends _modelo_parent{ //FINALIZADAS
     }
 
     /**
+     * REG
+     * Verifica si un grupo de usuarios tiene permisos sobre un tipo de documento.
      *
-     * Funcion que verifica si existe un acl_tipo_documento conforme al grupo_id y el tipo_documento_id
-     * @param int $grupo_id Grupo de usuario
-     * @param int $tipo_documento_id Tipo de documento en base de datos no relacionado a la extension,
-     * mas bien al objeto del tipo del documento ej INE
-     * @return array|bool
+     * Esta función consulta la base de datos para determinar si existe un registro en la tabla
+     * `doc_acl_tipo_documento` que asocie un grupo de usuarios (`adm_grupo.id`) con un tipo
+     * de documento (`doc_tipo_documento.id`). La función solo considera registros con estado
+     * "activo".
+     *
+     * @param int $grupo_id Identificador del grupo de usuarios.
+     *                      - Debe ser un número entero positivo mayor a 0.
+     * @param int $tipo_documento_id Identificador del tipo de documento.
+     *                                - Debe ser un número entero positivo mayor a 0.
+     *
+     * @return bool|array Devuelve `true` si el permiso existe, `false` si no existe.
+     *                    En caso de error, devuelve un array con detalles del error.
+     *
+     * @example Uso exitoso:
+     * ```php
+     * $acl = new doc_acl_tipo_documento($pdo);
+     * $permiso = $acl->tipo_documento_permiso(grupo_id: 2, tipo_documento_id: 5);
+     * var_dump($permiso);
+     * ```
+     * **Salida esperada (si el permiso existe)**:
+     * ```php
+     * bool(true)
+     * ```
+     *
+     * **Salida esperada (si el permiso NO existe)**:
+     * ```php
+     * bool(false)
+     * ```
+     *
+     * @example Caso con error:
+     * ```php
+     * $permiso = $acl->tipo_documento_permiso(grupo_id: 0, tipo_documento_id: 5);
+     * ```
+     * **Salida esperada (error por `grupo_id` inválido)**:
+     * ```php
+     * array(
+     *   'error' => true,
+     *   'mensaje' => 'Error grupo id no puede ser menor a 1',
+     *   'data' => 0
+     * )
+     * ```
+     *
+     * @throws errores En caso de fallo en la consulta o si los parámetros no son válidos.
      * @version 0.9.1
      */
     final public function tipo_documento_permiso(int $grupo_id, int $tipo_documento_id): bool|array
     {
-
-        if($grupo_id <= 0){
-            return $this->error->error(mensaje: 'Error grupo id no puede ser menor a 1',data:  $grupo_id);
+        if ($grupo_id <= 0) {
+            return $this->error->error(mensaje: 'Error grupo id no puede ser menor a 1', data: $grupo_id);
         }
-        if($tipo_documento_id <= 0){
+        if ($tipo_documento_id <= 0) {
             return $this->error->error(mensaje: 'Error tipo documento id no puede ser menor a 1',
                 data: $tipo_documento_id);
         }
@@ -70,10 +109,11 @@ class doc_acl_tipo_documento extends _modelo_parent{ //FINALIZADAS
         $filtro['doc_acl_tipo_documento.status'] = 'activo';
 
         $existe = $this->existe(filtro: $filtro);
-        if(errores::$error) {
+        if (errores::$error) {
             return $this->error->error(mensaje: 'Error al obtener acl', data: $existe);
         }
 
         return $existe;
     }
+
 }
