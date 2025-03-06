@@ -65,5 +65,26 @@ class doc_tipo_documentoTest extends base_test {
         errores::$error = false;
 
     }
+
+    public function test_valida_extension_permitida()
+    {
+        errores::$error = false;
+        $tipo_doc = new doc_tipo_documento($this->link);
+        //$tipo_doc = new liberator($tipo_doc);
+
+
+
+        $tipo_documento_id = 1;
+        $extension = 'a';
+        $resultado = $tipo_doc->valida_extension_permitida($extension,$tipo_documento_id);
+        //print_r($resultado);exit;
+        $this->assertIsBool($resultado);
+        $this->assertNotTrue(errores::$error);
+        //$this->assertTrue($resultado);
+
+
+        errores::$error = false;
+
+    }
 }
 

@@ -11,6 +11,7 @@ use gamboamartin\documento\models\doc_tipo_documento;
 use gamboamartin\documento\models\doc_version;
 use gamboamartin\errores\errores;
 
+use gamboamartin\test\liberator;
 use tests\base_test;
 
 
@@ -285,6 +286,25 @@ class doc_documentoTest extends base_test {
         $this->assertFileExists($resultado->registro['doc_documento_ruta_absoluta']);
 
         errores::$error = false;
+    }
+
+    public function test_validaciones_documentos()
+    {
+        $doc_documento = new doc_documento($this->link);
+        $doc_documento = new liberator($doc_documento);
+
+        errores::$error = false;
+        $extension = 'a';
+        $grupo_id = 2;
+        $tipo_documento_id = 1;
+        $resultado = $doc_documento->validaciones_documentos($extension,$grupo_id,$tipo_documento_id);
+
+        $this->assertIsArray($resultado);
+        $this->assertTrue(errores::$error);
+        $this->assertStringContainsStringIgnoringCase('Error no tiene permiso de alta', $resultado['mensaje_limpio']);
+
+        errores::$error = false;
+
     }
 }
 

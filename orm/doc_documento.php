@@ -378,16 +378,148 @@ class doc_documento extends modelo{
         return $r_modifica_doc;
     }
 
-    /** Valida
-     * @param string $extension
-     * @param int $grupo_id
-     * @param int $tipo_documento_id
-     * @return bool|array
+    /**
+     * REG
+     * Valida si un documento cumple con los requisitos de seguridad y extensión permitida.
+     *
+     * Esta función verifica si la extensión del documento es válida y si el usuario tiene permisos para
+     * registrar un documento en base a su grupo y el tipo de documento.
+     *
+     * ### Flujo de ejecución:
+     * 1. **Validación de la extensión:**
+     *    - Si `$extension` está vacía, retorna un error.
+     * 2. **Verificación de permisos (si aplica seguridad):**
+     *    - Si `$grupo_id` es menor o igual a 0, retorna un error.
+     *    - Si `$tipo_documento_id` es menor o igual a 0, retorna un error.
+     *    - Se verifica si el usuario tiene permisos sobre el tipo de documento.
+     *    - Si no tiene permisos, retorna un error.
+     * 3. **Verificación de extensión permitida:**
+     *    - Se valida si la extensión está permitida para el tipo de documento.
+     *    - Si no está permitida, retorna un error.
+     * 4. **Retorna `true` si todas las validaciones son exitosas.**
+     *
+     * @param string $extension Extensión del archivo a validar (sin punto inicial, ej. `"pdf"`).
+     * @param int $grupo_id ID del grupo de usuario que intenta registrar el documento.
+     * @param int $tipo_documento_id ID del tipo de documento al que se intentará registrar el archivo.
+     *
+     * @return bool|array Retorna `true` si todas las validaciones son exitosas.
+     * En caso de error, retorna un array con el mensaje del problema.
+     *
+     * ### Ejemplos de uso:
+     *
+     * #### Ejemplo 1: Documento válido con seguridad activada
+     * **Entrada:**
+     * ```php
+     * $resultado = validaciones_documentos("pdf", 3, 10);
+     * ```
+     * **Salida esperada:**
+     * ```php
+     * true
+     * ```
+     *
+     * #### Ejemplo 2: Extensión vacía
+     * **Entrada:**
+     * ```php
+     * $resultado = validaciones_documentos("", 3, 10);
+     * ```
+     * **Salida esperada (error):**
+     * ```php
+     * [
+     *     "error" => true,
+     *     "mensaje" => "Error $extension esta vacia",
+     *     "data" => "",
+     *     "es_final" => true
+     * ]
+     * ```
+     *
+     * #### Ejemplo 3: Grupo ID inválido
+     * **Entrada:**
+     * ```php
+     * $resultado = validaciones_documentos("pdf", 0, 10);
+     * ```
+     * **Salida esperada (error):**
+     * ```php
+     * [
+     *     "error" => true,
+     *     "mensaje" => "Error grupo id no puede ser menor a 1",
+     *     "data" => 0,
+     *     "es_final" => true
+     * ]
+     * ```
+     *
+     * #### Ejemplo 4: Tipo de documento ID inválido
+     * **Entrada:**
+     * ```php
+     * $resultado = validaciones_documentos("pdf", 3, 0);
+     * ```
+     * **Salida esperada (error):**
+     * ```php
+     * [
+     *     "error" => true,
+     *     "mensaje" => "Error tipo documento id no puede ser menor a 1",
+     *     "data" => 0,
+     *     "es_final" => true
+     * ]
+     * ```
+     *
+     * #### Ejemplo 5: Usuario sin permisos para el tipo de documento
+     * **Entrada:**
+     * ```php
+     * $resultado = validaciones_documentos("pdf", 3, 10);
+     * ```
+     * **Salida esperada (error, si el usuario no tiene permisos):**
+     * ```php
+     * [
+     *     "error" => true,
+     *     "mensaje" => "Error no tiene permiso de alta",
+     *     "data" => false
+     * ]
+     * ```
+     *
+     * #### Ejemplo 6: Extensión no permitida
+     * **Entrada:**
+     * ```php
+     * $resultado = validaciones_documentos("exe", 3, 10);
+     * ```
+     * **Salida esperada (error):**
+     * ```php
+     * [
+     *     "error" => true,
+     *     "mensaje" => "Error la extension del documento no es validar",
+     *     "data" => false
+     * ]
+     * ```
+     *
+     * ### Notas:
+     * - La extensión debe ingresarse sin el punto inicial (ej. `"pdf"`, no `".pdf"`).
+     * - Si la seguridad está activada, el usuario debe tener permisos en el tipo de documento.
+     * - Si `$grupo_id` o `$tipo_documento_id` son inválidos, la función devuelve un error.
+     * - Se utiliza `doc_acl_tipo_documento` para verificar los permisos.
+     * - Se usa `doc_tipo_documento` para validar la extensión permitida.
+     *
+     * @throws errores Si los parámetros son inválidos o hay un problema en la validación de permisos.
+     * @version 6.4.0
      */
+
     private function validaciones_documentos(string $extension, int $grupo_id, int $tipo_documento_id): bool|array
     {
+        $extension = trim($extension);
+        if($extension === ''){
+            return $this->error->error(mensaje: 'Error $extension esta vacia', data: $extension,
+                es_final: true);
+        }
         $aplica_seguridad = (new generales())->aplica_seguridad;
         if($aplica_seguridad) {
+
+            if ($grupo_id <= 0) {
+                return $this->error->error(mensaje: 'Error grupo id no puede ser menor a 1', data: $grupo_id,
+                    es_final: true);
+            }
+            if ($tipo_documento_id <= 0) {
+                return $this->error->error(mensaje: 'Error tipo documento id no puede ser menor a 1',
+                    data: $tipo_documento_id, es_final: true);
+            }
+
             $tiene_permiso = (new doc_acl_tipo_documento($this->link))->tipo_documento_permiso(
                 grupo_id: $grupo_id, tipo_documento_id: $tipo_documento_id);
             if(errores::$error){

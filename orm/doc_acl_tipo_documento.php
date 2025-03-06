@@ -97,11 +97,12 @@ class doc_acl_tipo_documento extends _modelo_parent{ //FINALIZADAS
     final public function tipo_documento_permiso(int $grupo_id, int $tipo_documento_id): bool|array
     {
         if ($grupo_id <= 0) {
-            return $this->error->error(mensaje: 'Error grupo id no puede ser menor a 1', data: $grupo_id);
+            return $this->error->error(mensaje: 'Error grupo id no puede ser menor a 1', data: $grupo_id,
+                es_final: true);
         }
         if ($tipo_documento_id <= 0) {
             return $this->error->error(mensaje: 'Error tipo documento id no puede ser menor a 1',
-                data: $tipo_documento_id);
+                data: $tipo_documento_id, es_final: true);
         }
 
         $filtro['doc_tipo_documento.id'] = $tipo_documento_id;
