@@ -1,0 +1,3 @@
+Aprobación expresa de Martín, 18 de noviembre de 2026: se intercambian únicamente las expectativas de posiciones 1/2 del orden físico a codigo, descripcion. Esquema e importación sin cambios. Original completo preservado en historial/instalacionTest-original.php y hash en tests-originales.json.
+
+El histórico se conserva byte a byte con SHA-256 `17214932d7f961d505f55471f07eca68932d495ceb1f09e5d40263c3a0aa601d`, idéntico al archivo original de la revisión base. Su línea vacía final preexistente genera un aviso de whitespace al incorporarlo como archivo nuevo. Se excluye únicamente este archivo histórico del chequeo de whitespace; el resto debe pasar. No se normalizan sus bytes ni se modifica ninguna expectativa por este aviso.

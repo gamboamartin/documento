@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "cantidad": 13,
+  "pruebas": [
+    {
+      "archivo": "tests/controllers/_docsTest.php",
+      "metodo": "test_data_view_acl_tipo_documento"
+    },
+    {
+      "archivo": "tests/instalacion/instalacionTest.php",
+      "metodo": "test__add_doc_tipo_documento"
+    },
+    {
+      "archivo": "tests/instalacion/instalacionTest.php",
+      "metodo": "test_doc_tipo_documento"
+    },
+    {
+      "archivo": "tests/orm/doc_acl_tipo_documentoTest.php",
+      "metodo": "test_tipo_documento_permiso"
+    },
+    {
+      "archivo": "tests/orm/doc_conf_tipo_documento_seccionTest.php",
+      "metodo": "test_inicializa_campos"
+    },
+    {
+      "archivo": "tests/orm/doc_documentoTest.php",
+      "metodo": "test_alta_bd"
+    },
+    {
+      "archivo": "tests/orm/doc_documentoTest.php",
+      "metodo": "test_validaciones_documentos"
+    },
+    {
+      "archivo": "tests/orm/doc_extensionTest.php",
+      "metodo": "test_doc_extension_id"
+    },
+    {
+      "archivo": "tests/orm/doc_extensionTest.php",
+      "metodo": "test_extension"
+    },
+    {
+      "archivo": "tests/orm/doc_tipo_documentoTest.php",
+      "metodo": "test_es_extension_permitida"
+    },
+    {
+      "archivo": "tests/orm/doc_tipo_documentoTest.php",
+      "metodo": "test_extensiones_permitidas"
+    },
+    {
+      "archivo": "tests/orm/doc_tipo_documentoTest.php",
+      "metodo": "test_valida_extension_permitida"
+    },
+    {
+      "archivo": "tests/orm/doc_versionTest.php",
+      "metodo": "test_alta_bd"
+    }
+  ],
+  "expectativa_aprobada": "Orden físico id,codigo,descripcion,status; no altera importación",
+  "historico": "historial/instalacionTest-original.php",
+  "estado_acreditado": "13 PASS en corrida local 08, 84 aserciones; véase README"
+}

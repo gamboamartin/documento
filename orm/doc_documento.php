@@ -145,13 +145,18 @@ class doc_documento extends modelo{
             return $this->error->error('Error al guardar registro', $r_alta_doc);
         }
 
-        $guarda = (new files())->guarda_archivo_fisico(contenido_file:  file_get_contents($file['tmp_name']),
-            ruta_file: $this->registro['ruta_absoluta']);
+        $guarda = $this->guardar_archivo_alta(contenido: file_get_contents($file['tmp_name']),
+            ruta: $this->registro['ruta_absoluta']);
         if(errores::$error){
             return $this->error->error('Error al guardar archivo', $guarda);
         }
 
         return $r_alta_doc;
+    }
+
+    /** Punto opt-in de escritura; el comportamiento por defecto permanece sin cambios. */
+    protected function guardar_archivo_alta(string $contenido, string $ruta): string|array {
+        return (new files())->guarda_archivo_fisico(contenido_file: $contenido, ruta_file: $ruta);
     }
 
     public function alta_documento(array $registro, array $file = array()): array|stdClass

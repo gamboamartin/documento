@@ -1,0 +1,13 @@
+{
+  "tests/base_test.php": "e75562da3d3b08be805fed0d1b849116ecd9f831f2c53b00773e10c95d39ecf2",
+  "tests/orm/doc_tipo_documentoTest.php": "9e13aef59dc692ca6891d06b8b970d7799863cf7ed8332e6b405592afd148012",
+  "tests/orm/doc_versionTest.php": "284aa596e2820ccc9e2ddf110ddca16cf5218f7cc13c601de8455113434adace",
+  "tests/orm/doc_extensionTest.php": "f3961e813946bb941114cdb62f72710ffbbaff7e5175352aaae5bc17401e9079",
+  "tests/orm/doc_documentoTest.php": "37579476aa378137efb20772442332af2d5aa5a79f401837f53a10024cc0beef",
+  "tests/orm/doc_acl_tipo_documentoTest.php": "5e5f3147fe830af135fe4f4ed9bd1de78944ddd72ad574e02ca880402f04e1ae",
+  "tests/orm/doc_conf_tipo_documento_seccionTest.php": "9268bac13ee14dfb9750a3f328f2a4e028f094db7e0f830916dc8e47fd689130",
+  "tests/files/1.pdf": "b0a7e4f71c0deef926804070099875a058c2110286c184ec777df57a15e13e66",
+  "tests/files/a.a": "b0a7e4f71c0deef926804070099875a058c2110286c184ec777df57a15e13e66",
+  "tests/instalacion/instalacionTest.php": "432608bd0cc0e4379eb3c1e464b9b9f742469bcb847d377c190d95e7adbfc308",
+  "tests/controllers/_docsTest.php": "1d106978800bd84b4f455006f478cd8bcd32837f36e88c096f89aa9f4c4499f3"
+}
